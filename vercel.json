@@ -2,12 +2,8 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/marketing-site/index.html"
-    },
-    {
-      "source": "/:path*",
-      "destination": "/marketing-site/:path*"
+      "source": "/(.*)",
+      "destination": "/marketing-site/$1"
     }
   ]
 }
