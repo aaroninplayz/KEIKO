@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>KEIKO | Download & Node Engine Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="js/particles-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "background": "#050506",
+              "bg-card": "#0c0c0e",
+              "primary": "#d2bbff",
+              "secondary": "#adc6ff",
+              "tertiary": "#71f8e4",
+              "text-primary": "#F4F4F5",
+              "text-secondary": "#9E9E9F"
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+              "mono": ["IBM Plex Mono", "monospace"]
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+        body {
+            background-color: #050506;
+            color: #F4F4F5;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+        .glass-panel {
+            background: rgba(12, 12, 14, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .glass-neo-stitch {
+            background: rgba(12, 12, 14, 0.45);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                inset 1px 1px 2px rgba(255, 255, 255, 0.12),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.8),
+                0 15px 35px rgba(0, 0, 0, 0.6);
+            border-radius: 24px;
+            outline: 1.5px dashed rgba(210, 187, 255, 0.12);
+            outline-offset: -8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-neo-stitch:hover {
+            outline-color: rgba(113, 248, 228, 0.3);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 
+                inset 1px 1px 2px rgba(255, 255, 255, 0.18),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.8),
+                0 25px 45px rgba(0, 0, 0, 0.7);
+            transform: translateY(-2px);
+        }
+        .gradient-text {
+            background-image: linear-gradient(135deg, #d2bbff 0%, #adc6ff 50%, #71f8e4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        .grid-bg {
+            background-size: 30px 30px;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="font-body text-sm overflow-x-hidden selection:bg-primary/20 grid-bg min-h-screen flex flex-col justify-between">
+
+<!-- Fixed Background Particle Canvas -->
+<canvas id="fixed-particle-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 bg-transparent"></canvas>
+
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#050506]/50 backdrop-blur-lg border-b border-white/5 h-20">
+  <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+    <a href="index.html" class="text-2xl font-bold tracking-tighter hover:opacity-90 transition-opacity font-display">KEIKO</a>
+    <div class="hidden md:flex items-center space-x-8">
+      <a id="nav-about" class="text-sm text-gray-400 hover:text-white transition-colors" href="about.html">About</a>
+      <a id="nav-journey" class="text-sm text-gray-400 hover:text-white transition-colors" href="interview-journey.html">Journey</a>
+      <a id="nav-features" class="text-sm text-gray-400 hover:text-white transition-colors" href="features.html">Features</a>
+      <a id="nav-architecture" class="text-sm text-gray-400 hover:text-white transition-colors" href="architecture.html">Architecture</a>
+      <a id="nav-download" class="text-sm text-white font-medium transition-colors" href="download.html">Download</a>
+      <a id="nav-docs" class="text-sm text-gray-400 hover:text-white transition-colors" href="documentation.html">Docs</a>
+    </div>
+    <a class="bg-[#7c3aed] text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:scale-105 hover:opacity-90 active:scale-95 shadow-lg shadow-purple-500/20" href="download.html">
+      Get KEIKO
+    </a>
+  </div>
+</nav>
+
+<!-- Main Workspace -->
+<main class="relative z-10 pt-32 pb-20 px-6 max-w-5xl mx-auto w-full flex-grow">
+  
+  <!-- Header Title -->
+  <div class="text-center mb-10 space-y-4">
+    <div id="node-status-badge" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 font-mono text-xs font-semibold tracking-wider">
+      <span id="badge-dot" class="w-2.5 h-2.5 rounded-full bg-gray-500 animate-pulse"></span>
+      <span id="badge-text">CHECKING LOCAL ENGINE STATUS...</span>
+    </div>
+    <h1 class="text-4xl md:text-5xl font-bold font-display tracking-tight text-white">
+      Keiko <span class="gradient-text">Engine Hub</span>
+    </h1>
+    <p class="text-text-secondary max-w-2xl mx-auto text-base">
+      Local edge intelligence platform for multi-sensory candidate telemetry and real-time interview evaluation.
+    </p>
+  </div>
+
+  <!-- Dynamic Content Container -->
+  <div class="relative">
+    
+    <!-- State 1: Local Node ONLINE -->
+    <div id="node-online-card" class="glass-neo-stitch p-8 md:p-10 space-y-8 hidden">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-6 border-b border-white/10">
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            Active Local Node Detected
+          </div>
+          <h2 class="text-2xl font-bold font-display text-white">Keiko Engine is Live</h2>
+          <p class="text-text-secondary text-sm">
+            Your local processing server is active on <code class="font-mono text-primary bg-white/5 px-2 py-0.5 rounded">http://localhost:8000</code>.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-4">
+          <a href="http://localhost:8000/static/dashboard.html" class="bg-[#7c3aed] text-white px-8 py-3.5 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-[#6d28d9] transition-all shadow-lg shadow-purple-500/25 hover:scale-105 active:scale-95">
+            <span>Launch Web Dashboard</span>
+            <span class="material-symbols-outlined text-sm">open_in_new</span>
+          </a>
+          <a href="http://localhost:8000/static/interview-setup.html" class="glass-panel text-white px-6 py-3.5 rounded-xl font-medium text-sm flex items-center gap-2 hover:bg-white/10 transition-all border border-white/10">
+            <span>Quick Setup Session</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Node Telemetry Diagnostics -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-black/30 p-4 rounded-xl border border-white/5 space-y-1">
+          <div class="text-xs font-mono text-text-secondary uppercase">API Latency</div>
+          <div id="metric-latency" class="text-lg font-bold font-mono text-emerald-400">-- ms</div>
+        </div>
+        <div class="bg-black/30 p-4 rounded-xl border border-white/5 space-y-1">
+          <div class="text-xs font-mono text-text-secondary uppercase">Engine Version</div>
+          <div id="metric-version" class="text-lg font-bold font-mono text-primary">v0.1.0</div>
+        </div>
+        <div class="bg-black/30 p-4 rounded-xl border border-white/5 space-y-1">
+          <div class="text-xs font-mono text-text-secondary uppercase">Backend Runtime</div>
+          <div class="text-lg font-bold font-mono text-white">FastAPI Async</div>
+        </div>
+        <div class="bg-black/30 p-4 rounded-xl border border-white/5 space-y-1">
+          <div class="text-xs font-mono text-text-secondary uppercase">Storage System</div>
+          <div class="text-lg font-bold font-mono text-tertiary">SQLite + Local</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- State 2: Local Node OFFLINE -->
+    <div id="node-offline-card" class="space-y-8 hidden">
+      <!-- Main Offline Card -->
+      <div class="glass-neo-stitch p-8 md:p-10 space-y-8">
+        <div class="space-y-3">
+          <div class="inline-flex items-center gap-2 text-xs font-mono text-rose-400 uppercase tracking-widest">
+            <span class="w-2 h-2 rounded-full bg-rose-400"></span>
+            No Active Local Server Detected
+          </div>
+          <h2 class="text-2xl font-bold font-display text-white">Download Keiko Desktop Engine</h2>
+          <p class="text-text-secondary text-sm max-w-2xl">
+            To run biometric vision processing and real-time audio analysis, download the Keiko Desktop App or launch the backend Python server on your local machine.
+          </p>
+        </div>
+
+        <!-- Download Buttons Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- macOS -->
+          <a href="#" onclick="alert('Downloading Keiko-macOS-Universal.dmg...'); return false;" class="bg-black/40 hover:bg-black/60 p-6 rounded-2xl border border-white/10 hover:border-primary/50 transition-all text-left space-y-4 group">
+            <div class="flex justify-between items-start">
+              <span class="material-symbols-outlined text-3xl text-primary group-hover:scale-110 transition-transform">desktop_mac</span>
+              <span class="text-xs font-mono bg-primary/10 text-primary px-2.5 py-1 rounded-full border border-primary/20">Universal</span>
+            </div>
+            <div>
+              <div class="font-bold text-white text-base">macOS Installer</div>
+              <div class="text-xs text-text-secondary mt-1">Apple Silicon & Intel (.dmg)</div>
+            </div>
+            <div class="text-xs font-mono text-primary flex items-center gap-1 pt-2">
+              <span>Download v0.1.0</span>
+              <span class="material-symbols-outlined text-sm">download</span>
+            </div>
+          </a>
+
+          <!-- Windows -->
+          <a href="#" onclick="alert('Downloading Keiko-Setup-x64.exe...'); return false;" class="bg-black/40 hover:bg-black/60 p-6 rounded-2xl border border-white/10 hover:border-secondary/50 transition-all text-left space-y-4 group">
+            <div class="flex justify-between items-start">
+              <span class="material-symbols-outlined text-3xl text-secondary group-hover:scale-110 transition-transform">window</span>
+              <span class="text-xs font-mono bg-secondary/10 text-secondary px-2.5 py-1 rounded-full border border-secondary/20">x64 Bit</span>
+            </div>
+            <div>
+              <div class="font-bold text-white text-base">Windows Setup</div>
+              <div class="text-xs text-text-secondary mt-1">Windows 10 / 11 (.exe)</div>
+            </div>
+            <div class="text-xs font-mono text-secondary flex items-center gap-1 pt-2">
+              <span>Download v0.1.0</span>
+              <span class="material-symbols-outlined text-sm">download</span>
+            </div>
+          </a>
+
+          <!-- Linux -->
+          <a href="#" onclick="alert('Downloading Keiko-Linux-x86_64.AppImage...'); return false;" class="bg-black/40 hover:bg-black/60 p-6 rounded-2xl border border-white/10 hover:border-tertiary/50 transition-all text-left space-y-4 group">
+            <div class="flex justify-between items-start">
+              <span class="material-symbols-outlined text-3xl text-tertiary group-hover:scale-110 transition-transform">terminal</span>
+              <span class="text-xs font-mono bg-tertiary/10 text-tertiary px-2.5 py-1 rounded-full border border-tertiary/20">AppImage</span>
+            </div>
+            <div>
+              <div class="font-bold text-white text-base">Linux Package</div>
+              <div class="text-xs text-text-secondary mt-1">Ubuntu / Debian / Fedora (.AppImage)</div>
+            </div>
+            <div class="text-xs font-mono text-tertiary flex items-center gap-1 pt-2">
+              <span>Download v0.1.0</span>
+              <span class="material-symbols-outlined text-sm">download</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 4-Step Setup Guide Card -->
+      <div class="glass-neo-stitch p-8 space-y-6">
+        <h3 class="text-xl font-bold font-display text-white flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">terminal</span>
+          Local Python Server Quickstart
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-black/40 p-5 rounded-xl border border-white/5 space-y-2">
+            <div class="text-xs font-mono text-primary font-bold">STEP 1. Clone Repository</div>
+            <code class="block font-mono text-xs bg-black/60 text-emerald-400 p-2.5 rounded border border-white/5 select-all">
+              git clone https://github.com/keiko-ai/keiko-platform.git
+            </code>
+          </div>
+
+          <div class="bg-black/40 p-5 rounded-xl border border-white/5 space-y-2">
+            <div class="text-xs font-mono text-secondary font-bold">STEP 2. Install Dependencies</div>
+            <code class="block font-mono text-xs bg-black/60 text-emerald-400 p-2.5 rounded border border-white/5 select-all">
+              cd local-app && pip install -r requirements.txt
+            </code>
+          </div>
+
+          <div class="bg-black/40 p-5 rounded-xl border border-white/5 space-y-2">
+            <div class="text-xs font-mono text-tertiary font-bold">STEP 3. Start Local Engine</div>
+            <code class="block font-mono text-xs bg-black/60 text-emerald-400 p-2.5 rounded border border-white/5 select-all">
+              python main.py
+            </code>
+          </div>
+
+          <div class="bg-black/40 p-5 rounded-xl border border-white/5 space-y-2">
+            <div class="text-xs font-mono text-emerald-400 font-bold">STEP 4. Access Dashboard</div>
+            <p class="text-xs text-text-secondary leading-relaxed pt-1">
+              The engine automatically opens <code class="font-mono text-white">http://localhost:8000/static/dashboard.html</code> in your browser.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Standardized Footer -->
+<footer class="border-t border-white/5 bg-[#050506] py-16 px-8 relative z-10 mt-20">
+  <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-5 gap-10 text-sm">
+    <!-- Brand Info -->
+    <div class="md:col-span-2 space-y-4">
+      <div class="text-2xl font-bold font-display tracking-tighter text-white">KEIKO</div>
+      <p class="text-text-secondary text-xs leading-relaxed max-w-sm">
+        Next-generation AI real-time interview analyzer. Multi-sensory biometric & linguistic intelligence running on local edge architecture.
+      </p>
+    </div>
+    <!-- Platform Links -->
+    <div class="space-y-3">
+      <div class="font-mono text-xs font-bold text-primary uppercase tracking-wider">Platform</div>
+      <ul class="space-y-2 text-xs text-text-secondary">
+        <li><a href="about.html" class="hover:text-white transition-colors">About Us</a></li>
+        <li><a href="interview-journey.html" class="hover:text-white transition-colors">Interview Journey</a></li>
+        <li><a href="features.html" class="hover:text-white transition-colors">Features</a></li>
+        <li><a href="architecture.html" class="hover:text-white transition-colors">Architecture</a></li>
+        <li><a href="download.html" class="hover:text-white transition-colors font-semibold text-primary">Download Engine</a></li>
+      </ul>
+    </div>
+    <!-- Intelligence Modules -->
+    <div class="space-y-3">
+      <div class="font-mono text-xs font-bold text-primary uppercase tracking-wider">Modules</div>
+      <ul class="space-y-2 text-xs text-text-secondary">
+        <li><a href="resume-intelligence.html" class="hover:text-white transition-colors">Resume Intelligence</a></li>
+        <li><a href="job-intelligence.html" class="hover:text-white transition-colors">Job Intelligence</a></li>
+        <li><a href="video-intelligence.html" class="hover:text-white transition-colors">Video Intelligence</a></li>
+        <li><a href="audio-intelligence.html" class="hover:text-white transition-colors">Audio Intelligence</a></li>
+        <li><a href="interview-intelligence.html" class="hover:text-white transition-colors">Interview Intelligence</a></li>
+      </ul>
+    </div>
+    <!-- Resources Links -->
+    <div class="space-y-3">
+      <div class="font-mono text-xs font-bold text-primary uppercase tracking-wider">Resources</div>
+      <ul class="space-y-2 text-xs text-text-secondary">
+        <li><a href="documentation.html" class="hover:text-white transition-colors">Documentation</a></li>
+        <li><a href="documentation.html#changelogs" class="hover:text-white transition-colors">Changelog</a></li>
+        <li><a href="documentation.html#faq" class="hover:text-white transition-colors">FAQ</a></li>
+        <li><a href="documentation.html#opensource" class="hover:text-white transition-colors">Open Source</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-[1440px] mx-auto mt-12 pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-text-secondary">
+    <div>&copy; 2026 KEIKO AI Platform. All rights reserved.</div>
+    <div class="flex space-x-6 mt-4 md:mt-0">
+      <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+      <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<!-- JS Health Polling Engine -->
+<script>
+(function() {
+  const HEALTH_URL = 'http://localhost:8000/health';
+  const CHECK_INTERVAL_MS = 4000;
+  const FETCH_TIMEOUT_MS = 2500;
+
+  // DOM Elements
+  const statusBadge = document.getElementById('node-status-badge');
+  const badgeDot = document.getElementById('badge-dot');
+  const badgeText = document.getElementById('badge-text');
+  const onlineCard = document.getElementById('node-online-card');
+  const offlineCard = document.getElementById('node-offline-card');
+  const latencyDisplay = document.getElementById('metric-latency');
+  const versionDisplay = document.getElementById('metric-version');
+
+  async function checkHealth() {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    const startTime = performance.now();
+
+    try {
+      const response = await fetch(HEALTH_URL, {
+        method: 'GET',
+        signal: controller.signal,
+        cache: 'no-store'
+      });
+      clearTimeout(timeoutId);
+
+      if (response.ok) {
+        const data = await response.json();
+        const latency = Math.round(performance.now() - startTime);
+        renderOnlineState(data.version || '0.1.0', latency);
+      } else {
+        renderOfflineState(`HTTP ${response.status}`);
+      }
+    } catch (err) {
+      clearTimeout(timeoutId);
+      renderOfflineState(err.name === 'AbortError' ? 'Timeout' : 'Unreachable');
+    }
+  }
+
+  function renderOnlineState(version, latencyMs) {
+    badgeDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse";
+    badgeText.textContent = `LOCAL NODE ONLINE (Port 8000 Active)`;
+    statusBadge.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-semibold tracking-wider";
+
+    onlineCard.classList.remove('hidden');
+    offlineCard.classList.add('hidden');
+
+    if (latencyDisplay) latencyDisplay.textContent = `${latencyMs} ms`;
+    if (versionDisplay) versionDisplay.textContent = `v${version}`;
+  }
+
+  function renderOfflineState(reason) {
+    badgeDot.className = "w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse";
+    badgeText.textContent = `LOCAL NODE OFFLINE (${reason})`;
+    statusBadge.className = "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 font-mono text-xs font-semibold tracking-wider";
+
+    onlineCard.classList.add('hidden');
+    offlineCard.classList.remove('hidden');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    checkHealth();
+    setInterval(checkHealth, CHECK_INTERVAL_MS);
+  });
+})();
+</script>
+
+</body>
+</html>

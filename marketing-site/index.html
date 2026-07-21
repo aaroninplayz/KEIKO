@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>KEIKO | Interview Intelligence System</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="js/particles-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "background": "#050506",
+              "bg-card": "#0c0c0e",
+              "primary": "#d2bbff",
+              "secondary": "#adc6ff",
+              "tertiary": "#71f8e4",
+              "text-primary": "#F4F4F5",
+              "text-secondary": "#9E9E9F",
+              "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #14B8A6 100%)"
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+              "mono": ["IBM Plex Mono", "monospace"]
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+        body {
+            background-color: #050506;
+            color: #F4F4F5;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-panel {
+            background: rgba(12, 12, 14, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .glass-neo-panel {
+            background: rgba(12, 12, 14, 0.45);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                inset 1px 1px 2px rgba(255, 255, 255, 0.12),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.8),
+                0 15px 35px rgba(0, 0, 0, 0.6);
+            border-radius: 32px;
+        }
+        .gradient-text {
+            background-image: linear-gradient(135deg, #d2bbff 0%, #adc6ff 50%, #71f8e4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        .radial-blur {
+            filter: blur(140px);
+        }
+        .grid-bg {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+        }
+        /* Slow drawing SVG paths */
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+        .branch-path {
+            stroke-dasharray: 8;
+            animation: draw 20s linear infinite;
+        }
+    </style>
+</head>
+<body class="font-body text-sm overflow-x-hidden selection:bg-primary/20 grid-bg">
+
+<!-- Fixed Fullscreen Particle Canvas Behind Everything -->
+<canvas id="fixed-particle-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 bg-black"></canvas>
+
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#050506]/50 backdrop-blur-lg border-b border-white/5 h-20">
+  <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+    <a href="index.html" class="text-2xl font-bold tracking-tighter hover:opacity-90 transition-opacity" style="font-family:'Space Grotesk',sans-serif">KEIKO</a>
+    <div class="hidden md:flex items-center space-x-8">
+      <a id="nav-about" class="text-sm text-gray-400 hover:text-white transition-colors" href="about.html">About</a>
+      <a id="nav-journey" class="text-sm text-gray-400 hover:text-white transition-colors" href="interview-journey.html">Journey</a>
+      <a id="nav-features" class="text-sm text-gray-400 hover:text-white transition-colors" href="features.html">Features</a>
+      <a id="nav-architecture" class="text-sm text-gray-400 hover:text-white transition-colors" href="architecture.html">Architecture</a>
+      <a id="nav-download" class="text-sm text-gray-400 hover:text-white transition-colors" href="download.html">Download</a>
+    </div>
+    <a class="bg-[#7c3aed] text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:scale-105 hover:opacity-90 active:scale-95" href="download.html">Experience KEIKO</a>
+  </div>
+</nav>
+
+<!-- Hero Section (Full Viewport Centered Text, Pitch Black background canvas) -->
+<section id="hero-section" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden z-10">
+    <div class="max-w-4xl space-y-8 select-none">
+        <!-- Wordmark -->
+        <div class="text-[10px] font-mono tracking-[0.4em] text-primary uppercase font-bold text-glow mb-6">KEIKO SYSTEM</div>
+        
+        <!-- Primary Headline -->
+        <h1 id="hero-headline" class="font-display text-4xl md:text-7xl font-bold leading-[1.05] tracking-tight text-white mb-6">
+            Every interview reveals<br/><span class="gradient-text italic">more than just words.</span>
+        </h1>
+        
+        <!-- Supporting Copy -->
+        <p class="text-text-secondary text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light mb-10">
+            KEIKO is a multi-agent interview intelligence platform that understands not only what candidates say, but how they think, communicate, adapt, and improve throughout an interview.
+        </p>
+
+        <!-- Primary CTA -->
+        <div>
+            <a class="px-10 py-4.5 rounded-full font-bold text-white bg-accent-gradient hover:scale-103 active:scale-97 transition-all shadow-xl shadow-violet-500/10 inline-block" href="download.html">
+                Experience KEIKO
+            </a>
+        </div>
+    </div>
+
+    <!-- Muted Scroll indicator -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-20">
+        <span class="font-mono text-[9px] uppercase tracking-widest">Scroll</span>
+        <span class="material-symbols-outlined text-sm">expand_more</span>
+    </div>
+</section>
+
+<!-- Section 1 — The Core Boundary -->
+<section id="core-boundary-section" class="py-32 px-8 max-w-5xl mx-auto relative z-10">
+    <div class="glass-neo-panel p-8 md:p-16">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+            <!-- Narrative content -->
+            <div class="md:col-span-7 space-y-6">
+                <span class="font-mono text-xs text-primary uppercase tracking-widest font-bold">The Core Boundary</span>
+                <h2 class="font-display text-3xl md:text-4xl font-bold text-white leading-tight">
+                    Traditional interviews observe answers.<br/>
+                    <span class="gradient-text italic">KEIKO observes understanding.</span>
+                </h2>
+                <p class="text-text-secondary leading-relaxed font-light text-xs md:text-sm">
+                    Standard technical screens evaluate simple memorized facts and syntax. But true engineering competency requires managing concurrent threads of knowledge simultaneously: technical depth, structural communication, composed posture alignment, gaze focus, and vocal speed ratios. 
+                </p>
+                <p class="text-text-secondary leading-relaxed font-light text-xs md:text-sm">
+                    Evaluating all of these channels simultaneously is outside human cognitive bounds. KEIKO combines multiple specialized AI intelligence systems to evaluate every important dimension consistently.
+                </p>
+            </div>
+
+            <!-- Telemetry feeds card on the right-hand side -->
+            <div class="md:col-span-5 relative">
+                <div class="glass-neo-panel p-6 space-y-5 border-white/5 relative z-10 bg-[#0c0c0e]/60 backdrop-blur-xl">
+                    <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                        <span class="font-mono text-[9px] uppercase tracking-widest text-primary font-bold">Telemetry feeds</span>
+                        <span class="flex h-2 w-2 relative">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+                        </span>
+                    </div>
+                    <div class="space-y-3 font-mono text-[10px]">
+                        <!-- Feed 1 -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-text-secondary">
+                                <span>Technical Depth</span>
+                                <span class="text-white font-semibold">94%</span>
+                            </div>
+                            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-primary via-secondary to-tertiary rounded-full" style="width: 94%;"></div>
+                            </div>
+                        </div>
+                        <!-- Feed 2 -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-text-secondary">
+                                <span>Structure &amp; Logic</span>
+                                <span class="text-white font-semibold">89%</span>
+                            </div>
+                            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-primary via-secondary to-tertiary rounded-full" style="width: 89%;"></div>
+                            </div>
+                        </div>
+                        <!-- Feed 3 -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-text-secondary">
+                                <span>Gaze Stability</span>
+                                <span class="text-white font-semibold">0.85 ratio</span>
+                            </div>
+                            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-primary via-secondary to-tertiary rounded-full" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <!-- Feed 4 -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-text-secondary">
+                                <span>Posture alignment</span>
+                                <span class="text-white font-semibold">24° delta</span>
+                            </div>
+                            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-primary via-secondary to-tertiary rounded-full" style="width: 72%;"></div>
+                            </div>
+                        </div>
+                        <!-- Feed 5 -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-text-secondary">
+                                <span>Vocal hesitation</span>
+                                <span class="text-white font-semibold">1.2 / min</span>
+                            </div>
+                            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-primary via-secondary to-tertiary rounded-full" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 2 — Collaborative Architecture (Sticky scroll zoom & random reveal with center Evaluation integration) -->
+<section class="relative h-[750vh] z-20" id="sticky-scroll-wrapper">
+    <!-- Ambient scroll gradient reflector layer -->
+    <div class="absolute inset-0 transition-opacity duration-300 pointer-events-none" id="ambient-scroll-glow" style="background: radial-gradient(circle, rgba(113, 248, 228, 0) 0%, transparent 60%);"></div>
+
+    <div class="sticky top-0 h-screen w-screen bg-[#050506] flex items-center justify-center overflow-hidden">
+        
+        <!-- Ambient radial glow behind cards -->
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0A0A0B]/80 to-transparent pointer-events-none"></div>
+
+        <!-- SVG overlay for drawing connection lines toward the center -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" id="connections-svg" style="z-index: 5;">
+            <defs>
+                <!-- Unified flowing linear gradient across the layout width -->
+                <linearGradient id="circuit-flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#d2bbff" />
+                    <stop offset="35%" stop-color="#adc6ff" />
+                    <stop offset="50%" stop-color="#b6e3f2" />
+                    <stop offset="65%" stop-color="#8bece0" />
+                    <stop offset="100%" stop-color="#71f8e4" />
+                </linearGradient>
+                <!-- Standard high-end glow filter for circuit-board look -->
+                <filter id="line-glow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="blur" />
+                    <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+            </defs>
+            <!-- Left Side Solid connections (gradient flowing purple to center) -->
+            <path id="left-line-1" stroke="url(#circuit-flow-grad)" stroke-width="3.5" fill="none" filter="url(#line-glow)" />
+            <path id="left-line-2" stroke="url(#circuit-flow-grad)" stroke-width="3.5" fill="none" filter="url(#line-glow)" />
+            <path id="left-line-3" stroke="url(#circuit-flow-grad)" stroke-width="3.5" fill="none" filter="url(#line-glow)" />
+            
+            <!-- Left main trunk (extra thick data bus) -->
+            <path id="left-trunk" stroke="url(#circuit-flow-grad)" stroke-width="7.5" fill="none" filter="url(#line-glow)" stroke-linecap="round" />
+
+            <!-- Right Side Solid connections (gradient flowing teal to center) -->
+            <path id="right-line-1" stroke="url(#circuit-flow-grad)" stroke-width="3.5" fill="none" filter="url(#line-glow)" />
+            <path id="right-line-2" stroke="url(#circuit-flow-grad)" stroke-width="3.5" fill="none" filter="url(#line-glow)" />
+            <path id="right-line-3" stroke="url(#circuit-flow-grad)" stroke-width="3.5" fill="none" filter="url(#line-glow)" />
+            
+            <!-- Right main trunk (extra thick data bus) -->
+            <path id="right-trunk" stroke="url(#circuit-flow-grad)" stroke-width="7.5" fill="none" filter="url(#line-glow)" stroke-linecap="round" />
+        </svg>
+
+        <!-- Sticky Intro Text (Only thing on the screen initially) -->
+        <div id="sticky-intro" class="max-w-2xl text-center px-8 transition-all duration-300 z-10">
+            <span class="font-mono text-xs text-primary uppercase tracking-widest font-bold block mb-2">Collaborative Architecture</span>
+            <h2 class="font-display text-3xl md:text-5xl font-bold text-white leading-tight">One Interview.<br/>Multiple Intelligence Systems.</h2>
+            <p class="text-text-secondary text-sm font-light mt-4 leading-relaxed">
+                KEIKO coordinates specialized, modular AI agents that collaboratively understand candidates.
+            </p>
+        </div>
+
+        <!-- Float modules container -->
+        <div class="absolute inset-0 w-full h-full pointer-events-none" id="sticky-cards-deck">
+            
+            <!-- Card 1 (Top Left) -->
+            <div id="sc-card-1" class="absolute glass-panel p-5 rounded-2xl w-60 text-xs font-light transition-all duration-500 opacity-0 scale-90" style="top: 18%; left: 12%; transform: rotate(-8deg); z-index: 20;">
+                <span class="material-symbols-outlined text-primary text-lg block mb-2">description</span>
+                <h4 class="font-display font-bold text-white text-xs">Resume Intelligence</h4>
+                <p class="text-[10px] text-text-secondary mt-1">Parses unstructured resumes into mapped competency skill vectors.</p>
+            </div>
+
+            <!-- Card 2 (Top Right) -->
+            <div id="sc-card-2" class="absolute glass-panel p-5 rounded-2xl w-60 text-xs font-light transition-all duration-500 opacity-0 scale-90" style="top: 18%; left: 70%; transform: rotate(6deg); z-index: 20;">
+                <span class="material-symbols-outlined text-tertiary text-lg block mb-2">work</span>
+                <h4 class="font-display font-bold text-white text-xs">Job Intelligence</h4>
+                <p class="text-[10px] text-text-secondary mt-1">Decodes role specifications into baseline calibration thresholds.</p>
+            </div>
+
+            <!-- Card 3 (Bottom Left) -->
+            <div id="sc-card-3" class="absolute glass-panel p-5 rounded-2xl w-60 text-xs font-light transition-all duration-500 opacity-0 scale-90" style="top: 72%; left: 12%; transform: rotate(10deg); z-index: 20;">
+                <span class="material-symbols-outlined text-primary text-lg block mb-2">forum</span>
+                <h4 class="font-display font-bold text-white text-xs">Interview Dialogue</h4>
+                <p class="text-[10px] text-text-secondary mt-1">Manages conversation flow, adapting question difficulty trees live.</p>
+            </div>
+
+            <!-- Card 4 (Bottom Right) -->
+            <div id="sc-card-4" class="absolute glass-panel p-5 rounded-2xl w-60 text-xs font-light transition-all duration-500 opacity-0 scale-90" style="top: 72%; left: 70%; transform: rotate(-5deg); z-index: 20;">
+                <span class="material-symbols-outlined text-tertiary text-lg block mb-2">videocam</span>
+                <h4 class="font-display font-bold text-white text-xs">Video Intelligence</h4>
+                <p class="text-[10px] text-text-secondary mt-1">Analyzes face meshes to track gaze focus stability and posture angles.</p>
+            </div>
+
+            <!-- Card 5 (Center Left) -->
+            <div id="sc-card-5" class="absolute glass-panel p-5 rounded-2xl w-60 text-xs font-light transition-all duration-500 opacity-0 scale-90" style="top: 45%; left: 8%; transform: rotate(-12deg); z-index: 20;">
+                <span class="material-symbols-outlined text-primary text-lg block mb-2">mic</span>
+                <h4 class="font-display font-bold text-white text-xs">Audio Intelligence</h4>
+                <p class="text-[10px] text-text-secondary mt-1">Monitors speaking pace words-per-minute curves and vocal filler tags.</p>
+            </div>
+
+            <!-- Card 6 (Center Right) -->
+            <div id="sc-card-6" class="absolute glass-panel p-5 rounded-2xl w-60 text-xs font-light transition-all duration-500 opacity-0 scale-90" style="top: 45%; left: 74%; transform: rotate(11deg); z-index: 20;">
+                <span class="material-symbols-outlined text-tertiary text-lg block mb-2">summarize</span>
+                <h4 class="font-display font-bold text-white text-xs">Report Intelligence</h4>
+                <p class="text-[10px] text-text-secondary mt-1">Compiles coaching feedback summaries listing transcript citations.</p>
+            </div>
+
+            <!-- Card 7 (CENTER Evaluation Framework - Hidden initially, borders fill from left and right) -->
+            <div id="sc-card-center" class="absolute rounded-2xl w-60 text-xs font-light transition-all duration-300 relative overflow-hidden" style="top: 42%; left: 43.5%; z-index: 30; height: 160px; opacity: 0; pointer-events: none; background: transparent; border: none; box-shadow: none;">
+                <!-- Left Border SVG path -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none" id="left-border-svg">
+                    <path id="left-border-path" d="M 0 80 L 0 24 A 24 24 0 0 1 24 0 L 120 0 M 0 80 L 0 136 A 24 24 0 0 0 24 160 L 120 160" fill="none" stroke="url(#circuit-flow-grad)" stroke-width="4.5" stroke-dasharray="400" stroke-dashoffset="400" filter="url(#line-glow)" stroke-linecap="round" />
+                </svg>
+
+                <!-- Right Border SVG path -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none" id="right-border-svg">
+                    <path id="right-border-path" d="M 240 80 L 240 24 A 24 24 0 0 0 216 0 L 120 0 M 240 80 L 240 136 A 24 24 0 0 1 216 160 L 120 160" fill="none" stroke="url(#circuit-flow-grad)" stroke-width="4.5" stroke-dasharray="400" stroke-dashoffset="400" filter="url(#line-glow)" stroke-linecap="round" />
+                </svg>
+                
+                <!-- Inner Content (Same style as outer cards) -->
+                <div class="relative p-5 z-10 opacity-0 transition-opacity duration-500" id="center-card-content">
+                    <span class="material-symbols-outlined text-primary text-lg block mb-2">analytics</span>
+                    <h4 class="font-display font-bold text-white text-xs">Evaluation Framework</h4>
+                    <p class="text-[10px] text-text-secondary mt-1">
+                        Processes sensory feeds and dialogue scores, compiling them into unified candidate analytics.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Section 4 — Why KEIKO Is Different (Storytelling) -->
+<section id="storytelling-section" class="py-32 px-8 max-w-5xl mx-auto relative z-10 font-light">
+    <div class="glass-neo-panel p-10 md:p-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-xs md:text-sm text-text-secondary">
+            <div class="space-y-8">
+                <div class="space-y-2">
+                    <span class="font-mono text-[9px] text-primary uppercase font-bold">Memory &amp; Context</span>
+                    <h4 class="font-display font-bold text-white text-base">We evaluate patterns, not moments.</h4>
+                    <p class="leading-relaxed">
+                        Human interviewers are subject to recency effects, locking onto a single stammer or one highly polished answer. KEIKO monitors the complete timeline of the conversation, analyzing problem-solving patterns that persist across the entire dialogue.
+                    </p>
+                </div>
+
+                <div class="space-y-2">
+                    <span class="font-mono text-[9px] text-primary uppercase font-bold">Cognitive Tracking</span>
+                    <h4 class="font-display font-bold text-white text-base">We observe behavior, not just answers.</h4>
+                    <p class="leading-relaxed">
+                        A correct answer is only one signal. KEIKO analyzes eye contact stability, head tilt angles, posture, and verbal hesitation rates to verify candidates' ease of expression and focus under technical complexity.
+                    </p>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <div class="space-y-2">
+                    <span class="font-mono text-[9px] text-primary uppercase font-bold">Analytical Explanability</span>
+                    <h4 class="font-display font-bold text-white text-base">We produce insights, not opinions.</h4>
+                    <p class="leading-relaxed">
+                        Traditional interview feedbacks end with vague statements like "I liked their vibe." KEIKO outputs clear, explainable insights with direct citations linking back to transcript nodes and telemetry frames.
+                    </p>
+                </div>
+
+                <div class="space-y-2">
+                    <span class="font-mono text-[9px] text-primary uppercase font-bold">Confidentiality</span>
+                    <h4 class="font-display font-bold text-white text-base">Designed for growth, not evaluation.</h4>
+                    <p class="leading-relaxed">
+                        We believe candidate preparation shouldn't feel like a corporate screen. KEIKO offers offline local model execution (Ollama integration) so you can practice completely privately.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 5 — Architecture Preview -->
+<section id="structural-blueprint-section" class="py-32 px-8 max-w-5xl mx-auto text-center relative z-10">
+    <div class="glass-neo-panel p-10 md:p-16">
+        <span class="font-mono text-xs text-tertiary uppercase tracking-widest font-bold">Structural Blueprint</span>
+        <h2 class="font-display text-3xl font-bold text-white mt-2 mb-6">Built on Collaborative Intelligence</h2>
+        <p class="text-text-secondary text-sm font-light max-w-xl mx-auto mb-16">
+            KEIKO partitions tasks into distinct layers, allowing modular scaling without altering candidate data flows.
+        </p>
+
+        <!-- Abstract architecture diagram layout -->
+        <div class="max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-5 gap-4 items-center justify-center mb-16 text-[10px] font-mono text-gray-500">
+            <div class="bg-white/5 border border-white/5 p-4 rounded-xl">
+                <strong class="text-white block mb-0.5">Input Layer</strong>
+                <span>Resume / JD Ingestion</span>
+            </div>
+            <div class="text-primary text-base font-bold">➔</div>
+            <div class="bg-white/5 border border-white/5 p-4 rounded-xl">
+                <strong class="text-white block mb-0.5">Intelligence Layer</strong>
+                <span>Sensory Telemetry</span>
+            </div>
+            <div class="text-primary text-base font-bold">➔</div>
+            <div class="bg-white/5 border border-white/5 p-4 rounded-xl font-bold text-primary">
+                <strong class="text-primary block mb-0.5">Evaluation Layer</strong>
+                <span>Competency Models</span>
+            </div>
+        </div>
+
+        <div>
+            <a class="px-8 py-3 rounded-full border border-primary text-primary font-bold hover:bg-primary hover:text-on-primary transition-all text-xs" href="architecture.html">
+                Explore Full Architecture
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Section 9 — Final CTA -->
+<section id="final-cta-section" class="py-36 px-8 max-w-4xl mx-auto text-center relative z-10">
+    <div class="glass-neo-panel p-12 md:p-16 border-cyan-500/10 shadow-lg shadow-cyan-500/5 relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-cyan-500/30 to-transparent"></div>
+        <div class="max-w-2xl mx-auto space-y-8 relative z-10">
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-white leading-tight">
+                Ready to experience<br/>interview intelligence?
+            </h2>
+            <p class="text-text-secondary text-sm md:text-base font-light">
+                Understand more than answers.
+            </p>
+            <div class="pt-6">
+                <a class="px-12 py-5 rounded-full font-bold text-white bg-accent-gradient hover:scale-103 active:scale-97 transition-all shadow-xl shadow-violet-500/20 inline-block text-sm" href="download.html">
+                    Experience KEIKO
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-[#050506] border-t border-white/5 w-full py-16 relative z-10">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-8 max-w-[1440px] mx-auto">
+    <div class="lg:col-span-1 space-y-4">
+      <div class="text-3xl text-white font-bold tracking-tighter" style="font-family:'Space Grotesk',sans-serif">KEIKO</div>
+      <p class="text-xs text-gray-500 leading-relaxed max-w-xs">
+          KEIKO — Knowledge-Guided Evaluation for Insights into Kinetics and Optimization in Interviews.
+      </p>
+      <p class="text-xs text-gray-600">&copy; 2026 KEIKO Intelligence. All rights reserved.</p>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold font-mono">Platform</h5>
+      <ul class="space-y-4 text-xs text-gray-500">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="about.html">About Us</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="interview-journey.html">Interview Journey</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="features.html">Features</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="architecture.html">Architecture</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="download.html">Experience KEIKO</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold font-mono">Resources</h5>
+      <ul class="space-y-4 text-xs text-gray-500">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">Documentation</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#opensource">Open Source</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Roadmap</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Changelog</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold font-mono">Legal</h5>
+      <ul class="space-y-4 text-xs text-gray-500">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Privacy Policy</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Terms of Service</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Contact Research</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- Interactive Physics Particles (WebGL/2D Custom 3D Wireframe Shape-shifting Engine) -->
+<script>
+(function() {
+    const canvas = document.getElementById('fixed-particle-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    });
+
+    // Global state
+    window.particleSystemState = {
+        theme: 'default', // 'default', 'black', 'blood-ocean', 'heatmap'
+        shapeLayout: 'hero' // 'hero', 'core-boundary', 'other'
+    };
+
+    // Load custom configurations or default to standard fallback values
+    const cfg = window.PARTICLE_CONFIG || {
+        maxParticles: 600,
+        particleRadius: 1.8,
+        particleColor: 'rgba(210, 187, 255, 0.55)',
+        connectionColor: 'rgba(210, 187, 255, 0.15)',
+        connectionMaxDistance: 85,
+        connectionMaxCount: 2,
+        mouseRepelDistance: 130,
+        mouseRepelForce: 2.5,
+        wanderDuration: 450,
+        transitionDuration: 120,
+        shapeDuration: 420,
+        shapeList: ['sphere', 'cube', 'torus', 'tesseract', 'mobius', 'helix', 'infinity'],
+        shapes: {
+            sphere: { R: 165 },
+            cube: { halfSize: 110 },
+            torus: { R_torus: 150, r_tube: 35 },
+            tesseract: { scale: 170 },
+            mobius: { scale: 130, tube: 50 },
+            helix: { R: 80, length: 220 },
+            infinity: { scale: 160 }
+        }
+    };
+
+    const particles = [];
+    const maxParticles = cfg.maxParticles;
+
+    let mouse = { x: -1000, y: -1000 };
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+
+    window.addEventListener('mouseleave', () => {
+        mouse.x = -1000;
+        mouse.y = -1000;
+    });
+
+    // Yaw/Pitch rotation coordinates
+    let angleX = 0;
+    let angleY = 0;
+
+    // State machine properties
+    let state = 'wandering'; 
+    let stateTimer = 0;
+    
+    let transitionDuration = cfg.transitionDuration;
+    let wanderDuration = cfg.wanderDuration;     
+    let shapeDuration = cfg.shapeDuration;
+    
+    // Choose 2 random shapes to appear simultaneously
+    let shapeType1 = 'sphere';
+    let shapeType2 = 'cube';
+    
+    // Centers of the 2 simultaneous shapes (randomly chosen in viewport)
+    let shapeCenter1 = { x: width * 0.2, y: height * 0.5 };
+    let shapeCenter2 = { x: width * 0.8, y: height * 0.5 };
+
+    const shapeList = cfg.shapeList;
+
+    // Targets for shape positions
+    let targetCenter1 = { x: width * 0.2, y: height * 0.5 };
+    let targetCenter2 = { x: width * 0.8, y: height * 0.5 };
+    let targetScale1 = 1.0;
+    let targetScale2 = 1.0;
+
+    // Scroll progress caching
+    let currentScrollProgress = 0;
+
+    // Smooth color states - color1 (purple base) and color2 (teal base) to represent signature gradient
+    let currentPColor1 = { r: 210, g: 187, b: 255 };
+    let currentPColor2 = { r: 113, g: 248, b: 228 };
+    let currentConnectionColor = { r: 173, g: 198, b: 255 };
+    let currentOpacity = 0.55;
+    let currentCLineOpacity = 0.15;
+    let currentRepelForce = cfg.mouseRepelForce;
+    let currentWanderSpeed = 1.8;
+
+    class Particle {
+        constructor(index) {
+            this.index = index;
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            
+            this.vx = (Math.random() - 0.5) * 1.8;
+            this.vy = (Math.random() - 0.5) * 1.8;
+
+            this.x3d = 0;
+            this.y3d = 0;
+            this.z3d = 0;
+
+            this.currentX = this.x;
+            this.currentY = this.y;
+
+            // Uniform factor for color skewing calculations
+            this.rawFactor = Math.random();
+
+            // Assign shape statically to create a mixed superposition constellation of shapes
+            const localShapes = ['sphere', 'torus', 'helix', 'cube'];
+            this.assignedShape = localShapes[this.index % localShapes.length];
+
+            // Recruited states (initially ambient wandering)
+            this.isAmbient = true;
+
+            // Organic noise jitter so shapes look fuzzy ("not fully there")
+            this.noiseX = (Math.random() - 0.5) * 22;
+            this.noiseY = (Math.random() - 0.5) * 22;
+            this.noiseZ = (Math.random() - 0.5) * 22;
+        }
+
+        calculateShapeCoordinates(shape, N_partition, localIdx) {
+            switch(shape) {
+                case 'sphere': {
+                    const theta = Math.acos(1 - 2 * (localIdx + 0.5) / N_partition);
+                    const phi = Math.sqrt(N_partition * Math.PI) * theta;
+                    const R = cfg.shapes.sphere.R;
+                    this.x3d = R * Math.sin(theta) * Math.cos(phi) + this.noiseX;
+                    this.y3d = R * Math.sin(theta) * Math.sin(phi) + this.noiseY;
+                    this.z3d = R * Math.cos(theta) + this.noiseZ;
+                    break;
+                }
+                case 'cube': {
+                    const edge = localIdx % 12;
+                    // Distribute uniformly along the 12 edges to prevent clumping
+                    const t = (((localIdx / 12) | 0) / Math.max(1, N_partition / 12)) * 2 - 1; // range -1 to 1
+                    const halfSize = cfg.shapes.cube.halfSize;
+                    switch(edge) {
+                        // Top face edges
+                        case 0: this.x3d = t * halfSize; this.y3d = -halfSize; this.z3d = -halfSize; break;
+                        case 1: this.x3d = halfSize; this.y3d = t * halfSize; this.z3d = -halfSize; break;
+                        case 2: this.x3d = t * halfSize; this.y3d = halfSize; this.z3d = -halfSize; break;
+                        case 3: this.x3d = -halfSize; this.y3d = t * halfSize; this.z3d = -halfSize; break;
+                        // Bottom face edges
+                        case 4: this.x3d = t * halfSize; this.y3d = -halfSize; this.z3d = halfSize; break;
+                        case 5: this.x3d = halfSize; this.y3d = t * halfSize; this.z3d = fillProgress = halfSize; this.z3d = halfSize; break;
+                        case 6: this.x3d = t * halfSize; this.y3d = halfSize; this.z3d = halfSize; break;
+                        case 7: this.x3d = -halfSize; this.y3d = t * halfSize; this.z3d = halfSize; break;
+                        // Vertical connecting edges
+                        case 8: this.x3d = -halfSize; this.y3d = -halfSize; this.z3d = t * halfSize; break;
+                        case 9: this.x3d = halfSize; this.y3d = -halfSize; this.z3d = t * halfSize; break;
+                        case 10: this.x3d = halfSize; this.y3d = halfSize; this.z3d = t * halfSize; break;
+                        case 11: this.x3d = -halfSize; this.y3d = halfSize; this.z3d = t * halfSize; break;
+                    }
+                    this.x3d += this.noiseX;
+                    this.y3d += this.noiseY;
+                    this.z3d += this.noiseZ;
+                    break;
+                }
+                case 'torus': {
+                    const R_torus = cfg.shapes.torus.R_torus;
+                    const r_tube = cfg.shapes.torus.r_tube;
+                    const rings = Math.floor(Math.sqrt(N_partition));
+                    const u = (localIdx % rings / rings) * Math.PI * 2;
+                    const v = (Math.floor(localIdx / rings) / (N_partition / rings)) * Math.PI * 2;
+                    this.x3d = (R_torus + r_tube * Math.cos(v)) * Math.cos(u) + this.noiseX;
+                    this.y3d = (R_torus + r_tube * Math.cos(v)) * Math.sin(u) + this.noiseY;
+                    this.z3d = r_tube * Math.sin(v) + this.noiseZ;
+                    break;
+                }
+                case 'tesseract': {
+                    const corner = localIdx % 16;
+                    const x4 = (corner & 1 ? 1 : -1);
+                    const y4 = (corner & 2 ? 1 : -1);
+                    const z4 = (corner & 4 ? 1 : -1);
+                    const w4 = (corner & 8 ? 1 : -1);
+                    const cX = Math.cos(angleX), sX = Math.sin(angleX);
+                    const cY = Math.cos(angleY), sY = Math.sin(angleY);
+                    const xRot = x4 * cY - w4 * sY;
+                    const wRot = x4 * sY + w4 * cY;
+                    const yRot = y4 * cX - wRot * sX;
+                    const wRot2 = y4 * sX + wRot * cX;
+                    const factor = cfg.shapes.tesseract.scale / (2.0 + wRot2);
+                    this.x3d = xRot * factor + this.noiseX;
+                    this.y3d = yRot * factor + this.noiseY;
+                    this.z3d = z4 * factor * 0.7 + this.noiseZ;
+                    break;
+                }
+                case 'mobius': {
+                    const u = (localIdx / N_partition) * Math.PI * 2;
+                    const v = ((localIdx % 12) / 12 - 0.5) * cfg.shapes.mobius.tube; 
+                    const scale = cfg.shapes.mobius.scale;
+                    this.x3d = (scale + v * Math.cos(u / 2)) * Math.cos(u) + this.noiseX;
+                    this.y3d = (scale + v * Math.cos(u / 2)) * Math.sin(u) + this.noiseY;
+                    this.z3d = v * Math.sin(u / 2) + this.noiseZ;
+                    break;
+                }
+                case 'helix': {
+                    const t = (localIdx / N_partition) * Math.PI * 8; 
+                    const side = (localIdx % 2 === 0) ? 1 : -1;
+                    const R_helix = cfg.shapes.helix.R;
+                    const len = cfg.shapes.helix.length;
+                    this.x3d = R_helix * Math.cos(t) * side + this.noiseX;
+                    this.y3d = R_helix * Math.sin(t) * side + this.noiseY;
+                    this.z3d = (localIdx / N_partition - 0.5) * len + this.noiseZ;
+                    break;
+                }
+                case 'infinity': {
+                    const theta = (localIdx / N_partition) * Math.PI * 2;
+                    const cosT = Math.cos(theta);
+                    const sinT = Math.sin(theta);
+                    const denom = 1 + sinT * sinT;
+                    const scale_inf = cfg.shapes.infinity.scale;
+                    this.x3d = scale_inf * cosT / denom + this.noiseX;
+                    this.y3d = scale_inf * cosT * sinT / denom + this.noiseY;
+                    this.z3d = 18 * sinT + this.noiseZ;
+                    break;
+                }
+                default: {
+                    const theta = Math.acos(1 - 2 * (localIdx + 0.5) / N_partition);
+                    const phi = Math.sqrt(N_partition * Math.PI) * theta;
+                    const R = 100;
+                    this.x3d = R * Math.sin(theta) * Math.cos(phi) + this.noiseX;
+                    this.y3d = R * Math.sin(theta) * Math.sin(phi) + this.noiseY;
+                    this.z3d = R * Math.cos(theta) + this.noiseZ;
+                    break;
+                }
+            }
+        }
+
+        update() {
+            // Ambient dust particles (further away) and wandering state particles float freely
+            if (state === 'wandering' || this.isAmbient) {
+                const dx = this.x - mouse.x;
+                const dy = this.y - mouse.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                
+                if (dist < cfg.mouseRepelDistance) {
+                    const force = (cfg.mouseRepelDistance - dist) / cfg.mouseRepelDistance;
+                    const repelAngle = Math.atan2(dy, dx);
+                    this.vx += Math.cos(repelAngle) * force * currentRepelForce;
+                    this.vy += Math.sin(repelAngle) * force * currentRepelForce;
+                }
+
+                // Shape vicinity clearing force: repels ambient wandering particles away from active shape centers
+                if (this.isAmbient && (state === 'shape' || state === 'transitionToShape')) {
+                    const clearRadius = 260;
+                    const centers = [];
+                    centers.push(shapeCenter1);
+                    if (window.particleSystemState.shapeLayout !== 'core-boundary') {
+                        centers.push(shapeCenter2);
+                    }
+                    
+                    centers.forEach(center => {
+                        const cx = this.x - center.x;
+                        const cy = this.y - center.y;
+                        const cDist = Math.sqrt(cx * cx + cy * cy);
+                        if (cDist < clearRadius) {
+                            const force = (clearRadius - cDist) / clearRadius * 6.0;
+                            const angle = Math.atan2(cy, cx);
+                            this.vx += Math.cos(angle) * force;
+                            this.vy += Math.sin(angle) * force;
+                        }
+                    });
+                }
+
+                this.vx *= 0.92;
+                this.vy *= 0.92;
+
+                this.vx += (Math.random() - 0.5) * currentWanderSpeed * 0.15;
+                this.vy += (Math.random() - 0.5) * currentWanderSpeed * 0.15;
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                this.currentX = this.x;
+                this.currentY = this.y;
+            } 
+            else {
+                // Recruited particles: forms shape in superposition
+                let shapeCenter, N_partition, localIdx, targetScale;
+                const layout = window.particleSystemState.shapeLayout;
+                
+                if (layout === 'core-boundary') {
+                    shapeCenter = shapeCenter1;
+                    N_partition = maxParticles;
+                    localIdx = this.index;
+                    targetScale = targetScale1;
+                } else {
+                    if (this.index < maxParticles / 2) {
+                        shapeCenter = shapeCenter1;
+                        N_partition = maxParticles / 2;
+                        localIdx = this.index;
+                        targetScale = targetScale1;
+                    } else {
+                        shapeCenter = shapeCenter2;
+                        N_partition = maxParticles / 2;
+                        localIdx = this.index - (maxParticles / 2);
+                        targetScale = targetScale2;
+                    }
+                }
+
+                // Superposition mapping
+                this.calculateShapeCoordinates(this.assignedShape, N_partition, localIdx);
+                
+                // Scale shape dynamically
+                this.x3d *= targetScale;
+                this.y3d *= targetScale;
+                this.z3d *= targetScale;
+
+                let xRot = this.x3d * Math.cos(angleY) - this.z3d * Math.sin(angleY);
+                let zRot = this.x3d * Math.sin(angleY) + this.z3d * Math.cos(angleY);
+                let yRot = this.y3d * Math.cos(angleX) - zRot * Math.sin(angleX);
+                zRot = this.y3d * Math.sin(angleX) + zRot * Math.cos(angleX);
+                const fov = 350;
+                const scale = fov / (fov + zRot);
+
+                const targetX = shapeCenter.x + xRot * scale;
+                const targetY = shapeCenter.y + yRot * scale;
+
+                const springStrength = 0.08;
+                
+                if (state === 'transitionToShape') {
+                    const t = Math.max(0, Math.min(1, stateTimer / transitionDuration));
+                    const easedT = t * t * (3 - 2 * t);
+                    
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    const blendedTargetX = this.x * (1 - easedT) + targetX * easedT;
+                    const blendedTargetY = this.y * (1 - easedT) + targetY * easedT;
+
+                    this.vx += (blendedTargetX - this.currentX) * springStrength;
+                    this.vy += (blendedTargetY - this.currentY) * springStrength;
+                } 
+                else if (state === 'shape') {
+                    this.vx += (targetX - this.currentX) * springStrength;
+                    this.vy += (targetY - this.currentY) * springStrength;
+                } 
+                else if (state === 'transitionToWandering') {
+                    const t = Math.max(0, Math.min(1, stateTimer / transitionDuration));
+                    const easedT = t * t * (3 - 2 * t);
+                    
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    const blendedTargetX = targetX * (1 - easedT) + this.x * easedT;
+                    const blendedTargetY = targetY * (1 - easedT) + this.y * easedT;
+
+                    this.vx += (blendedTargetX - this.currentX) * springStrength;
+                    this.vy += (blendedTargetY - this.currentY) * springStrength;
+                }
+
+                this.vx *= 0.92;
+                this.vy *= 0.92;
+
+                this.currentX += this.vx;
+                this.currentY += this.vy;
+
+                this.x = this.currentX;
+                this.y = this.currentY;
+            }
+        }
+
+        draw() {
+            ctx.beginPath();
+            const posX = (state === 'wandering' || this.isAmbient) ? this.x : this.currentX;
+            const posY = (state === 'wandering' || this.isAmbient) ? this.y : this.currentY;
+
+            ctx.arc(posX, posY, cfg.particleRadius, 0, Math.PI * 2);
+            
+            // Dynamic color dominance ratio shifting mathematically:
+            // At top (currentScrollProgress = 0): skewed heavily purple (factor near 0)
+            // At bottom (currentScrollProgress = 1): skewed heavily blue/cyan (factor near 1)
+            const u = this.rawFactor;
+            const u_purple = Math.pow(u, 2.5);
+            const u_blue = 1 - Math.pow(1 - u, 2.5);
+            const factor = u_purple * (1 - currentScrollProgress) + u_blue * currentScrollProgress;
+            
+            // Blending colors
+            const r = Math.round(currentPColor1.r + (currentPColor2.r - currentPColor1.r) * factor);
+            const g = Math.round(currentPColor1.g + (currentPColor2.g - currentPColor1.g) * factor);
+            const b = Math.round(currentPColor1.b + (currentPColor2.b - currentPColor1.b) * factor);
+            
+            ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${currentOpacity})`;
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < maxParticles; i++) {
+        particles.push(new Particle(i));
+    }
+
+    function getScrollProgress() {
+        const scrollY = window.scrollY;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        return maxScroll > 0 ? scrollY / maxScroll : 0;
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        angleX += 0.004;
+        angleY += 0.006;
+
+        // Caching scroll progress once per frame (performance optimization)
+        currentScrollProgress = getScrollProgress();
+
+        // State Machine timer ticks
+        stateTimer++;
+        if (state === 'wandering' && stateTimer > wanderDuration) {
+            state = 'transitionToShape';
+            stateTimer = 0;
+            
+            // Choose 2 random shapes to appear simultaneously
+            shapeType1 = shapeList[Math.floor(Math.random() * shapeList.length)];
+            shapeType2 = shapeList[Math.floor(Math.random() * shapeList.length)];
+        } 
+        else if (state === 'transitionToShape' && stateTimer > transitionDuration) {
+            state = 'shape';
+            stateTimer = 0;
+        } 
+        else if (state === 'shape' && stateTimer > shapeDuration) {
+            state = 'transitionToWandering';
+            stateTimer = 0;
+        } 
+        else if (state === 'transitionToWandering' && stateTimer > transitionDuration) {
+            state = 'wandering';
+            stateTimer = 0;
+            particles.forEach(p => {
+                p.x = p.currentX;
+                p.y = p.currentY;
+            });
+        }
+
+        // Shape Center layout positions update targets
+        const layout = window.particleSystemState.shapeLayout;
+        if (layout === 'hero') {
+            targetCenter1 = { x: width * 0.2, y: height * 0.4 };
+            targetCenter2 = { x: width * 0.8, y: height * 0.4 };
+            targetScale1 = 1.0;
+            targetScale2 = 1.0;
+        } else if (layout === 'core-boundary') {
+            targetCenter1 = { x: width * 0.75, y: height * 0.5 };
+            targetCenter2 = { x: -2000, y: -2000 };
+            targetScale1 = 1.6; 
+            targetScale2 = 0.1;
+        } else {
+            // 'other'
+            targetCenter1 = { x: width * 0.25, y: height * 0.6 };
+            targetCenter2 = { x: width * 0.75, y: height * 0.4 };
+            targetScale1 = 1.1;
+            targetScale2 = 1.1;
+        }
+
+        // Interpolate shape centers
+        shapeCenter1.x += (targetCenter1.x - shapeCenter1.x) * 0.05;
+        shapeCenter1.y += (targetCenter1.y - shapeCenter1.y) * 0.05;
+        shapeCenter2.x += (targetCenter2.x - shapeCenter2.x) * 0.05;
+        shapeCenter2.y += (targetCenter2.y - shapeCenter2.y) * 0.05;
+
+        // Proximity-based dynamic particle recruitment (consumed close to shapes, others remain back)
+        if (state === 'transitionToShape' && stateTimer === 1) {
+            particles.forEach(p => {
+                let center;
+                if (layout === 'core-boundary') {
+                    center = shapeCenter1;
+                } else {
+                    center = (p.index < maxParticles / 2) ? shapeCenter1 : shapeCenter2;
+                }
+                const dx = p.x - center.x;
+                const dy = p.y - center.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                // Consumed if close to shape center; otherwise let it remain back as ambient dust!
+                if (dist < width * 0.38) {
+                    p.isAmbient = false;
+                } else {
+                    p.isAmbient = true;
+                }
+            });
+        }
+        if (state === 'transitionToWandering' && stateTimer === 1) {
+            particles.forEach(p => {
+                p.isAmbient = true;
+            });
+        }
+
+        // Dynamic continuous scroll-to-color mapping: keeps purple/teal and turns to ice cyan/blue at the end
+        let targetPColor1 = { r: 210, g: 187, b: 255 }; // Purple
+        let targetPColor2 = { r: 113, g: 248, b: 228 }; // Teal
+        let targetCColor = { r: 173, g: 198, b: 255 }; // Connection base
+        let targetOpacity = 0.55;
+        let targetCLineOpacity = 0.15;
+        let targetWanderSpeed = 1.8;
+        let targetRepelForce = cfg.mouseRepelForce;
+
+        if (currentScrollProgress <= 0.85) {
+            // Keep default signature colors all the way down
+            targetPColor1 = { r: 210, g: 187, b: 255 };
+            targetPColor2 = { r: 113, g: 248, b: 228 };
+            targetCColor = { r: 173, g: 198, b: 255 };
+            targetOpacity = 0.55;
+            targetCLineOpacity = 0.15;
+            targetWanderSpeed = 1.8;
+            targetRepelForce = cfg.mouseRepelForce;
+        } 
+        else {
+            // Transition smoothly to ice cyan/blue at the Final CTA!
+            const t = (currentScrollProgress - 0.85) / 0.15;
+            
+            targetPColor1.r = 210 + (142 - 210) * t;
+            targetPColor1.g = 187 + (232 - 187) * t;
+            targetPColor1.b = 255 + (248 - 255) * t;
+
+            targetPColor2.r = 113 + (192 - 113) * t;
+            targetPColor2.g = 248 + (240 - 248) * t;
+            targetPColor2.b = 228 + (255 - 228) * t;
+
+            targetCColor.r = 173 + (214 - 173) * t;
+            targetCColor.g = 198 + (245 - 198) * t;
+            targetCColor.b = 255 + (255 - 255) * t;
+
+            targetOpacity = 0.55 + (0.7 - 0.55) * t;
+            targetCLineOpacity = 0.15 + (0.28 - 0.15) * t;
+            targetWanderSpeed = 1.8 + (2.2 - 1.8) * t; 
+            targetRepelForce = cfg.mouseRepelForce + (cfg.mouseRepelForce * 0.5) * t;
+        }
+
+        // Smoothly interpolate RGB values
+        currentPColor1.r += (targetPColor1.r - currentPColor1.r) * 0.05;
+        currentPColor1.g += (targetPColor1.g - currentPColor1.g) * 0.05;
+        currentPColor1.b += (targetPColor1.b - currentPColor1.b) * 0.05;
+
+        currentPColor2.r += (targetPColor2.r - currentPColor2.r) * 0.05;
+        currentPColor2.g += (targetPColor2.g - currentPColor2.g) * 0.05;
+        currentPColor2.b += (targetPColor2.b - currentPColor2.b) * 0.05;
+
+        currentConnectionColor.r += (targetCColor.r - currentConnectionColor.r) * 0.05;
+        currentConnectionColor.g += (targetCColor.g - currentConnectionColor.g) * 0.05;
+        currentConnectionColor.b += (targetCColor.b - currentConnectionColor.b) * 0.05;
+        
+        currentOpacity += (targetOpacity - currentOpacity) * 0.05;
+        currentCLineOpacity += (targetCLineOpacity - currentCLineOpacity) * 0.05;
+        currentRepelForce += (targetRepelForce - currentRepelForce) * 0.05;
+        currentWanderSpeed += (targetWanderSpeed - currentWanderSpeed) * 0.05;
+
+        // Draw wireframe connections (Always show connections in shape states)
+        const inShape = (state === 'shape' || state === 'transitionToShape');
+
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.update();
+            p.draw();
+
+            if (inShape && !p.isAmbient) {
+                // Connect within local partition range to form separate wireframe grids
+                const partitionStart = (layout === 'core-boundary') ? 0 : ((i < maxParticles / 2) ? 0 : (maxParticles / 2));
+                const partitionEnd = (layout === 'core-boundary') ? maxParticles : ((i < maxParticles / 2) ? (maxParticles / 2) : maxParticles);
+                
+                const startIdx = Math.max(partitionStart, i - 12);
+                const endIdx = Math.min(partitionEnd, i + 12);
+                
+                let connectionsCount = 0;
+                for (let j = startIdx; j < endIdx; j++) {
+                    if (j === i) continue;
+                    if (connectionsCount >= cfg.connectionMaxCount) break;
+                    
+                    const p2 = particles[j];
+                    if (p2.isAmbient) continue;
+
+                    const dx = p.currentX - p2.currentX;
+                    const dy = p.currentY - p2.currentY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < cfg.connectionMaxDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.currentX, p.currentY);
+                        ctx.lineTo(p2.currentX, p2.currentY);
+                        ctx.strokeStyle = `rgba(${Math.round(currentConnectionColor.r)}, ${Math.round(currentConnectionColor.g)}, ${Math.round(currentConnectionColor.b)}, ${currentCLineOpacity * (1 - dist / cfg.connectionMaxDistance)})`;
+                        ctx.stroke();
+                        connectionsCount++;
+                    }
+                }
+            } else {
+                // Wandering state: standard sparse distance links
+                for (let j = i + 1; j < Math.min(particles.length, i + 20); j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 60) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(${Math.round(currentConnectionColor.r)}, ${Math.round(currentConnectionColor.g)}, ${Math.round(currentConnectionColor.b)}, ${currentCLineOpacity * 0.4 * (1 - dist / 60)})`;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+})();
+</script>
+
+<!-- Curved connections and glowing SVG border reveal logic -->
+<script>
+    // Robust coordinate helper: gets target centers relative to the STICKY wrapper boundaries.
+    function getElementCenterRelative(elId, container) {
+        const el = document.getElementById(elId);
+        if (!el) return { x: 0, y: 0 };
+        const rect = el.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        return {
+            x: rect.left - containerRect.left + rect.width / 2,
+            y: rect.top - containerRect.top + rect.height / 2
+        };
+    }
+
+    // Dynamic scroll detector for background particle morphing
+    function updateParticleSystemState() {
+        const hero = document.getElementById('hero-section');
+        const coreBoundary = document.getElementById('core-boundary-section');
+        const collArch = document.getElementById('sticky-scroll-wrapper');
+        const storytelling = document.getElementById('storytelling-section');
+        const structuralBlueprint = document.getElementById('structural-blueprint-section');
+        const finalCta = document.getElementById('final-cta-section');
+
+        const windowHeight = window.innerHeight;
+
+        let theme = 'default';
+        let shapeLayout = 'hero';
+
+        if (finalCta && finalCta.getBoundingClientRect().top < windowHeight * 0.6) {
+            theme = 'heatmap';
+            shapeLayout = 'other';
+        } else if (structuralBlueprint && structuralBlueprint.getBoundingClientRect().top < windowHeight * 0.6) {
+            theme = 'default'; // keep default signature colors!
+            shapeLayout = 'other';
+        } else if (storytelling && storytelling.getBoundingClientRect().top < windowHeight * 0.6) {
+            theme = 'default'; // keep default signature colors!
+            shapeLayout = 'other';
+        } else if (collArch && collArch.getBoundingClientRect().top < windowHeight * 0.5 && collArch.getBoundingClientRect().bottom > windowHeight * 0.5) {
+            theme = 'black';
+            shapeLayout = 'other';
+        } else if (coreBoundary && coreBoundary.getBoundingClientRect().top < windowHeight * 0.6 && coreBoundary.getBoundingClientRect().bottom > windowHeight * 0.3) {
+            theme = 'default';
+            shapeLayout = 'core-boundary';
+        } else {
+            theme = 'default';
+            shapeLayout = 'hero';
+        }
+
+        if (window.particleSystemState) {
+            window.particleSystemState.theme = theme;
+            window.particleSystemState.shapeLayout = shapeLayout;
+        }
+    }
+
+    window.addEventListener('scroll', () => {
+        // Run background particle state updater
+        updateParticleSystemState();
+
+        const wrapper = document.getElementById('sticky-scroll-wrapper');
+        const container = wrapper ? wrapper.querySelector('.sticky') : null;
+        if (!wrapper || !container) return;
+
+        const rect = wrapper.getBoundingClientRect();
+        const totalScrollable = rect.height - window.innerHeight;
+        const scrolled = -rect.top;
+        let progress = scrolled / totalScrollable;
+        progress = Math.max(0, Math.min(1, progress));
+
+        // Shift ambient scroll gradient reflector
+        const ambientGlow = document.getElementById('ambient-scroll-glow');
+        if (ambientGlow) {
+            ambientGlow.style.background = `radial-gradient(circle, rgba(113, 248, 228, ${progress * 0.16}) 0%, transparent 65%)`;
+        }
+
+        const introText = document.getElementById('sticky-intro');
+
+        if (progress <= 0.15) {
+            introText.style.opacity = '1';
+            introText.style.transform = 'scale(1)';
+            introText.style.filter = 'blur(0px)';
+        } else if (progress > 0.15 && progress <= 0.25) {
+            const p = (progress - 0.15) / 0.1;
+            introText.style.opacity = `${1 - p}`;
+            introText.style.transform = `scale(${1 - p * 0.1})`;
+            introText.style.filter = `blur(${p * 4}px)`;
+        } else {
+            introText.style.opacity = '0';
+            introText.style.transform = 'scale(0.9)';
+            introText.style.filter = 'blur(4px)';
+        }
+
+        // Show/hide outer cards sequentially (Phase 1: Cards spawn from 0.20 to 0.45)
+        const cardSteps = 6;
+        const startProgress = 0.20;
+        const endProgress = 0.45;
+        const progressRange = endProgress - startProgress;
+        const stepSize = progressRange / cardSteps;
+
+        for (let i = 1; i <= cardSteps; i++) {
+            const card = document.getElementById(`sc-card-${i}`);
+            if (!card) continue;
+
+            const cardTrigger = startProgress + (i - 1) * stepSize;
+            
+            if (progress >= cardTrigger) {
+                card.classList.remove('opacity-0', 'scale-90');
+                card.classList.add('opacity-100', 'scale-100');
+            } else {
+                card.classList.add('opacity-0', 'scale-90');
+                card.classList.remove('opacity-100', 'scale-100');
+            }
+        }
+
+        const centerCard = document.getElementById('sc-card-center');
+        const leftPath = document.getElementById('left-border-path');
+        const rightPath = document.getElementById('right-border-path');
+        const centerContent = document.getElementById('center-card-content');
+
+        // Target coordinates setup relative to the container grid
+        const center = getElementCenterRelative('sc-card-center', container);
+
+        // Coordinates of intermediate joint bus points
+        const leftJoint = { x: center.x - 180, y: center.y };
+        const rightJoint = { x: center.x + 180, y: center.y };
+
+        centerCard.style.transform = 'none';
+
+        if (progress < 0.45) {
+            centerCard.style.opacity = '0';
+            centerCard.style.pointerEvents = 'none';
+            centerCard.style.background = 'transparent';
+            centerCard.style.border = 'none';
+            centerCard.style.boxShadow = 'none';
+            centerCard.style.backdropFilter = 'none';
+            leftPath.setAttribute('stroke-dashoffset', '400');
+            rightPath.setAttribute('stroke-dashoffset', '400');
+            centerContent.style.opacity = '0';
+
+            // Clear all lines
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`left-line-${i}`).setAttribute('d', '');
+                document.getElementById(`right-line-${i}`).setAttribute('d', '');
+            }
+            document.getElementById('left-trunk').setAttribute('d', '');
+            document.getElementById('right-trunk').setAttribute('d', '');
+        } 
+        else if (progress >= 0.45 && progress < 0.68) {
+            centerCard.style.opacity = '0';
+            centerCard.style.pointerEvents = 'none';
+            centerCard.style.background = 'transparent';
+            centerCard.style.border = 'none';
+            centerCard.style.boxShadow = 'none';
+            centerCard.style.backdropFilter = 'none';
+            leftPath.setAttribute('stroke-dashoffset', '400');
+            rightPath.setAttribute('stroke-dashoffset', '400');
+            centerContent.style.opacity = '0';
+
+            const lineProgress = (progress - 0.45) / 0.23; // 0 to 1
+
+            // Left side card connections: Cards 1, 5, 3 meet at leftJoint
+            const leftCards = ['sc-card-1', 'sc-card-5', 'sc-card-3'];
+            leftCards.forEach((cId, idx) => {
+                const cardPos = getElementCenterRelative(cId, container);
+                const startX = cardPos.x + 100; 
+                const path = document.getElementById(`left-line-${idx+1}`);
+
+                if (lineProgress < 0.5) {
+                    const hProgress = lineProgress * 2;
+                    const curH = startX + (leftJoint.x - startX) * hProgress;
+                    path.setAttribute('d', `M ${startX} ${cardPos.y} L ${curH} ${cardPos.y}`);
+                } else {
+                    const vProgress = (lineProgress - 0.5) * 2;
+                    if (idx === 1) { // Audio
+                        path.setAttribute('d', `M ${startX} ${cardPos.y} L ${leftJoint.x} ${cardPos.y}`);
+                    } else { // Resume & Dialogue drop
+                        const curV = cardPos.y + (leftJoint.y - cardPos.y) * vProgress;
+                        path.setAttribute('d', `M ${startX} ${cardPos.y} L ${leftJoint.x} ${cardPos.y} L ${leftJoint.x} ${curV}`);
+                    }
+                }
+            });
+
+            // Right side card connections: Cards 2, 6, 4 meet at rightJoint
+            const rightCards = ['sc-card-2', 'sc-card-6', 'sc-card-4'];
+            rightCards.forEach((cId, idx) => {
+                const cardPos = getElementCenterRelative(cId, container);
+                const startX = cardPos.x - 100;
+                const path = document.getElementById(`right-line-${idx+1}`);
+
+                if (lineProgress < 0.5) {
+                    const hProgress = lineProgress * 2;
+                    const curH = startX + (rightJoint.x - startX) * hProgress;
+                    path.setAttribute('d', `M ${startX} ${cardPos.y} L ${curH} ${cardPos.y}`);
+                } else {
+                    const vProgress = (lineProgress - 0.5) * 2;
+                    if (idx === 1) { // Report
+                        path.setAttribute('d', `M ${startX} ${cardPos.y} L ${rightJoint.x} ${cardPos.y}`);
+                    } else { // Job & Video drop
+                        const curV = cardPos.y + (rightJoint.y - cardPos.y) * vProgress;
+                        path.setAttribute('d', `M ${startX} ${cardPos.y} L ${rightJoint.x} ${cardPos.y} L ${rightJoint.x} ${curV}`);
+                    }
+                }
+            });
+
+            document.getElementById('left-trunk').setAttribute('d', '');
+            document.getElementById('right-trunk').setAttribute('d', '');
+        } 
+        else if (progress >= 0.68 && progress < 0.82) {
+            const trunkProgress = (progress - 0.68) / 0.14; // 0 to 1
+
+            for (let i = 1; i <= 3; i++) {
+                const leftPos = getElementCenterRelative(`sc-card-${i === 2 ? 5 : (i === 3 ? 3 : 1)}`, container);
+                const rightPos = getElementCenterRelative(`sc-card-${i === 1 ? 2 : (i === 2 ? 6 : 4)}`, container);
+
+                document.getElementById(`left-line-${i}`).setAttribute('d', `M ${leftPos.x + 100} ${leftPos.y} L ${leftJoint.x} ${leftPos.y} L ${leftJoint.x} ${leftJoint.y}`);
+                document.getElementById(`right-line-${i}`).setAttribute('d', `M ${rightPos.x - 100} ${rightPos.y} L ${rightJoint.x} ${rightPos.y} L ${rightJoint.x} ${rightJoint.y}`);
+            }
+
+            const targetLeftX = center.x - 120;
+            const curLeftX = leftJoint.x + (targetLeftX - leftJoint.x) * trunkProgress;
+            document.getElementById('left-trunk').setAttribute('d', `M ${leftJoint.x} ${leftJoint.y} L ${curLeftX} ${leftJoint.y}`);
+
+            const targetRightX = center.x + 120;
+            const curRightX = rightJoint.x + (targetRightX - rightJoint.x) * trunkProgress;
+            document.getElementById('right-trunk').setAttribute('d', `M ${rightJoint.x} ${rightJoint.y} L ${curRightX} ${rightJoint.y}`);
+
+            centerCard.style.opacity = '0';
+            centerCard.style.pointerEvents = 'none';
+            centerCard.style.background = 'transparent';
+            centerCard.style.border = 'none';
+            centerCard.style.boxShadow = 'none';
+            centerCard.style.backdropFilter = 'none';
+            leftPath.setAttribute('stroke-dashoffset', '400');
+            rightPath.setAttribute('stroke-dashoffset', '400');
+            centerContent.style.opacity = '0';
+        }
+        else if (progress >= 0.82 && progress < 0.94) {
+            const fillProgress = (progress - 0.82) / 0.12; // 0 to 1
+            const offset = 400 - (fillProgress * 400);
+
+            for (let i = 1; i <= 3; i++) {
+                const leftPos = getElementCenterRelative(`sc-card-${i === 2 ? 5 : (i === 3 ? 3 : 1)}`, container);
+                const rightPos = getElementCenterRelative(`sc-card-${i === 1 ? 2 : (i === 2 ? 6 : 4)}`, container);
+                document.getElementById(`left-line-${i}`).setAttribute('d', `M ${leftPos.x + 100} ${leftPos.y} L ${leftJoint.x} ${leftPos.y} L ${leftJoint.x} ${leftJoint.y}`);
+                document.getElementById(`right-line-${i}`).setAttribute('d', `M ${rightPos.x - 100} ${rightPos.y} L ${rightJoint.x} ${rightPos.y} L ${rightJoint.x} ${rightJoint.y}`);
+            }
+            document.getElementById('left-trunk').setAttribute('d', `M ${leftJoint.x} ${leftJoint.y} L ${center.x - 120} ${leftJoint.y}`);
+            document.getElementById('right-trunk').setAttribute('d', `M ${rightJoint.x} ${rightJoint.y} L ${center.x + 120} ${rightJoint.y}`);
+
+            centerCard.style.opacity = '1';
+            centerCard.style.pointerEvents = 'auto';
+            
+            leftPath.setAttribute('stroke-dashoffset', offset);
+            rightPath.setAttribute('stroke-dashoffset', offset);
+
+            if (fillProgress >= 0.9) {
+                centerContent.style.opacity = '1';
+                centerCard.style.background = 'rgba(12, 12, 14, 0.75)';
+                centerCard.style.border = '1px solid rgba(255, 255, 255, 0.05)';
+                centerCard.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5)';
+                centerCard.style.backdropFilter = 'blur(24px)';
+            } else {
+                centerContent.style.opacity = '0';
+                centerCard.style.background = 'transparent';
+                centerCard.style.border = 'none';
+                centerCard.style.boxShadow = 'none';
+                centerCard.style.backdropFilter = 'none';
+            }
+        }
+        else if (progress >= 0.94) {
+            for (let i = 1; i <= 3; i++) {
+                const leftPos = getElementCenterRelative(`sc-card-${i === 2 ? 5 : (i === 3 ? 3 : 1)}`, container);
+                const rightPos = getElementCenterRelative(`sc-card-${i === 1 ? 2 : (i === 2 ? 6 : 4)}`, container);
+                document.getElementById(`left-line-${i}`).setAttribute('d', `M ${leftPos.x + 100} ${leftPos.y} L ${leftJoint.x} ${leftPos.y} L ${leftJoint.x} ${leftJoint.y}`);
+                document.getElementById(`right-line-${i}`).setAttribute('d', `M ${rightPos.x - 100} ${rightPos.y} L ${rightJoint.x} ${rightPos.y} L ${rightJoint.x} ${rightJoint.y}`);
+            }
+            document.getElementById('left-trunk').setAttribute('d', `M ${leftJoint.x} ${leftJoint.y} L ${center.x - 120} ${leftJoint.y}`);
+            document.getElementById('right-trunk').setAttribute('d', `M ${rightJoint.x} ${rightJoint.y} L ${center.x + 120} ${rightJoint.y}`);
+
+            centerCard.style.opacity = '1';
+            centerCard.style.pointerEvents = 'auto';
+            centerCard.style.background = 'rgba(12, 12, 14, 0.75)';
+            centerCard.style.border = '1px solid rgba(255, 255, 255, 0.05)';
+            centerCard.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5)';
+            centerCard.style.backdropFilter = 'blur(24px)';
+            leftPath.setAttribute('stroke-dashoffset', '0');
+            rightPath.setAttribute('stroke-dashoffset', '0');
+            centerContent.style.opacity = '1';
+        }
+    });
+
+    // Color shifting stop stops matching HSL
+    window.addEventListener('scroll', () => {
+        const stops = document.querySelectorAll('#circuit-flow-grad stop');
+        if (stops.length >= 5) {
+            const time = Date.now() * 0.0012;
+            stops[0].setAttribute('stop-color', `hsl(${(275 + Math.sin(time) * 20) % 360}, 95%, 82%)`);
+            stops[1].setAttribute('stop-color', `hsl(${(235 + Math.sin(time + 1) * 20) % 360}, 95%, 82%)`);
+            stops[2].setAttribute('stop-color', `hsl(${(205 + Math.sin(time + 2) * 20) % 360}, 95%, 82%)`);
+            stops[3].setAttribute('stop-color', `hsl(${(185 + Math.sin(time + 3) * 20) % 360}, 95%, 82%)`);
+            stops[4].setAttribute('stop-color', `hsl(${(165 + Math.sin(time + 4) * 20) % 360}, 95%, 82%)`);
+        }
+    });
+
+    // Unified navigation active state matching
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    const navItems = {
+        'about.html': 'nav-about',
+        'interview-journey.html': 'nav-journey',
+        'features.html': 'nav-features',
+        'architecture.html': 'nav-architecture'
+    };
+    const activeId = navItems[currentPath];
+    if (activeId) {
+        const activeLink = document.getElementById(activeId);
+        if (activeLink) {
+            activeLink.className = "font-body text-body text-[#d2bbff] font-bold border-b-2 border-[#d2bbff] pb-1 transition-all";
+        }
+    }
+</script>
+</body>
+</html>

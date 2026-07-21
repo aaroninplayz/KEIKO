@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Interview Setup — KEIKO Intelligence</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "background": "#131314",
+            "primary": "#d2bbff",
+            "secondary": "#adc6ff",
+            "tertiary": "#71f8e4",
+            "text-primary": "#F4F4F5",
+            "text-secondary": "#A1A1AA"
+          },
+          fontFamily: {
+            "display": ["Space Grotesk", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "mono": ["IBM Plex Mono", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #131314; color: #F4F4F5; font-family: 'Inter', sans-serif; }
+    .glass-panel { background: rgba(20, 20, 22, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(74, 68, 85, 0.2); }
+    .glass-neo-stitch {
+      background: rgba(20, 20, 22, 0.65);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 
+        inset 1px 1px 2px rgba(255, 255, 255, 0.12),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.8),
+        0 15px 35px rgba(0, 0, 0, 0.6);
+      border-radius: 20px;
+      outline: 1.5px dashed rgba(210, 187, 255, 0.15);
+      outline-offset: -8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .gradient-text {
+      background-image: linear-gradient(135deg, #d2bbff 0%, #adc6ff 50%, #71f8e4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+    .bg-accent-gradient { background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #14B8A6 100%); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#131314] text-[#F4F4F5]">
+
+  <!-- KEIKO Navigation Bar -->
+  <nav class="fixed top-0 w-full z-50 bg-[#131314]/85 backdrop-blur-md border-b border-white/10 h-20">
+    <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+      <a href="dashboard.html" class="text-2xl md:text-3xl font-bold text-white tracking-tighter font-display">KEIKO</a>
+      <div class="hidden md:flex items-center space-x-8">
+        <a class="text-sm text-gray-400 hover:text-white transition-colors" href="dashboard.html">Dashboard</a>
+        <a class="text-sm text-primary font-bold transition-colors" href="interview-setup.html">Setup Session</a>
+        <a class="text-sm text-gray-400 hover:text-white transition-colors" href="documentation.html">Documentation</a>
+        <a class="text-sm text-gray-400 hover:text-white transition-colors" href="admin.html">Admin</a>
+      </div>
+      <a class="bg-[#7c3aed] text-white px-6 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all" href="dashboard.html">Return to Portal</a>
+    </div>
+  </nav>
+
+  <!-- Setup Workspace -->
+  <main class="flex-1 mt-24 max-w-4xl mx-auto w-full px-6 py-8">
+    <div class="mb-8 space-y-2">
+      <div class="inline-flex items-center gap-2 text-xs font-mono text-primary uppercase tracking-widest">
+        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+        Interview Initialization
+      </div>
+      <h1 class="text-3xl font-bold tracking-tight text-white font-display">
+        Interview Session <span class="gradient-text">Configuration</span>
+      </h1>
+      <p class="text-text-secondary text-sm">
+        Configure candidate details, job description, resume context, and 9 telemetry sensor weights in a single setup matrix.
+      </p>
+    </div>
+
+    <form id="setupForm" class="space-y-8">
+      
+      <!-- 1. Candidate Information -->
+      <section class="glass-neo-stitch p-6 space-y-4">
+        <h2 class="text-lg font-semibold text-white flex items-center gap-2 font-display">
+          <span class="material-symbols-outlined text-primary">person</span>
+          1. Candidate Details
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-mono uppercase tracking-wider text-text-secondary mb-1">Full Name *</label>
+            <input id="candidateName" required type="text" placeholder="e.g. Alex Mercer" class="w-full bg-[#1c1b1c] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary transition-colors"/>
+          </div>
+          <div>
+            <label class="block text-xs font-mono uppercase tracking-wider text-text-secondary mb-1">Email Address *</label>
+            <input id="candidateEmail" required type="email" placeholder="alex.mercer@example.com" class="w-full bg-[#1c1b1c] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary transition-colors"/>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Target Role & Job Description -->
+      <section class="glass-neo-stitch p-6 space-y-4">
+        <h2 class="text-lg font-semibold text-white flex items-center gap-2 font-display">
+          <span class="material-symbols-outlined text-primary">work</span>
+          2. Role & Job Description
+        </h2>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs font-mono uppercase tracking-wider text-text-secondary mb-1">Target Role</label>
+            <select id="targetRole" class="w-full bg-[#1c1b1c] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary">
+              <option value="JavaScript Developer" selected>JavaScript Developer</option>
+              <option value="Python Backend Engineer">Python Backend Engineer</option>
+              <option value="Full Stack Developer">Full Stack Developer</option>
+              <option value="AI/ML Engineer">AI/ML Engineer</option>
+              <option value="DevOps Engineer">DevOps Engineer</option>
+              <option value="Custom Role">Custom / Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-mono uppercase tracking-wider text-text-secondary mb-1">Job Description Requirements</label>
+            <textarea id="jdText" rows="4" placeholder="Paste target position requirements, tech stack, and key qualifications..." class="w-full bg-[#1c1b1c] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary resize-none"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Resume Upload -->
+      <section class="glass-neo-stitch p-6 space-y-4">
+        <h2 class="text-lg font-semibold text-white flex items-center gap-2 font-display">
+          <span class="material-symbols-outlined text-primary">description</span>
+          3. Resume Upload
+        </h2>
+        <div id="resumeDropzone" class="border-2 border-dashed border-white/20 hover:border-primary rounded-xl p-6 text-center cursor-pointer transition-colors bg-[#1c1b1c]/50">
+          <span class="material-symbols-outlined text-3xl text-gray-400 mb-2">cloud_upload</span>
+          <p class="text-sm text-gray-300 font-medium">Drag & drop candidate resume file here, or click to browse</p>
+          <p class="text-xs text-gray-500 mt-1">Supports PDF, DOCX, TXT</p>
+          <input id="resumeFile" type="file" accept=".pdf,.docx,.txt" class="hidden"/>
+          <p id="resumeFileName" class="text-xs text-tertiary mt-2 font-mono hidden"></p>
+        </div>
+      </section>
+
+      <!-- 4. 9 Sensor Telemetry Weight Matrix -->
+      <section class="glass-neo-stitch p-6 space-y-6">
+        <div class="flex items-center justify-between">
+          <h2 class="text-lg font-semibold text-white flex items-center gap-2 font-display">
+            <span class="material-symbols-outlined text-primary">tune</span>
+            4. Telemetry Sensor Weights (9 Sensors)
+          </h2>
+          <span id="totalWeightBadge" class="text-xs font-mono bg-[#7c3aed]/20 text-primary px-3 py-1 rounded-full border border-[#7c3aed]/30 font-semibold">Sum: 100%</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Posture -->
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-gray-300">Posture</span>
+              <span id="postureVal" class="text-primary font-semibold">15%</span>
+            </div>
+            <input id="w_posture" type="range" min="0" max="100" value="15" class="w-full accent-[#7c3aed] cursor-pointer"/>
+          </div>
+
+          <!-- Eye Contact -->
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-gray-300">Eye Contact</span>
+              <span id="eyeVal" class="text-primary font-semibold">15%</span>
+            </div>
+            <input id="w_eye_contact" type="range" min="0" max="100" value="15" class="w-full accent-[#7c3aed] cursor-pointer"/>
+          </div>
+
+          <!-- Body Language -->
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-gray-300">Body Language</span>
+              <span id="bodyVal" class="text-primary font-semibold">15%</span>
+            </div>
+            <input id="w_body_language" type="range" min="0" max="100" value="15" class="w-full accent-[#7c3aed] cursor-pointer"/>
+          </div>
+
+          <!-- Attire -->
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-gray-300">Attire</span>
+              <span id="attireVal" class="text-primary font-semibold">10%</span>
+            </div>
+            <input id="w_attire" type="range" min="0" max="100" value="10" class="w-full accent-[#7c3aed] cursor-pointer"/>
+          </div>
+
+          <!-- Confidence -->
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-gray-300">Confidence</span>
+              <span id="confidenceVal" class="text-primary font-semibold">10%</span>
+            </div>
+            <input id="w_confidence" type="range" min="0" max="100" value="10" class="w-full accent-[#7c3aed] cursor-pointer"/>
+          </div>
+
+          <!-- Facial Expression -->
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-gray-300">Facial Expression</span>
+              <span id="facialVal" class="text-primary font-semibold">10%</span>
+            </div>
+            <input id="w_facial_expression" type="range" min="0" max="100" value="10" class="w-full accent-[#7c3aed] cursor-pointer"/>
+          </div>
+
+          <!-- Voice -->
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-gray-300">Voice Dynamics</span>
+              <span id="voiceVal" class="text-primary font-semibold">15%</span>
+            </div>
+            <input id="w_voice" type="range" min="0" max="100" value="15" class="w-full accent-[#7c3aed] cursor-pointer"/>
+          </div>
+
+          <!-- Engagement -->
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-gray-300">Engagement</span>
+              <span id="engagementVal" class="text-primary font-semibold">5%</span>
+            </div>
+            <input id="w_engagement" type="range" min="0" max="100" value="5" class="w-full accent-[#7c3aed] cursor-pointer"/>
+          </div>
+
+          <!-- Professional Presence -->
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span class="text-gray-300">Prof. Presence</span>
+              <span id="presenceVal" class="text-primary font-semibold">5%</span>
+            </div>
+            <input id="w_professional_presence" type="range" min="0" max="100" value="5" class="w-full accent-[#7c3aed] cursor-pointer"/>
+          </div>
+        </div>
+      </section>
+
+      <!-- Action Bar -->
+      <div class="flex items-center justify-end gap-4 pt-4">
+        <a href="dashboard.html" class="px-6 py-3 rounded-xl border border-white/10 text-sm text-gray-300 hover:bg-white/5 transition-colors">Cancel</a>
+        <button id="submitBtn" type="submit" class="bg-accent-gradient text-white px-8 py-3 rounded-xl font-medium text-sm flex items-center gap-2 hover:shadow-[0_0_25px_rgba(124,58,237,0.4)] transition-all">
+          <span>Start Interview</span>
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Form Submission & Weight Handling JS Script -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 9 Telemetry Sensors mapping
+    const sensors = [
+      { id: 'w_posture', display: 'postureVal' },
+      { id: 'w_eye_contact', display: 'eyeVal' },
+      { id: 'w_body_language', display: 'bodyVal' },
+      { id: 'w_attire', display: 'attireVal' },
+      { id: 'w_confidence', display: 'confidenceVal' },
+      { id: 'w_facial_expression', display: 'facialVal' },
+      { id: 'w_voice', display: 'voiceVal' },
+      { id: 'w_engagement', display: 'engagementVal' },
+      { id: 'w_professional_presence', display: 'presenceVal' }
+    ];
+
+    function updateSum() {
+      let total = 0;
+      sensors.forEach(s => {
+        const el = document.getElementById(s.id);
+        const val = parseInt(el.value, 10) || 0;
+        document.getElementById(s.display).textContent = val + '%';
+        total += val;
+      });
+      document.getElementById('totalWeightBadge').textContent = `Sum: ${total}%`;
+    }
+
+    sensors.forEach(s => {
+      document.getElementById(s.id).addEventListener('input', updateSum);
+    });
+
+    // Drag and drop resume handling
+    const dropzone = document.getElementById('resumeDropzone');
+    const fileInput = document.getElementById('resumeFile');
+    const fileNameDisplay = document.getElementById('resumeFileName');
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-primary'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('border-primary'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('border-primary');
+      if (e.dataTransfer.files.length > 0) {
+        fileInput.files = e.dataTransfer.files;
+        fileNameDisplay.textContent = 'Selected: ' + e.dataTransfer.files[0].name;
+        fileNameDisplay.classList.remove('hidden');
+      }
+    });
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        fileNameDisplay.textContent = 'Selected: ' + fileInput.files[0].name;
+        fileNameDisplay.classList.remove('hidden');
+      }
+    });
+
+    // Form Submission Logic
+    const form = document.getElementById('setupForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Initializing Session...</span>`;
+
+      try {
+        // Step 1: Start Session
+        const startRes = await fetch('/api/v1/interview/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            interview_type: 'Tech',
+            difficulty_mode: 'Adaptive',
+            duration_type: 'questions',
+            duration_value: 5
+          })
+        });
+        
+        if (!startRes.ok) {
+          throw new Error(`Failed to start session (HTTP ${startRes.status})`);
+        }
+
+        const startData = await startRes.json();
+        const sessionId = startData.session_id;
+
+        if (!sessionId) throw new Error("Failed to obtain session_id from backend response.");
+
+        // Step 2: Upload Job Description & Candidate Metadata
+        const targetRole = document.getElementById('targetRole').value;
+        const jdText = document.getElementById('jdText').value.trim();
+        const candName = document.getElementById('candidateName').value.trim();
+        const candEmail = document.getElementById('candidateEmail').value.trim();
+
+        const combinedJd = `Candidate Name: ${candName}\nCandidate Email: ${candEmail}\nTarget Role: ${targetRole}\n\nJob Description:\n${jdText}`;
+
+        const jdFormData = new FormData();
+        jdFormData.append('jd_text', combinedJd);
+        await fetch(`/api/v1/interview/upload/jd/${sessionId}`, {
+          method: 'POST',
+          body: jdFormData
+        });
+
+        // Step 3: Upload Resume if selected
+        if (fileInput.files.length > 0) {
+          const formData = new FormData();
+          formData.append('file', fileInput.files[0]);
+          await fetch(`/api/v1/interview/upload/resume/${sessionId}`, {
+            method: 'POST',
+            body: formData
+          });
+        }
+
+        // Step 4: Save 9 Telemetry Sensor Weights
+        const weights = {
+          posture: parseFloat(document.getElementById('w_posture').value) / 100,
+          eye_contact: parseFloat(document.getElementById('w_eye_contact').value) / 100,
+          body_language: parseFloat(document.getElementById('w_body_language').value) / 100,
+          attire: parseFloat(document.getElementById('w_attire').value) / 100,
+          confidence: parseFloat(document.getElementById('w_confidence').value) / 100,
+          facial_expression: parseFloat(document.getElementById('w_facial_expression').value) / 100,
+          voice: parseFloat(document.getElementById('w_voice').value) / 100,
+          engagement: parseFloat(document.getElementById('w_engagement').value) / 100,
+          professional_presence: parseFloat(document.getElementById('w_professional_presence').value) / 100
+        };
+
+        await fetch(`/api/v1/interview/config/weights/${sessionId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(weights)
+        });
+
+        // Step 5: Redirect to Interview Chamber with session_id query parameter
+        window.location.href = `interview.html?session_id=${encodeURIComponent(sessionId)}`;
+
+      } catch (err) {
+        console.error("Session setup error:", err);
+        alert("Error initializing interview session: " + err.message);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Start Interview</span><span class="material-symbols-outlined text-sm">arrow_forward</span>`;
+      }
+    });
+  });
+  </script>
+
+</body>
+</html>

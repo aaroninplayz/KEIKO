@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KEIKO Evaluation Report - Dr. Elena Vance</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&amp;family=Inter:wght@100..900&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#3a393a",
+                      "inverse-primary": "#732ee4",
+                      "on-surface": "#e5e2e3",
+                      "on-secondary": "#002e6a",
+                      "surface": "#131314",
+                      "inverse-on-surface": "#313031",
+                      "surface-container-lowest": "#0e0e0f",
+                      "tertiary": "#4fdbc8",
+                      "on-primary-fixed": "#25005a",
+                      "text-primary": "#F4F4F5",
+                      "on-background": "#e5e2e3",
+                      "secondary": "#adc6ff",
+                      "primary-container": "#7c3aed",
+                      "on-secondary-fixed-variant": "#004395",
+                      "primary-fixed-dim": "#d2bbff",
+                      "on-error-container": "#ffdad6",
+                      "text-secondary": "#A1A1AA",
+                      "error": "#ffb4ab",
+                      "secondary-fixed": "#d8e2ff",
+                      "background": "#131314",
+                      "surface-tint": "#d2bbff",
+                      "surface-variant": "#353436",
+                      "on-error": "#690005",
+                      "tertiary-fixed": "#71f8e4",
+                      "on-tertiary-container": "#75fce8",
+                      "on-primary-container": "#ede0ff",
+                      "surface-glass": "rgba(20, 20, 22, 0.7)",
+                      "outline-variant": "#4a4455",
+                      "inverse-surface": "#e5e2e3",
+                      "primary": "#d2bbff",
+                      "surface-raised": "#141416",
+                      "on-primary": "#3f008e",
+                      "surface-container": "#201f20",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "on-tertiary-fixed": "#00201c",
+                      "primary-fixed": "#eaddff",
+                      "on-secondary-container": "#e6ecff",
+                      "secondary-container": "#0566d9",
+                      "on-surface-variant": "#ccc3d8",
+                      "on-tertiary-fixed-variant": "#005048",
+                      "outline": "#958da1",
+                      "surface-container-high": "#2a2a2b",
+                      "tertiary-container": "#007468",
+                      "on-secondary-fixed": "#001a42",
+                      "surface-base": "#0A0A0B",
+                      "surface-container-highest": "#353436",
+                      "text-supporting": "#71717A",
+                      "surface-dim": "#131314",
+                      "danger": "#EF4444",
+                      "on-primary-fixed-variant": "#5a00c6",
+                      "on-tertiary": "#003731",
+                      "surface-container-low": "#1c1b1c",
+                      "error-container": "#93000a",
+                      "tertiary-fixed-dim": "#4fdbc8",
+                      "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #14B8A6 100%)"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "section-mobile": "96px",
+                      "margin-desktop": "64px",
+                      "gutter": "24px",
+                      "section-tablet": "120px",
+                      "micro": "4px",
+                      "section-desktop": "160px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "heading-m": [
+                              "Space Grotesk"
+                      ],
+                      "heading-l": [
+                              "Space Grotesk"
+                      ],
+                      "heading-xl": [
+                              "Space Grotesk"
+                      ],
+                      "display-xl": [
+                              "Space Grotesk"
+                      ],
+                      "mono-label": [
+                              "IBM Plex Mono"
+                      ],
+                      "display-l": [
+                              "Space Grotesk"
+                      ],
+                      "body-large": [
+                              "Inter"
+                      ],
+                      "body": [
+                              "Inter"
+                      ],
+                      "display-xl-mobile": [
+                              "Space Grotesk"
+                      ],
+                      "body-small": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "heading-m": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "heading-l": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "heading-xl": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-xl": [
+                              "72px",
+                              {
+                                      "lineHeight": "80px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "mono-label": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-l": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-large": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-xl-mobile": [
+                              "40px",
+                              {
+                                      "lineHeight": "48px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-small": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+            overflow-x: hidden;
+        }
+        
+        /* Custom scrollbar for deep-toned aesthetic */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface-dim');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.surface-variant');
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline-variant');
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex selection:bg-primary selection:text-on-primary">
+<!-- Background Shader -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
+
+</div>
+<!-- SideNavBar Prediction: {{DATA:COMPONENTS:COMPONENTS_72}} -->
+<!-- KEIKO TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131314]/85 backdrop-blur-md border-b border-white/10 h-20">
+  <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+    <a href="index.html" class="text-2xl md:text-3xl font-bold text-white tracking-tighter hover:opacity-90 transition-opacity" style="font-family:'Space Grotesk',sans-serif">KEIKO</a>
+    <div class="hidden md:flex items-center space-x-8">
+      <a id="nav-about" class="text-sm text-gray-400 hover:text-white transition-colors" href="about.html" style="font-family:'Inter',sans-serif">About</a>
+      <a id="nav-journey" class="text-sm text-gray-400 hover:text-white transition-colors" href="interview-journey.html" style="font-family:'Inter',sans-serif">Journey</a>
+      <a id="nav-features" class="text-sm text-gray-400 hover:text-white transition-colors" href="features.html" style="font-family:'Inter',sans-serif">Features</a>
+      <a id="nav-architecture" class="text-sm text-gray-400 hover:text-white transition-colors" href="architecture.html" style="font-family:'Inter',sans-serif">Architecture</a>
+    </div>
+    <a class="bg-[#7c3aed] text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:scale-105 hover:opacity-90 active:scale-95" href="interview.html" style="font-family:'Inter',sans-serif">Experience KEIKO</a>
+  </div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 md:ml-64 flex flex-col lg:flex-row min-h-screen relative z-10 w-full max-w-[1440px]">
+<!-- Center Canvas: Report Content -->
+<div class="flex-1 px-4 md:px-8 lg:px-12 py-8 lg:py-12 max-w-5xl mx-auto w-full">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="px-2 py-1 rounded bg-tertiary/10 text-tertiary font-mono-label text-mono-label border border-tertiary/20">STATUS: EVALUATION COMPLETE</span>
+<span class="font-mono-label text-mono-label text-text-supporting">ID: KKO-9942-EV</span>
+</div>
+<h1 class="font-display-l text-display-l text-on-surface mb-2">Dr. Elena Vance</h1>
+<p class="font-body-large text-body-large text-text-secondary">Senior Systems Architect <span class="mx-2 text-outline-variant">|</span> Global Infrastructure Team</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 rounded-lg border border-outline-variant/30 bg-surface-glass backdrop-blur-xl hover:bg-surface-variant/50 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">print</span>
+<span class="font-mono-label text-mono-label">Print</span>
+</button>
+<button class="px-4 py-2 rounded-lg border border-outline-variant/30 bg-surface-glass backdrop-blur-xl hover:bg-surface-variant/50 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">share</span>
+<span class="font-mono-label text-mono-label">Share</span>
+</button>
+<button class="px-6 py-2 rounded-lg text-white hover:opacity-90 transition-opacity flex items-center gap-2 shadow-lg shadow-primary/20" style="background: theme('colors.accent-gradient')">
+<span class="material-symbols-outlined text-sm">picture_as_pdf</span>
+<span class="font-mono-label text-mono-label uppercase tracking-wider">Export PDF</span>
+</button>
+</div>
+</header>
+<!-- Executive Summary Card -->
+<section class="bg-surface-raised rounded-2xl p-6 lg:p-8 mb-12 border border-outline-variant/10 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 group-hover:bg-primary/10 transition-colors duration-700"></div>
+<h2 class="font-heading-l text-heading-l mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">summarize</span>
+                    Executive Summary
+                </h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="col-span-1 md:col-span-3 lg:col-span-1">
+<div class="flex flex-col h-full justify-center">
+<div class="inline-flex flex-col gap-1 mb-4">
+<span class="font-mono-label text-mono-label text-text-supporting uppercase">Final Assessment</span>
+<span class="font-heading-xl text-heading-xl text-tertiary">Highly Recommended</span>
+</div>
+<p class="font-body text-body text-text-secondary">Demonstrated exceptional mastery in distributed systems architecture and strategic technical leadership. Exhibits strong alignment with active reasoning protocols.</p>
+</div>
+</div>
+<div class="col-span-1 md:col-span-2 lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/5">
+<span class="font-mono-label text-mono-label text-primary mb-3 block">OBSERVED STRENGTHS</span>
+<ul class="flex flex-col gap-2">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+<span class="font-body text-body-small text-on-surface-variant">Distributed Systems Architecture</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+<span class="font-body text-body-small text-on-surface-variant">Strategic Technical Thinking</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+<span class="font-body text-body-small text-on-surface-variant">Cross-functional Communication</span>
+</li>
+</ul>
+</div>
+<div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/5">
+<span class="font-mono-label text-mono-label text-secondary mb-3 block">DEVELOPMENT PRIORITIES</span>
+<ul class="flex flex-col gap-2">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary text-sm mt-0.5">trending_up</span>
+<span class="font-body text-body-small text-on-surface-variant">Low-Level Latency Optimization</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary text-sm mt-0.5">trending_up</span>
+<span class="font-body text-body-small text-on-surface-variant">Familiarity with legacy migration</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- KEIKO Footer -->
+<footer class="bg-[#0A0A0B] border-t border-white/10 w-full py-16 mt-32">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-8 max-w-[1440px] mx-auto">
+    <div class="lg:col-span-1">
+      <div class="text-3xl text-white mb-4 font-bold tracking-tighter" style="font-family:'Space Grotesk',sans-serif">KEIKO</div>
+      <p class="text-sm text-gray-500 mb-6 max-w-xs" style="font-family:'Inter',sans-serif">Engineering-grade intelligence for the modern technical interview.</p>
+      <p class="text-xs text-gray-600" style="font-family:'Inter',sans-serif">&copy; 2026 KEIKO Intelligence. All rights reserved.</p>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Platform</h5>
+      <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="about.html">About Us</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="interview-journey.html">Interview Journey</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="features.html">Features</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="architecture.html">Architecture</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="interview.html">Experience KEIKO</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Resources</h5>
+      <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">Documentation</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">API Configuration</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Roadmap</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#opensource">Open Source</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#faq">FAQ</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Legal</h5>
+      <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Privacy Policy</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Terms of Service</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Contact Research</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var p = window.location.pathname.split('/').pop() || 'index.html';
+  var m = {'about.html':'nav-about','interview-journey.html':'nav-journey','features.html':'nav-features','architecture.html':'nav-architecture'};
+  var id = m[p];
+  if(id){var el=document.getElementById(id);if(el){el.style.color='#d2bbff';el.style.fontWeight='bold';el.style.borderBottom='2px solid #d2bbff';el.style.paddingBottom='4px';}}
+})();
+</script>
+</body></html>

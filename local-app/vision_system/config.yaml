@@ -1,0 +1,62 @@
+# HR Interview Vision AI Configuration
+
+# Aggregation Settings
+aggregation_mode: "weighted_rubric" # Options: weighted_rubric, meta_classifier
+
+# Independent Detector Configs
+detectors:
+  posture:
+    enabled: true
+    weight: 0.20
+    threshold: 0.50
+    temperature: 1.0
+    labels:
+      - "good"
+      - "slouched"
+    model_path: "models/posture.pth"
+    backbone: "resnet18" # resnet18, mobilenet_v3
+
+  eye_contact:
+    enabled: true
+    weight: 0.25
+    threshold: 0.50
+    temperature: 0.8
+    labels:
+      - "focused"
+      - "distracted"
+    model_path: "models/eye_contact.pth"
+    backbone: "resnet18"
+
+  attire:
+    enabled: true
+    weight: 0.15
+    threshold: 0.50
+    temperature: 1.0
+    labels:
+      - "formal"
+      - "casual"
+    model_path: "models/attire.pth"
+    backbone: "mobilenet_v3"
+
+  confidence:
+    enabled: true
+    weight: 0.20
+    threshold: 0.50
+    temperature: 1.2
+    labels:
+      - "confident"
+      - "nervous"
+    model_path: "models/confidence.pth"
+    backbone: "resnet18"
+
+  emotions:
+    enabled: true
+    weight: 0.20
+    threshold: 0.50
+    temperature: 0.9
+    labels:
+      - "confident"
+      - "stressed"
+      - "neutral"
+    model_path: "models/emotions.pth"
+    backbone: "resnet18"

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- KEIKO TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131314]/85 backdrop-blur-md border-b border-white/10 h-20">
+  <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+    <a href="index.html" class="text-2xl md:text-3xl font-bold text-white tracking-tighter hover:opacity-90 transition-opacity" style="font-family:'Space Grotesk',sans-serif">KEIKO</a>
+    <div class="hidden md:flex items-center space-x-8">
+      <a id="nav-about" class="text-sm text-gray-400 hover:text-white transition-colors" href="about.html" style="font-family:'Inter',sans-serif">About</a>
+      <a id="nav-journey" class="text-sm text-gray-400 hover:text-white transition-colors" href="interview-journey.html" style="font-family:'Inter',sans-serif">Journey</a>
+      <a id="nav-features" class="text-sm text-gray-400 hover:text-white transition-colors" href="features.html" style="font-family:'Inter',sans-serif">Features</a>
+      <a id="nav-architecture" class="text-sm text-gray-400 hover:text-white transition-colors" href="architecture.html" style="font-family:'Inter',sans-serif">Architecture</a>
+    </div>
+    <a class="bg-[#7c3aed] text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:scale-105 hover:opacity-90 active:scale-95" href="download.html" style="font-family:'Inter',sans-serif">Experience KEIKO</a>
+  </div>
+</nav>
+<!-- STITCH_SHADER_START:ANIMATION_45 class="fixed inset-0 w-full h-full" -->
+<div class="fixed inset-0 w-full h-full" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_45" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_45');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+varying vec2 v_texCoord;
+
+float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), f.x),
+               mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec2 mouse = u_mouse / u_resolution;
+    
+    // Obsidian background #131314
+    vec3 color = vec3(0.0745, 0.0745, 0.0784);
+    
+    // Orchestration flow: animated dialogue "bubbles" or nodes
+    float nodes = 0.0;
+    for(float i = 0.0; i < 6.0; i++) {
+        vec2 p = vec2(hash(vec2(i, 1.0)), hash(vec2(i, 2.0)));
+        p.x += sin(u_time * 0.15 + i) * 0.15;
+        p.y += cos(u_time * 0.1 + i) * 0.2;
+        
+        float d = distance(uv, p);
+        float circle = smoothstep(0.015, 0.01, d);
+        nodes += circle * (0.5 + 0.5 * sin(u_time + i));
+    }
+    color += nodes * vec3(0.486, 0.227, 0.929) * 0.3; // Violet nodes
+    
+    // Connection lines (adaptive intelligence paths)
+    float lines = 0.0;
+    vec2 p1 = vec2(0.5, 0.5);
+    for(float i = 0; i < 4.0; i++) {
+        vec2 p2 = vec2(hash(vec2(i, 7.0)), hash(vec2(i, 8.0)));
+        p2.x += sin(u_time * 0.2) * 0.1;
+        
+        vec2 pa = uv - p1, ba = p2 - p1;
+        float h = clamp(dot(pa,ba)/dot(ba,ba), 0.0, 1.0);
+        float d = length(pa - ba*h);
+        lines += smoothstep(0.002, 0.0, d) * 0.1;
+    }
+    color += lines * vec3(0.08, 0.72, 0.65); // Teal lines
+    
+    // Faint technical grid
+    vec2 grid = fract(uv * 15.0);
+    float g = (smoothstep(0.03, 0.0, grid.x) + smoothstep(0.03, 0.0, grid.y)) * 0.02;
+    color += g;
+    
+    // Interaction glow
+    float dist = distance(uv, mouse);
+    float glow = smoothstep(0.5, 0.0, dist) * 0.08;
+    color += glow * vec3(0.23, 0.51, 0.96); // Blue
+    
+    gl_FragColor = vec4(color, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_45 -->
+<!-- KEIKO Footer -->
+<footer class="bg-[#0A0A0B] border-t border-white/10 w-full py-16 mt-32">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-8 max-w-[1440px] mx-auto">
+    <div class="lg:col-span-1">
+      <div class="text-3xl text-white mb-4 font-bold tracking-tighter" style="font-family:'Space Grotesk',sans-serif">KEIKO</div>
+      <p class="text-sm text-gray-500 mb-6 max-w-xs" style="font-family:'Inter',sans-serif">Engineering-grade intelligence for the modern technical interview.</p>
+      <p class="text-xs text-gray-600" style="font-family:'Inter',sans-serif">&copy; 2026 KEIKO Intelligence. All rights reserved.</p>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Platform</h5>
+      <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="about.html">About Us</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="interview-journey.html">Interview Journey</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="features.html">Features</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="architecture.html">Architecture</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="download.html">Experience KEIKO</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Resources</h5>
+      <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">Documentation</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">API Configuration</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Roadmap</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#opensource">Open Source</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#faq">FAQ</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Legal</h5>
+      <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Privacy Policy</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Terms of Service</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Contact Research</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var p = window.location.pathname.split('/').pop() || 'index.html';
+  var m = {'about.html':'nav-about','interview-journey.html':'nav-journey','features.html':'nav-features','architecture.html':'nav-architecture'};
+  var id = m[p];
+  if(id){var el=document.getElementById(id);if(el){el.style.color='#d2bbff';el.style.fontWeight='bold';el.style.borderBottom='2px solid #d2bbff';el.style.paddingBottom='4px';}}
+})();
+</script>
+</body>
+</html>

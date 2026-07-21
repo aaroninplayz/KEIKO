@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Product Features — KEIKO</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com font-preconnect" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com font-preconnect" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#adc6ff",
+                        "inverse-primary": "#732ee4",
+                        "on-secondary-fixed": "#001a42",
+                        "surface-glass": "rgba(10, 10, 12, 0.7)",
+                        "surface-variant": "#1c1b1c",
+                        "danger": "#EF4444",
+                        "surface-bright": "#2c2b2d",
+                        "surface-container-high": "#222123",
+                        "on-tertiary-container": "#75fce8",
+                        "text-supporting": "#71717A",
+                        "on-surface": "#e5e2e3",
+                        "secondary-container": "#0566d9",
+                        "outline": "#958da1",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "background": "#050506",
+                        "on-tertiary": "#003731",
+                        "on-background": "#e5e2e3",
+                        "surface-container-highest": "#353436",
+                        "on-secondary-fixed-variant": "#004395",
+                        "surface-dim": "#0e0e0f",
+                        "on-primary-container": "#ede0ff",
+                        "on-secondary": "#002e6a",
+                        "primary-fixed": "#eaddff",
+                        "inverse-on-surface": "#313031",
+                        "text-secondary": "#9E9E9F",
+                        "on-primary": "#3f008e",
+                        "surface-tint": "#d2bbff",
+                        "on-primary-fixed": "#25005a",
+                        "tertiary": "#4fdbc8",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#007468",
+                        "surface-container": "#111012",
+                        "surface-raised": "#0e0d0f",
+                        "on-tertiary-fixed": "#00201c",
+                        "inverse-surface": "#e5e2e3",
+                        "surface-base": "#050506",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "text-primary": "#F4F4F5",
+                        "primary-fixed-dim": "#d2bbff",
+                        "primary": "#d2bbff",
+                        "on-secondary-container": "#e6ecff",
+                        "tertiary-fixed-dim": "#4fdbc8",
+                        "tertiary-fixed": "#71f8e4",
+                        "on-surface-variant": "#ccc3d8",
+                        "surface": "#0a0a0b",
+                        "primary-container": "#7c3aed",
+                        "on-tertiary-fixed-variant": "#005048",
+                        "on-error": "#690005",
+                        "outline-variant": "#222024",
+                        "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #14B8A6 100%)",
+                        "surface-container-lowest": "#080709",
+                        "surface-container-low": "#141315",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050506; color: #F4F4F5; -webkit-font-smoothing: antialiased; }
+        .glass-panel {
+            background: rgba(12, 12, 14, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        .gradient-text {
+            background-image: linear-gradient(135deg, #d2bbff 0%, #adc6ff 50%, #71f8e4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="font-body text-body min-h-screen flex flex-col selection:bg-primary-container selection:text-white">
+    <!-- Interactive 3D Particle Physics Canvas (Subtle Parallax Background) -->
+    <canvas id="particle-canvas" class="fixed inset-0 w-full h-full z-[-1] pointer-events-none"></canvas>
+
+    <!-- KEIKO TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 bg-[#050506]/80 backdrop-blur-md border-b border-white/5 h-20">
+      <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+        <a href="index.html" class="text-2xl md:text-3xl font-bold text-white tracking-tighter hover:opacity-90 transition-opacity" style="font-family:'Space Grotesk',sans-serif">KEIKO</a>
+        <div class="hidden md:flex items-center space-x-8">
+          <a id="nav-about" class="text-sm text-gray-400 hover:text-white transition-colors" href="about.html" style="font-family:'Inter',sans-serif">About</a>
+          <a id="nav-journey" class="text-sm text-gray-400 hover:text-white transition-colors" href="interview-journey.html" style="font-family:'Inter',sans-serif">Journey</a>
+          <a id="nav-features" class="text-sm text-gray-400 hover:text-white transition-colors" href="features.html" style="font-family:'Inter',sans-serif">Features</a>
+          <a id="nav-architecture" class="text-sm text-gray-400 hover:text-white transition-colors" href="architecture.html" style="font-family:'Inter',sans-serif">Architecture</a>
+        </div>
+        <a class="bg-[#7c3aed] text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:scale-105 hover:opacity-90 active:scale-95" href="download.html" style="font-family:'Inter',sans-serif">Experience KEIKO</a>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 w-full max-w-[1440px] mx-auto px-6 md:px-16 py-32">
+        <!-- Hero Section -->
+        <header class="mb-36 text-center md:text-left md:max-w-2xl relative">
+            <div class="inline-block px-4 py-1 rounded-full border border-white/5 bg-white/5 mb-6 font-mono text-xs text-primary">
+                PLATFORM CAPABILITIES
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                Everything <span class="gradient-text">KEIKO</span> Can Do
+            </h1>
+            <p class="text-lg text-gray-400 leading-relaxed">
+                Explore our core cognitive nodes, training diagnostics, and real-time sensory evaluations built for the next generation of candidate readiness preparation.
+            </p>
+        </header>
+
+        <!-- Main Attraction: Core Intelligence Modules Gateway -->
+        <section class="mb-32">
+            <div class="text-center md:text-left mb-16">
+                <div class="font-mono text-xs text-[#71f8e4] uppercase tracking-widest mb-2">Core Intelligence Modules</div>
+                <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight" style="font-family:'Space Grotesk',sans-serif">The Core Engines</h2>
+                <p class="text-gray-400 mt-3 text-sm max-w-xl">Click on any core module to explore its interactive features, parameters, and diagnostic profiles.</p>
+            </div>
+
+            <!-- Premium Box Layout for Gateways -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Resume Intelligence Card -->
+                <a href="resume-intelligence.html" class="group relative bg-[#111012]/40 backdrop-blur-md border border-white/5 hover:border-primary/30 rounded-3xl p-8 transition-all duration-300 hover:translate-y-[-6px] flex flex-col justify-between min-h-[320px] overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 text-primary transition-transform group-hover:scale-110">
+                                <span class="material-symbols-outlined">description</span>
+                            </div>
+                            <span class="text-[10px] font-mono text-gray-500 tracking-wider">MODULE.01</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors" style="font-family:'Space Grotesk',sans-serif">Resume Intelligence</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Structured PDF/text resume parsing engine. Extracts programming proficiencies, experience timelines, project complexity benchmarks, and key structural gaps.
+                        </p>
+                    </div>
+                    <div class="relative z-10 flex items-center justify-between text-xs text-primary font-mono pt-6 mt-4 border-t border-white/5">
+                        <span>Launch Diagnostics</span>
+                        <span class="material-symbols-outlined text-sm ml-2 group-hover:translate-x-1.5 transition-transform">arrow_forward</span>
+                    </div>
+                </a>
+
+                <!-- JD Intelligence Card -->
+                <a href="job-intelligence.html" class="group relative bg-[#111012]/40 backdrop-blur-md border border-white/5 hover:border-primary/30 rounded-3xl p-8 transition-all duration-300 hover:translate-y-[-6px] flex flex-col justify-between min-h-[320px] overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 text-primary transition-transform group-hover:scale-110">
+                                <span class="material-symbols-outlined">work</span>
+                            </div>
+                            <span class="text-[10px] font-mono text-gray-500 tracking-wider">MODULE.02</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors" style="font-family:'Space Grotesk',sans-serif">JD Intelligence</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Maps unstructured job listings to standard engineering frameworks. Extracts core requirements, framework syntax, years of expertise, and soft skill objectives.
+                        </p>
+                    </div>
+                    <div class="relative z-10 flex items-center justify-between text-xs text-primary font-mono pt-6 mt-4 border-t border-white/5">
+                        <span>Launch Diagnostics</span>
+                        <span class="material-symbols-outlined text-sm ml-2 group-hover:translate-x-1.5 transition-transform">arrow_forward</span>
+                    </div>
+                </a>
+
+                <!-- Video & Visual Intelligence Card -->
+                <a href="video-intelligence.html" class="group relative bg-[#111012]/40 backdrop-blur-md border border-white/5 hover:border-primary/30 rounded-3xl p-8 transition-all duration-300 hover:translate-y-[-6px] flex flex-col justify-between min-h-[320px] overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 text-primary transition-transform group-hover:scale-110">
+                                <span class="material-symbols-outlined">videocam</span>
+                            </div>
+                            <span class="text-[10px] font-mono text-gray-500 tracking-wider">MODULE.03</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors" style="font-family:'Space Grotesk',sans-serif">Video & Visuals</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Tracks posture alignment, focal eye gaze deviation, expressive gestures, facial blendshape details, and continuous composure metrics at 60 frames per second.
+                        </p>
+                    </div>
+                    <div class="relative z-10 flex items-center justify-between text-xs text-primary font-mono pt-6 mt-4 border-t border-white/5">
+                        <span>Launch Diagnostics</span>
+                        <span class="material-symbols-outlined text-sm ml-2 group-hover:translate-x-1.5 transition-transform">arrow_forward</span>
+                    </div>
+                </a>
+
+                <!-- Audio & Speech Intelligence Card -->
+                <a href="audio-intelligence.html" class="group relative bg-[#111012]/40 backdrop-blur-md border border-white/5 hover:border-primary/30 rounded-3xl p-8 transition-all duration-300 hover:translate-y-[-6px] flex flex-col justify-between min-h-[320px] overflow-hidden md:col-span-1 lg:col-span-1">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 text-primary transition-transform group-hover:scale-110">
+                                <span class="material-symbols-outlined">mic</span>
+                            </div>
+                            <span class="text-[10px] font-mono text-gray-500 tracking-wider">MODULE.04</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors" style="font-family:'Space Grotesk',sans-serif">Audio & Speech</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Decodes speaking speed (WPM), hesitation filler metrics, tone modulation, pronunciation clarity, and verbal fluency indicators from raw microphone buffers.
+                        </p>
+                    </div>
+                    <div class="relative z-10 flex items-center justify-between text-xs text-primary font-mono pt-6 mt-4 border-t border-white/5">
+                        <span>Launch Diagnostics</span>
+                        <span class="material-symbols-outlined text-sm ml-2 group-hover:translate-x-1.5 transition-transform">arrow_forward</span>
+                    </div>
+                </a>
+
+                <!-- Central Evaluation Engine Card -->
+                <a href="download.html" class="group relative bg-[#111012]/40 backdrop-blur-md border border-white/5 hover:border-primary/30 rounded-3xl p-8 transition-all duration-300 hover:translate-y-[-6px] flex flex-col justify-between min-h-[320px] overflow-hidden md:col-span-2 lg:col-span-2">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 text-primary transition-transform group-hover:scale-110">
+                                <span class="material-symbols-outlined">psychology</span>
+                            </div>
+                            <span class="text-[10px] font-mono text-gray-500 tracking-wider">MODULE.05</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors" style="font-family:'Space Grotesk',sans-serif">Central Evaluation Engine</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Maps complete candidate transcripts against role requirements. Grades logical coherence, explanation depth, technical correctness, and generates diagnostic reports.
+                        </p>
+                    </div>
+                    <div class="relative z-10 flex items-center justify-between text-xs text-primary font-mono pt-6 mt-4 border-t border-white/5">
+                        <span>Launch Diagnostics</span>
+                        <span class="material-symbols-outlined text-sm ml-2 group-hover:translate-x-1.5 transition-transform">arrow_forward</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Detailed Metrics Breakdown -->
+        <section class="mb-24">
+            <div class="flex items-center space-x-4 mb-12 border-b border-white/5 pb-4">
+                <span class="material-symbols-outlined text-primary text-3xl">sensors</span>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-white font-display-l">Detailed Telemetry Parameters</h2>
+                    <p class="text-sm text-gray-500">Individual metrics analyzed continuously by visual and vocal sensors.</p>
+                </div>
+            </div>
+
+            <!-- UI-Based Cockpit Parameters Grid (Completely removes raw 'telemetry code text') -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Posture -->
+                <div class="bg-[#111012]/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl flex flex-col justify-between min-h-[220px]">
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Posture & Frame</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">Measures torso position and shoulder-spine alignment ratios using pose mesh estimators.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest">Spine Alignment</span>
+                        <div class="flex items-center space-x-2 bg-emerald-400/5 border border-emerald-400/10 px-2 py-1 rounded-md">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span class="text-xs font-mono font-bold text-[#71f8e4]">92.4° / OPTIMAL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Eye contact -->
+                <div class="bg-[#111012]/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl flex flex-col justify-between min-h-[220px]">
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Gaze Vector Stability</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">Calculates absolute horizontal gaze coordinates to determine focus stability.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest">Focal Vector</span>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-[10px] font-mono text-[#adc6ff] bg-[#adc6ff]/10 px-2 py-0.5 rounded">[X: 0.04, Y: -0.12]</span>
+                            <span class="text-xs font-mono font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded">95%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestures -->
+                <div class="bg-[#111012]/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl flex flex-col justify-between min-h-[220px]">
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Expressive Gestures</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">Tracks torso openness and gesturing speeds to map natural body language.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-white/5 flex flex-col space-y-2">
+                        <div class="flex justify-between text-[9px] font-mono text-gray-500 uppercase tracking-widest">
+                            <span>Kinetic Activity</span>
+                            <span class="text-primary font-bold">0.68 Index</span>
+                        </div>
+                        <div class="flex space-x-1.5 h-1.5 w-full">
+                            <div class="w-1/4 bg-[#7c3aed] rounded-sm"></div>
+                            <div class="w-1/4 bg-[#7c3aed] rounded-sm"></div>
+                            <div class="w-1/4 bg-[#7c3aed] rounded-sm opacity-40"></div>
+                            <div class="w-1/4 bg-white/5 rounded-sm"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expressions -->
+                <div class="bg-[#111012]/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl flex flex-col justify-between min-h-[220px]">
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Micro-Expressions</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">Monitors facial mesh coordinates to recognize neutral, happy, confused, or nervous states.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest">Primary Blendshape</span>
+                        <div class="flex space-x-1.5">
+                            <span class="text-[9px] font-mono text-emerald-400 border border-emerald-400/20 bg-emerald-400/5 px-2 py-0.5 rounded">Engaged (85%)</span>
+                            <span class="text-[9px] font-mono text-gray-500 bg-white/5 px-2 py-0.5 rounded">Neutral</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voice -->
+                <div class="bg-[#111012]/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl flex flex-col justify-between min-h-[220px]">
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Vocal Pacing</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">Analyzes words-per-minute (WPM), hesitation filler occurrences, and modulation tone.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest">Speech Rate</span>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-mono font-bold text-[#71f8e4] bg-[#71f8e4]/10 px-2 py-0.5 rounded">135 WPM</span>
+                            <span class="text-[9px] font-mono text-red-400 bg-red-400/10 px-2 py-0.5 rounded">2 fillers/min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Composure -->
+                <div class="bg-[#111012]/40 backdrop-blur-md border border-white/5 p-6 rounded-2xl flex flex-col justify-between min-h-[220px]">
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Anxiety & Resilience</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">Synthesizes posture stability and speech modulation to trace composure under load.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-white/5 flex flex-col space-y-2">
+                        <div class="flex justify-between text-[9px] font-mono text-gray-500 uppercase tracking-widest">
+                            <span>Resilience Index</span>
+                            <span class="text-emerald-400 font-bold">92%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-emerald-400" style="width: 92%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- KEIKO Footer -->
+    <footer class="bg-[#050506] border-t border-white/5 w-full py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-8 max-w-[1440px] mx-auto font-sans">
+        <div class="lg:col-span-1">
+          <div class="text-3xl text-white mb-4 font-bold tracking-tighter" style="font-family:'Space Grotesk',sans-serif">KEIKO</div>
+          <p class="text-sm text-gray-500 mb-6 max-w-xs" style="font-family:'Inter',sans-serif">Engineering-grade intelligence for the modern technical interview.</p>
+          <p class="text-xs text-gray-600" style="font-family:'Inter',sans-serif">&copy; 2026 KEIKO Intelligence. All rights reserved.</p>
+        </div>
+        <div>
+          <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Platform</h5>
+          <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="about.html">About Us</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="interview-journey.html">Interview Journey</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="features.html">Features</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="architecture.html">Architecture</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="download.html">Experience KEIKO</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Resources</h5>
+          <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">Documentation</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">API Configuration</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Roadmap</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#opensource">Open Source</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#faq">FAQ</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Legal</h5>
+          <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Privacy Policy</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Terms of Service</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Contact Research</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Interactive 3D Particle Physics Sphere Script (Centered at Bottom-Right Corner) -->
+    <script>
+    (function() {
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        const particles = [];
+        
+        // Increased count by 25% (from 650 to 820 particles) for optimal density
+        const numParticles = 820;
+        
+        // Massive 3D Sphere radius (e.g. 750px)
+        const sphereRadius = 750;
+
+        // Position lock to bottom-right corner when page loads (scroll = 0)
+        let sphereX = width;
+        let sphereY = height;
+
+        // 3D rotation parameters
+        let angleX = 0.0005;
+        let angleY = 0.0008;
+
+        let mouse = { x: -1000, y: -1000 };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            sphereX = width;
+            sphereY = height;
+        });
+
+        // Initialize particles distributed uniformly on a 3D Sphere surface
+        for (let i = 0; i < numParticles; i++) {
+            let theta = Math.acos(2 * Math.random() - 1); // inclination
+            let phi = Math.random() * 2 * Math.PI; // azimuth
+            
+            // 3D coordinates relative to center
+            let px = sphereRadius * Math.sin(theta) * Math.cos(phi);
+            let py = sphereRadius * Math.sin(theta) * Math.sin(phi);
+            let pz = sphereRadius * Math.cos(theta);
+
+            particles.push({
+                ox: px, // original 3D coordinates relative to center
+                oy: py,
+                oz: pz,
+                x: sphereX + px,
+                y: sphereY + py,
+                vx: 0,
+                vy: 0,
+                baseSize: Math.random() * 1.5 + 1.0,
+                color: i % 2 === 0 ? 'rgba(210, 187, 255, ' : 'rgba(113, 248, 228, ' // opacity appended in drawing
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Constant slowly accumulating rotations
+            angleX += 0.0008;
+            angleY += 0.001;
+
+            // Parallax offset shift as the page scrolls down
+            const scrollParallax = window.scrollY * 0.45;
+            const targetCenterX = sphereX;
+            const targetCenterY = sphereY - scrollParallax;
+
+            const cosY = Math.cos(angleY);
+            const sinY = Math.sin(angleY);
+            const cosX = Math.cos(angleX);
+            const sinX = Math.sin(angleX);
+
+            particles.forEach(p => {
+                // 3D rotation math
+                // Rotate around Y-axis
+                let rx = p.ox * cosY - p.oz * sinY;
+                let rz = p.ox * sinY + p.oz * cosY;
+
+                // Rotate around X-axis
+                let ry = p.oy * cosX - rz * sinX;
+                let rz2 = p.oy * sinX + rz * cosX; // rotated depth Z coordinate
+
+                // Perspective projection calculation
+                // fov matches projection distance
+                const fov = 1000;
+                const perspectiveScale = fov / (fov + rz2);
+
+                // Target position projected to screen coordinate space
+                const screenX = targetCenterX + rx * perspectiveScale;
+                const screenY = targetCenterY + ry * perspectiveScale;
+
+                // Mouse deflection interaction
+                let dx = p.x - mouse.x;
+                let dy = p.y - mouse.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < 120) {
+                    let force = (120 - dist) / 120;
+                    let pushAngle = Math.atan2(dy, dx);
+                    // Push particles away
+                    p.vx += Math.cos(pushAngle) * force * 15;
+                    p.vy += Math.sin(pushAngle) * force * 15;
+                }
+
+                // Elastic spring force to perspective-projected target coordinate
+                let ax = screenX - p.x;
+                let ay = screenY - p.y;
+                p.vx += ax * 0.08;
+                p.vy += ay * 0.08;
+
+                // Damping friction
+                p.vx *= 0.8;
+                p.vy *= 0.8;
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // 3D depth-scaling opacity and size
+                // Map depth range [-sphereRadius, sphereRadius] to opacity range [0.12, 0.55]
+                const depthRatio = (rz2 + sphereRadius) / (2 * sphereRadius); // 0 (front) to 1 (back)
+                const opacity = 0.55 - (depthRatio * 0.43); 
+                const size = p.baseSize * perspectiveScale;
+
+                // Draw 3D particle
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+                ctx.fillStyle = p.color + opacity + ')';
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    })();
+
+    // Active Navbar state mapping
+    (function(){
+      var p = window.location.pathname.split('/').pop() || 'index.html';
+      var m = {'about.html':'nav-about','interview-journey.html':'nav-journey','features.html':'nav-features','architecture.html':'nav-architecture'};
+      var id = m[p];
+      if(id){var el=document.getElementById(id);if(el){el.style.color='#d2bbff';el.style.fontWeight='bold';el.style.borderBottom='2px solid #d2bbff';el.style.paddingBottom='4px';}}
+    })();
+    </script>
+</body>
+</html>

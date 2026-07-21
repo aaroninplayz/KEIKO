@@ -1,0 +1,2306 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Documentation Workspace — KEIKO</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#adc6ff",
+                        "inverse-primary": "#732ee4",
+                        "on-secondary-fixed": "#001a42",
+                        "surface-glass": "rgba(20, 20, 22, 0.75)",
+                        "surface-variant": "#222124",
+                        "danger": "#EF4444",
+                        "surface-bright": "#3a393a",
+                        "surface-container-high": "#2a2a2b",
+                        "on-tertiary-container": "#75fce8",
+                        "text-supporting": "#71717A",
+                        "on-surface": "#e5e2e3",
+                        "secondary-container": "#0566d9",
+                        "outline": "#958da1",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "background": "#050506",
+                        "on-tertiary": "#003731",
+                        "on-background": "#e5e2e3",
+                        "surface-container-highest": "#353436",
+                        "on-secondary-fixed-variant": "#004395",
+                        "surface-dim": "#0e0e0f",
+                        "on-primary-container": "#ede0ff",
+                        "on-secondary": "#002e6a",
+                        "primary-fixed": "#eaddff",
+                        "inverse-on-surface": "#313031",
+                        "text-secondary": "#A1A1AA",
+                        "on-primary": "#3f008e",
+                        "surface-tint": "#d2bbff",
+                        "on-primary-fixed": "#25005a",
+                        "tertiary": "#4fdbc8",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#007468",
+                        "surface-container": "#111012",
+                        "surface-raised": "#0e0d0f",
+                        "on-tertiary-fixed": "#00201c",
+                        "inverse-surface": "#e5e2e3",
+                        "surface-base": "#050506",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "text-primary": "#F4F4F5",
+                        "primary-fixed-dim": "#d2bbff",
+                        "primary": "#d2bbff",
+                        "on-secondary-container": "#e6ecff",
+                        "tertiary-fixed-dim": "#4fdbc8",
+                        "tertiary-fixed": "#71f8e4",
+                        "on-surface-variant": "#ccc3d8",
+                        "surface": "#0a0a0b",
+                        "primary-container": "#7c3aed",
+                        "on-tertiary-fixed-variant": "#005048",
+                        "on-error": "#690005",
+                        "outline-variant": "#222024",
+                        "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #14B8A6 100%)",
+                        "surface-container-lowest": "#080709",
+                        "surface-container-low": "#141315",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050506; color: #F4F4F5; -webkit-font-smoothing: antialiased; }
+        .glass-panel {
+            background: rgba(12, 12, 14, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        .gradient-text {
+            background-image: linear-gradient(135deg, #d2bbff 0%, #adc6ff 50%, #71f8e4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        /* Custom scroll styling for docs */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 9999px; }
+        
+        .sidebar-link.active {
+            color: #d2bbff;
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 2px solid #7c3aed;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="font-body text-body min-h-screen flex flex-col selection:bg-primary-container selection:text-white">
+    <!-- KEIKO TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 bg-[#050506]/85 backdrop-blur-md border-b border-white/5 h-20">
+      <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+        <a href="index.html" class="text-2xl md:text-3xl font-bold text-white tracking-tighter hover:opacity-90 transition-opacity" style="font-family:'Space Grotesk',sans-serif">KEIKO</a>
+        <div class="hidden md:flex items-center space-x-8">
+          <a id="nav-about" class="text-sm text-gray-400 hover:text-white transition-colors" href="about.html" style="font-family:'Inter',sans-serif">About</a>
+          <a id="nav-journey" class="text-sm text-gray-400 hover:text-white transition-colors" href="interview-journey.html" style="font-family:'Inter',sans-serif">Journey</a>
+          <a id="nav-features" class="text-sm text-gray-400 hover:text-white transition-colors" href="features.html" style="font-family:'Inter',sans-serif">Features</a>
+          <a id="nav-architecture" class="text-sm text-gray-400 hover:text-white transition-colors" href="architecture.html" style="font-family:'Inter',sans-serif">Architecture</a>
+        </div>
+        <a class="bg-[#7c3aed] text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:scale-105 hover:opacity-90 active:scale-95" href="download.html" style="font-family:'Inter',sans-serif">Experience KEIKO</a>
+      </div>
+    </nav>
+
+    <!-- 2-Column Split Documentation Workspace layout -->
+    <div class="w-full flex-1 pt-20 flex max-w-[1440px] mx-auto relative">
+        
+        <!-- Left Sidebar Navigation -->
+        <aside class="w-64 fixed top-20 left-0 bottom-0 bg-[#050506] border-r border-white/5 p-6 overflow-y-auto hidden lg:block z-20">
+            <!-- Search placeholder box -->
+            <div class="mb-8 relative">
+                <span class="material-symbols-outlined absolute left-3 top-2.5 text-gray-500 text-sm">search</span>
+                <input type="text" placeholder="Search docs..." class="w-full bg-[#111012] border border-white/5 rounded-xl pl-9 pr-4 py-2 text-xs text-gray-300 placeholder-gray-600 focus:outline-none focus:border-primary/45 transition-colors" />
+            </div>
+
+            <!-- Hierarchical Sections list -->
+            <nav class="space-y-6 text-xs font-mono">
+                <div>
+                    <h5 class="text-[10px] text-gray-600 uppercase tracking-widest mb-3">GETTING STARTED</h5>
+                    <ul class="space-y-1 font-sans text-gray-400">
+                        <li><a onclick="navigateToTab('introduction')" id="link-introduction" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer active">Platform Overview</a></li>
+                        <li><a onclick="navigateToTab('objectives-scope')" id="link-objectives-scope" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Objectives & Scope</a></li>
+                        <li><a onclick="navigateToTab('tech-stack')" id="link-tech-stack" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Technology Stack</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-[10px] text-gray-600 uppercase tracking-widest mb-3">SYSTEM CORE</h5>
+                    <ul class="space-y-1 font-sans text-gray-400">
+                        <li><a onclick="navigateToTab('system-architecture')" id="link-system-architecture" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">System Architecture</a></li>
+                        <li><a onclick="navigateToTab('api-config-tab')" id="link-api-config-tab" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">API Configuration</a></li>
+                        <li><a onclick="navigateToTab('implementation')" id="link-implementation" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Implementation Flow</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-[10px] text-gray-600 uppercase tracking-widest mb-3">INTELLIGENCE LAYERS</h5>
+                    <ul class="space-y-1 font-sans text-gray-400">
+                        <li><a onclick="navigateToTab('resume-jd-parser')" id="link-resume-jd-parser" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Resume & JD Parser</a></li>
+                        <li><a onclick="navigateToTab('video-module')" id="link-video-module" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Video Intelligence</a></li>
+                        <li><a onclick="navigateToTab('audio-module')" id="link-audio-module" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Audio Intelligence</a></li>
+                        <li><a onclick="navigateToTab('interview-engine')" id="link-interview-engine" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Interview Engine</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-[10px] text-gray-600 uppercase tracking-widest mb-3">EVALUATION & DATA</h5>
+                    <ul class="space-y-1 font-sans text-gray-400">
+                        <li><a onclick="navigateToTab('evaluation-framework')" id="link-evaluation-framework" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Evaluation Framework</a></li>
+                        <li><a onclick="navigateToTab('weights-normalizer-section')" id="link-weights-normalizer-section" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Weights & Normalizer</a></li>
+                        <li><a onclick="navigateToTab('websocket-spec')" id="link-websocket-spec" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">WS Telemetry Packets</a></li>
+                        <li><a onclick="navigateToTab('performance-reports')" id="link-performance-reports" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Performance Reports</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-[10px] text-gray-600 uppercase tracking-widest mb-3">COMMUNITY & HISTORY</h5>
+                    <ul class="space-y-1 font-sans text-gray-400">
+                        <li><a onclick="navigateToTab('changelogs')" id="link-changelogs" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Release Changelogs</a></li>
+                        <li><a onclick="navigateToTab('faq')" id="link-faq" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Frequently Asked Questions</a></li>
+                        <li><a onclick="navigateToTab('opensource')" id="link-opensource" class="sidebar-link hover:text-white hover:bg-white/5 transition-all block px-3 py-2 rounded-lg cursor-pointer">Open Source Community</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Center Main Canvas (No right TOC) -->
+        <main class="flex-1 lg:ml-64 p-8 md:p-12 min-h-screen pb-32">
+            
+            <!-- Tab Section 1: Platform Overview -->
+            <div id="tab-introduction" class="doc-tab-content">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#71f8e4]">KEIKO Core Documentation Workspace</span>
+                </div>
+                
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-2" style="font-family:'Space Grotesk',sans-serif">
+                    KEIKO - Multi-Agent AI Platform for Talent Intelligence and Candidate Evaluation
+                </h1>
+                
+                <div class="flex items-center space-x-2 text-xs font-mono text-gray-500 mb-6">
+                    <span>Creator:</span>
+                    <strong class="text-white">Aaron Shibu Mammen</strong>
+                </div>
+
+                <div class="flex flex-wrap gap-4 mt-2 mb-8">
+                    <a href="https://github.com/aaroninplayz" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-primary/40 hover:bg-white/10 text-xs text-gray-300 transition-all font-mono">
+                        <span class="material-symbols-outlined text-sm">code</span> GitHub Profile
+                    </a>
+                    <a href="https://www.linkedin.com/in/aaron-shibu-mammen" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0077b5]/10 border border-[#0077b5]/20 hover:border-[#0077b5]/50 hover:bg-[#0077b5]/25 text-xs text-gray-300 transition-all font-mono">
+                        <span class="material-symbols-outlined text-sm">person</span> LinkedIn Profile
+                    </a>
+                </div>
+
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Abstract & Platform Overview</h3>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    Recruitment has traditionally relied on human judgment to evaluate a candidate's technical expertise, communication abilities, confidence, and overall suitability for a role. While experienced interviewers can often identify talented candidates, the process itself remains inherently subjective. Every interviewer has a unique style, evaluates candidates differently, and unconsciously prioritizes different aspects of performance. Two candidates providing identical answers may receive entirely different evaluations simply because of interviewer perception, fatigue, bias, or environmental conditions.
+                </p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    Modern recruitment presents additional challenges. Organizations often receive hundreds or even thousands of applications for a single position, making it increasingly difficult to provide every candidate with a consistent, fair, and comprehensive evaluation. Recruiters are expected to simultaneously observe technical accuracy, body language, eye contact, speech clarity, confidence, professionalism, and behavioral characteristics while maintaining a natural conversation. Human cognitive limitations make it nearly impossible to accurately monitor all these dimensions simultaneously.
+                </p>
+                
+                <div class="bg-[#111012]/60 border border-white/5 p-6 rounded-3xl mb-8">
+                    <h4 class="text-xs font-bold font-mono text-primary mb-3 uppercase tracking-wider">The Philosophy Behind KEIKO</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                        The primary design philosophy behind KEIKO is based on one simple principle: <strong>An interview should measure more than just the correctness of answers.</strong>
+                    </p>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        A candidate's success during an interview depends on multiple independent factors working together, including technical knowledge, problem-solving ability, communication effectiveness, confidence, behavioral consistency, professional presentation, eye contact, posture, speech clarity, adaptability, learning ability, and context retention. Traditional systems evaluate only the verbal responses provided. KEIKO transforms these subjective observations into measurable telemetry by continuously collecting structured metrics throughout the interview lifecycle.
+                    </p>
+                </div>
+
+                <h4 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">The Problem KEIKO Solves</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-1">Subjective Evaluation</strong>
+                        <p class="text-[11px] text-gray-400 leading-relaxed">
+                            Human interviewers naturally possess unconscious biases (accent, speaking speed, appearance). KEIKO minimizes these inconsistencies by generating objective, measurable metrics.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-1">Limited Human Attention</strong>
+                        <p class="text-[11px] text-gray-400 leading-relaxed">
+                            Recruiters cannot track eye contact, body language, tone, and technical correctness simultaneously. KEIKO distributes these tasks among independent AI agents collaborating in real time.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-1">Lack of Constructive Feedback</strong>
+                        <p class="text-[11px] text-gray-400 leading-relaxed">
+                            Candidates receive simple pass/fail decisions. KEIKO generates detailed, diagnostic dashboards breaking down category-wise performance and areas for improvement.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-1">Generic Questions</strong>
+                        <p class="text-[11px] text-gray-400 leading-relaxed">
+                            Instead of static question banks, KEIKO tailors follow-ups dynamically by understanding the uploaded resume, projects, and target job description requirements.
+                        </p>
+                    </div>
+                </div>
+
+                <h4 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Multi-Agent AI Advantage</h4>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    Rather than employing a single, monolithic LLM (which would face severe latency and context limitations if asked to simultaneously process video, audio, generate questions, and track state), KEIKO distributes responsibilities across specialized AI agents. This guarantees lower latency, better fault isolation, modular scaling, and provider flexibility.
+                </p>
+            </div>
+
+            <!-- Tab Section 2: Objectives & Scope -->
+            <div id="tab-objectives-scope" class="doc-tab-content hidden">
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    Objectives & Scope
+                </h1>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    KEIKO was conceived to address the absence of an objective, repeatable, and data-driven method for evaluating candidate performance. Instead of functioning as a static questionnaire, it behaves as an adaptive interviewer modifying its strategy based on candidate depth and composure metrics.
+                </p>
+                
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Primary Functional Objectives</h3>
+                <div class="space-y-4 mb-6">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">1. Intelligent Candidate & Job Understanding</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Performs semantic analysis of uploaded resumes (education, experience, technical stack, projects) and Job Descriptions (skills clusters, experience requirements, seniority) to tailor the conversation context.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">2. Real-Time Behavioral & Adaptive Intelligence</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Continuous longitudinal monitoring of visual signals (eye contact, posture alignment, expressions) and voice attributes (WPM speed, verbal hesitations, clarity). Adjusts question difficulty dynamically based on answer coherence.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">3. Quantifiable Feedback</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Converts qualitative behaviors into explicit, normalized scores. Generates comprehensive reports tracking performance timelines and actionable roadmaps instead of a simple pass/fail flag.
+                        </p>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Platform Limitations</h3>
+                <ul class="list-disc list-inside text-xs text-gray-400 space-y-2 mb-6 pl-4">
+                    <li>Visual tracking coordinates degrade in poor/unbalanced lighting environments or low frame-rate webcams.</li>
+                    <li>Vocal pacing and pause detections depend on clean microphone inputs and low ambient room noise.</li>
+                    <li>WebSocket real-time telemetry requires stable network connectivity to prevent packet buffering lag.</li>
+                </ul>
+
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Platform Core Principles</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    KEIKO is built on four core guidelines: <strong>Objectivity</strong> (quantifiable evidence), <strong>Personalization</strong> (session uniqueness), <strong>Transparency</strong> (traceable scores), and <strong>Provider Independence</strong> (decoupled LLM vendor APIs to switch models seamlessly).
+                </p>
+            </div>
+
+            <!-- Tab Section 3: Technology Stack -->
+            <div id="tab-tech-stack" class="doc-tab-content hidden">
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    Technology Stack & Infrastructure
+                </h1>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    The KEIKO platform is designed as a modern python web application. The backend coordinates core evaluation tasks asynchronously while the frontend renders cockpit metrics dynamically:
+                </p>
+                
+                <div class="space-y-6 text-sm text-gray-400">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Backend Engine — FastAPI & Python</strong>
+                        <p class="leading-relaxed mb-2">
+                            Uses FastAPI's ASGI architecture for asynchronous routing. Coordinates static profiles matching, WebSocket sessions, database queries, and background thread execution.
+                        </p>
+                        <div class="text-[10px] font-mono text-gray-500 bg-black/40 px-3 py-2 rounded border border-white/5">
+                            Core Endpoint: ./api/v1/interview/ws/{session_id}
+                        </div>
+                    </div>
+                    
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Databases — SQLite</strong>
+                        <p class="leading-relaxed">
+                            Maintains two databases: <code class="text-primary bg-white/5 px-1.5 py-0.5 rounded font-mono">app.db</code> (persists session records, metadata, configurations, and reports) and <code class="text-primary bg-white/5 px-1.5 py-0.5 rounded font-mono">test_realtime.db</code> (used for telemetric testing and streaming logs). Abstracted repository interfaces allow seamless migration to enterprise SQL/NoSQL platforms.
+                        </p>
+                    </div>
+
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Computer Vision & Speech Stack — MediaPipe & OpenCV</strong>
+                        <p class="leading-relaxed">
+                            Integrates OpenCV for video frame processing. Real-time visual tracking uses MediaPipe Mesh models to calculate landmarks (iris ratios, head orientations, and shoulder posture vectors). Speech streams are converted to transcripts and analyzed for filler words.
+                        </p>
+                    </div>
+
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">UI Rendering — Tailwind & JavaScript</strong>
+                        <p class="leading-relaxed">
+                            Uses Tailwind CSS utilities and vanilla JavaScript to manage raw WebSocket payloads, update the DOM without heavy frame re-renders, and plot SVG charts.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Section 4: System Architecture -->
+            <div id="tab-system-architecture" class="doc-tab-content hidden">
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    System Architecture
+                </h1>
+                
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    The architecture of an Artificial Intelligence platform determines its scalability, maintainability, fault tolerance, and overall performance. Since KEIKO simultaneously processes live video streams, microphone audio, resume documents, job descriptions, AI-generated conversations, and real-time behavioral analytics, a conventional monolithic application architecture would quickly become inefficient and difficult to maintain.
+                </p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    To address these challenges, KEIKO adopts a layered modular architecture in which each subsystem performs a single well-defined responsibility while communicating through structured interfaces. Rather than allowing every component to directly interact with every other module, the architecture organizes functionality into logical layers that exchange only the information required to complete a specific task. This separation of concerns significantly reduces system complexity, improves code maintainability, and allows independent scaling of computationally intensive components such as Computer Vision, Speech Processing, and Large Language Models.
+                </p>
+
+                <!-- High-Level Architecture Diagram -->
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">High-Level Layered Pipeline</h3>
+                <div class="space-y-4 mb-8 bg-[#111012]/30 border border-white/5 p-6 rounded-3xl">
+                    <div class="flex flex-col items-center">
+                        <div class="bg-[#111012] border border-white/10 px-6 py-3 rounded-2xl text-center w-full max-w-md shadow-lg">
+                            <strong class="text-white text-xs block font-mono">Frontend Client Interface</strong>
+                            <span class="text-gray-500 text-[10px]">Webcam and microphone stream data packages over WebSockets</span>
+                        </div>
+                        <div class="text-[#71f8e4] text-sm my-2">▼</div>
+                        <div class="bg-[#111012] border border-white/10 px-6 py-3 rounded-2xl text-center w-full max-w-md shadow-lg">
+                            <strong class="text-white text-xs block font-mono">FastAPI API Gateway</strong>
+                            <span class="text-gray-500 text-[10px]">Manages async routing endpoints & socket connections</span>
+                        </div>
+                        <div class="text-[#71f8e4] text-sm my-2">▼</div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-3xl">
+                            <div class="bg-[#111012] border border-white/10 p-4 rounded-2xl text-center shadow-lg">
+                                <strong class="text-[#adc6ff] text-xs block font-mono">Resume Intel Module</strong>
+                                <span class="text-gray-500 text-[9px] block mt-1">Parses PDF documents into structured candidate profiles</span>
+                            </div>
+                            <div class="bg-[#111012] border border-white/10 p-4 rounded-2xl text-center shadow-lg">
+                                <strong class="text-[#71f8e4] text-xs block font-mono">Interview Orchestrator</strong>
+                                <span class="text-gray-500 text-[9px] block mt-1">Coordinates dialogue trees and difficulty adjustments</span>
+                            </div>
+                            <div class="bg-[#111012] border border-white/10 p-4 rounded-2xl text-center shadow-lg">
+                                <strong class="text-purple-400 text-xs block font-mono">Visual & Vocal Sensors</strong>
+                                <span class="text-gray-500 text-[9px] block mt-1">MediaPipe mesh coordinate trackers & speech analyzers</span>
+                            </div>
+                        </div>
+                        <div class="text-[#71f8e4] text-sm my-2">▼</div>
+                        <div class="bg-[#111012] border border-white/10 px-6 py-3 rounded-2xl text-center w-full max-w-md shadow-lg">
+                            <strong class="text-white text-xs block font-mono">Evaluation Framework</strong>
+                            <span class="text-gray-500 text-[10px]">Aggregates metrics and normalizes scoring outputs</span>
+                        </div>
+                        <div class="text-[#71f8e4] text-sm my-2">▼</div>
+                        <div class="bg-[#111012] border border-emerald-500/10 px-6 py-3 rounded-2xl text-center w-full max-w-md shadow-lg">
+                            <strong class="text-emerald-400 text-xs block font-mono">Diagnostic Report Dashboard</strong>
+                            <span class="text-gray-500 text-[10px]">Generates progress maps and coaching roadmaps</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layer Breakdowns -->
+                <h3 class="text-lg font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif">Five Execution Layers</h3>
+                <div class="space-y-6">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Layer 1 — Input Layer</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-3">
+                            The Input Layer serves as the entry point into the KEIKO platform. Every interview session begins here. It handles resume and job description uploads (PDF/DOCX), parses user preferences, and manages websocket handshake configurations.
+                        </p>
+                        <ul class="list-disc list-inside text-[11px] text-gray-500 space-y-1 font-mono">
+                            <li>Supported Formats: PDF, DOCX (with future markdown/HTML support)</li>
+                            <li>Session Creation: Unique Session ID (e.g. UUID <code class="text-primary bg-white/5 px-1 py-0.5 rounded text-[10px]">4d93b7fa-c71d-41f6-b5c7-3d5d6dfb44ea</code>)</li>
+                            <li>Normalizes user-defined slider metrics prior to database storage</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Layer 2 — Intelligence Layer</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-3">
+                            The Intelligence Layer forms the computational core of KEIKO. It consists of multiple specialized AI agents operating independently and concurrently:
+                        </p>
+                        <ul class="list-disc list-inside text-[11px] text-gray-500 space-y-1 font-mono">
+                            <li>Resume Intelligence: Extracts certifications, timelines, work experience, and skills vectors.</li>
+                            <li>JD Intelligence: Maps required technologies, responsibilities, and seniority expectations.</li>
+                            <li>Video Intelligence: Integrates <code class="text-primary">posture_analyzer.py</code>, <code class="text-primary">eye_contact_analyzer.py</code>, and <code class="text-primary">facial_expression_analyzer.py</code> to track facial landmarks and frame alignment.</li>
+                            <li>Audio Intelligence: Implements <code class="text-primary">voice_analyzer.py</code> to track speaking speed (WPM), hesitation pause events, and filler count.</li>
+                            <li>LLM Intelligence: Connects to provider model boundaries to resolve interview queries.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Layer 3 — Interview Layer</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-3">
+                            The Interview Layer coordinates active sessions and tracks conversation flow. Implemented inside <code class="text-primary">orchestrator.py</code>, <code class="text-primary">router.py</code>, and <code class="text-primary">conversation_manager.py</code>, it maintains context and difficulty adjustments:
+                        </p>
+                        <ul class="list-disc list-inside text-[11px] text-gray-500 space-y-1 font-mono">
+                            <li>Conversation State: Remembers dialogue history (Question ➔ Response ➔ Follow-up) to prevent repetitive questions.</li>
+                            <li>Adaptive Difficulty: Adjusts complexity dynamically based on candidate performance metrics.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Layer 4 — Evaluation Layer</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Once telemetry has been collected from all modules, the Evaluation Layer transforms raw observations into performance scores. Using validation and normalization pipelines configured via <code class="text-primary">weight_config.py</code>, it computes category ratings (Technical Competency, Communication, Posture, Eye Contact, Confidence) using normalized weighted sums.
+                        </p>
+                    </div>
+
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Layer 5 — Reporting Layer</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            The Reporting Layer converts numerical evaluations into structured visual summaries. Rather than presenting raw statistics, the reporting engine generates SVG radar charts, timeline graphs, strength/weakness tables, and personalized coaching roadmaps.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Session & Thread Architecture -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 mb-8">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <h4 class="text-xs font-bold text-white font-mono mb-2 uppercase tracking-wider">Session Manager</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Encapsulates sessions dynamically inside isolated states. Persists profile info, telemetry histories, question records, and final evaluations inside SQLite databases (<code class="text-primary font-mono">app.db</code>, <code class="text-primary font-mono">test_realtime.db</code>) to support simultaneous concurrent runs.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <h4 class="text-xs font-bold text-white font-mono mb-2 uppercase tracking-wider">Thread Architecture</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Spawns concurrent worker threads (Main Server, Resume parsing subthread, Video parsing subthread, Audio parsing subthread, Evaluation engine subthread) to isolate processor-heavy OpenCV/MediaPipe calculations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-blue-400/5 border border-blue-500/10 p-5 rounded-2xl mb-8">
+                    <h4 class="text-xs font-bold text-blue-400 font-mono mb-2 uppercase tracking-wider">Fault Tolerance & Resilience</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-2">
+                        KEIKO targets modular, graceful degradation to ensure session stability:
+                    </p>
+                    <ul class="list-disc list-inside text-[11px] text-gray-400 space-y-1">
+                        <li>If the webcam disconnects, audio analysis continues.</li>
+                        <li>If speech transcription temporarily fails, video analysis remains active.</li>
+                        <li>If one AI provider becomes unavailable, fallback models can be hot-swapped dynamically.</li>
+                        <li>Temporary network packet dropouts trigger automatic client reconnection attempts.</li>
+                    </ul>
+                </div>
+
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Scalability Strategy</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                    While the platform operates as a unified application, its decoupled, modular design naturally supports future migration to independent microservices (Resume Service, Video Analysis Service, Audio Analysis Service, Evaluation Service, Reporting Service) connected through API gateways or message queues.
+                </p>
+            </div>
+
+            <!-- Tab Section 5: API Configuration -->
+            <div id="tab-api-config-tab" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#71f8e4]">PROVIDER AGNOSTIC ORCHESTRATION</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    AI Model Architecture
+                </h1>
+                
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    Artificial Intelligence is the core driving force behind KEIKO. However, unlike many AI-powered applications that tightly couple their business logic to a single Large Language Model (LLM) provider, KEIKO follows a provider-agnostic architecture. This design philosophy ensures that the interview engine, evaluation framework, and user experience remain independent of the underlying AI model responsible for generating interview questions and understanding candidate responses.
+                </p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    The rapid evolution of Generative AI has resulted in numerous capable models such as OpenAI GPT-4o, Google Gemini, Anthropic Claude, Meta Llama, Mistral, DeepSeek, and locally hosted models through Ollama. Each model differs in pricing, latency, reasoning capabilities, privacy guarantees, context window size, and deployment flexibility. Rather than forcing organizations to adopt one ecosystem, KEIKO abstracts all model interactions behind a unified orchestration layer. The Interview Intelligence Engine communicates only with this abstraction layer, while the orchestration layer handles provider-specific API formats, authentication, prompt construction, response parsing, retry logic, and error handling.
+                </p>
+
+                <div class="bg-[#111012]/40 border border-white/5 p-6 rounded-3xl mb-8">
+                    <h3 class="text-xs font-bold font-mono text-primary mb-4 uppercase tracking-wider">Traditional vs. KEIKO Abstracted Pipelines</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-gray-400">
+                        <div class="bg-black/40 p-4 rounded-xl border border-white/5 flex flex-col justify-between">
+                            <strong class="text-red-400 block mb-2 font-mono">Traditional Lock-in Model</strong>
+                            <div class="text-[10px] text-gray-500 font-mono space-y-1">
+                                <div>Application</div>
+                                <div class="text-red-400 pl-4">└── OpenAI API (Tight Coupling)</div>
+                                <div class="text-red-500/60 pl-8">└── GPT-4 Model Only (Vendor Lock)</div>
+                            </div>
+                        </div>
+                        <div class="bg-black/40 p-4 rounded-xl border border-white/5 flex flex-col justify-between">
+                            <strong class="text-emerald-400 block mb-2 font-mono">KEIKO Decoupled Gateway</strong>
+                            <div class="text-[10px] text-[#71f8e4] font-mono space-y-1">
+                                <div>Interview Engine</div>
+                                <div class="text-emerald-400 pl-4">└── AI Orchestration Layer</div>
+                                <div class="text-primary pl-8">└── Switchable Adapters (Ollama, Anthropic, Gemini)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">The Orchestration Pipeline</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                    Implemented inside <code class="text-primary font-mono">conversation_manager.py</code> and routed via the WebSocket interfaces, the orchestration layer performs prompt construction, token tracking, and response parsing:
+                </p>
+
+                <div class="flex flex-wrap items-center justify-center gap-2 mb-8 text-[10px] font-mono text-gray-400">
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Interview Request</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Prompt Builder</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Context Manager</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Provider Selector</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Model Adapter</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-[#71f8e4]/20 text-[#71f8e4]">Response Parser</span>
+                </div>
+
+                <!-- Sub-component cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-sm text-gray-400">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Prompt Builder</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Dynamically builds prompts by combining the Candidate Resume Profile (skills, stack), Job Description targets, previously asked questions, current difficulty levels, and conversational composure metrics.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Context Manager</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Tracks the history of conversation exchanges (Questions & Responses) in sequential context windows, prompting the AI to maintain continuous context instead of generating repetitive, unrelated queries.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Model Adapter Layer</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Converts unified internal payloads into specific vendor schemas (e.g. converting standardized system-message arrays to OpenAI, Gemini, or Claude formats).
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Response Parser</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Normalizes varying provider formats into structured JSON variables, validating question string parameters and topic tag categories before returning them to the Interview Engine.
+                        </p>
+                    </div>
+                </div>
+
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Centralized Configuration</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                    All model parameters are centralized. Switching models requires updating configuration values rather than altering backend codebase scripts:
+                </p>
+
+                <div class="rounded-2xl overflow-hidden border border-white/5 bg-[#09090b] mb-8">
+                    <div class="flex bg-white/5 px-4 py-2 border-b border-white/5 justify-between items-center">
+                        <span class="text-[10px] font-mono text-gray-400">config/model_config.json</span>
+                        <span class="text-[9px] font-mono text-primary uppercase">JSON Blueprint</span>
+                    </div>
+                    <pre class="p-5 text-xs text-emerald-400 overflow-x-auto leading-relaxed"><code>{
+  "provider": "openai",
+  "model_name": "gpt-4o",
+  "temperature": 0.3,
+  "max_tokens": 1024,
+  "timeout": 30,
+  "system_prompts": {
+    "interview_induction": "Act as a technical backend interviewer.",
+    "followup_adaptation": "Increase technical complexity dynamically based on candidate scores."
+  }
+}</code></pre>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-sm text-gray-400">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1 font-mono">Dynamic Temperature Tuning</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Adjusts creativity parameters dynamically depending on the active interview state:
+                        </p>
+                        <ul class="list-disc list-inside text-[11px] text-gray-500 space-y-1 mt-2 font-mono">
+                            <li>Opening Questions: Temperature = 0.4</li>
+                            <li>Technical Code Evaluation: Temperature = 0.2</li>
+                            <li>Behavioral Coaching: Temperature = 0.5</li>
+                        </ul>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1 font-mono">Redundant Provider Failover</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Maintains request retry policies. If the primary LLM provider times out or triggers rate-limiting parameters, the orchestration loop dynamically switches routes to fallback models.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-blue-400/5 border border-blue-500/10 p-5 rounded-2xl mb-8">
+                    <h4 class="text-xs font-bold text-blue-400 font-mono mb-2 uppercase tracking-wider">Local Inference & Data Privacy</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        To address data residency and privacy rules, KEIKO supports local-first model inference. By configuring the adapter to target local ports (e.g. running Llama-3 locally via Ollama), organizations can execute visual-vocal training sessions completely offline without sending data to external APIs.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tab Section 6: Implementation Flow -->
+            <div id="tab-implementation" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#71f8e4]">LIFECYCLE EXECUTION PIPELINE</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    Implementation Flow
+                </h1>
+                
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    The implementation workflow of KEIKO defines the complete lifecycle of a candidate interview session, beginning with document uploads and ending with the generation of a comprehensive performance report. Unlike conventional interview applications that simply present questions and record answers, KEIKO executes a sequence of interconnected operations involving Natural Language Processing (NLP), Computer Vision, Speech Intelligence, WebSocket communication, adaptive AI reasoning, and multi-dimensional evaluation.
+                </p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    Each stage of the workflow is designed to prepare, analyze, adapt, and evaluate the interview in real time. Rather than treating these processes as isolated operations, KEIKO maintains a continuous flow of contextual information between modules, allowing each sta                <!-- Workflow diagram -->
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Workflow Phases</h3>
+                <div class="grid grid-cols-2 md:grid-cols-7 gap-4 mb-8 text-center text-xs">
+                    <div class="bg-[#111012]/40 border border-white/5 p-3 rounded-2xl shadow-md">
+                        <strong class="text-[#71f8e4] block mb-1">01</strong>
+                        <span class="text-white font-mono block text-[10px]">Session Setup</span>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-3 rounded-2xl shadow-md">
+                        <strong class="text-[#71f8e4] block mb-1">02</strong>
+                        <span class="text-white font-mono block text-[10px]">Initialization</span>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-3 rounded-2xl shadow-md">
+                        <strong class="text-[#71f8e4] block mb-1">03</strong>
+                        <span class="text-white font-mono block text-[10px]">WS Handshake</span>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-3 rounded-2xl shadow-md">
+                        <strong class="text-[#71f8e4] block mb-1">04</strong>
+                        <span class="text-white font-mono block text-[10px]">Live Stream</span>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-3 rounded-2xl shadow-md">
+                        <strong class="text-[#71f8e4] block mb-1">05</strong>
+                        <span class="text-white font-mono block text-[10px]">Dialogue Adapt</span>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-3 rounded-2xl shadow-md">
+                        <strong class="text-[#71f8e4] block mb-1">06</strong>
+                        <span class="text-white font-mono block text-[10px]">Evaluator Run</span>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-3 rounded-2xl shadow-md col-span-2 md:col-span-1">
+                        <strong class="text-[#71f8e4] block mb-1">07</strong>
+                        <span class="text-white font-mono block text-[10px]">Dashboard Report</span>
+                    </div>
+                </div>
+
+                <!-- Detailed Phases breakdowns -->
+                <div class="space-y-6">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Phase 1 — Session Setup</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-3">
+                            The candidate configures the session parameters, uploading their resume (PDF/DOCX) and Job Description (PDF/TXT) files, selecting standard difficulty levels (Easy, Medium, Hard, Expert), and setting scoring weights prioritizations.
+                        </p>
+                        <div class="text-[10px] font-mono text-gray-500 bg-black/40 px-3 py-1.5 rounded border border-white/5 inline-block">
+                            Calibration: weight_config.py normalizes inputs to sum to exactly 1.0 (100%)
+                        </div>
+                    </div>
+
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Phase 2 — Workspace Initialization</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-3">
+                            Initiated by `POST /api/v1/session/initialize`, the server prepares the session workspace to minimize latency during streaming:
+                        </p>
+                        <ul class="list-disc list-inside text-[11px] text-gray-500 space-y-1 font-mono">
+                            <li>Generates unique Session UUIDs (e.g. <code class="text-primary text-[10px]">a4ef72cd-918d-4a5f-bc2f-5e82a4d8138d</code>).</li>
+                            <li>Inserts initial session rows and weights configs into the SQLite database records (<code class="text-primary">app.db</code>).</li>
+                            <li>Triggers background tasks in the parser threads to index resume experiences and extract Job Description expectations.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Phase 3 — WebSocket Connection</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-3">
+                            Establishes a persistent, bi-directional WebSocket connection via the relative path <code class="text-primary font-mono">./api/v1/interview/ws/{session_id}</code>.
+                        </p>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            The server accepts the connection and returns a JSON <code class="text-primary">connected</code> handshake event verifying connection readiness, while concurrently spinning up heartbeat monitors to track network packet drops.
+                        </p>
+                    </div>
+
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Phase 4 — Real-Time Streaming</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-3">
+                            The browser webcam captures frames, encodes them as Base64 JPEG strings, and streams them over the socket at a rate of 10 FPS. Simultaneously, the mic streams binary PCM audio buffers.
+                        </p>
+                        <ul class="list-disc list-inside text-[11px] text-gray-500 space-y-1 font-mono">
+                            <li>Camera: Frame Capture ➔ JPEG ➔ Base64 String ➔ WebSocket</li>
+                            <li>Microphone: PCM Audio Chunks ➔ Audio Buffer ➔ WebSocket</li>
+                            <li>Server: Distributes visual frames and audio chunks to parallel processing threads</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Phase 5 — Adaptive Coaching & Dialogue</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-3">
+                            Coordinated via <code class="text-primary">conversation_manager.py</code>. After transcription, the Dialogue Engine analyzes candidate answers against semantic job profiles, dynamically generating targeted technical follow-up questions.
+                        </p>
+                        <ul class="list-disc list-inside text-[11px] text-gray-500 space-y-1 font-mono">
+                            <li>Adaptive Pacing: Adjusts subsequent question complexity (Easy ➔ Architect ➔ Scenarios) based on answer depth.</li>
+                            <li>Continuous Telemetry: Spawns subthreads to track posture deviations and gaze offset vectors over time.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Phase 6 — Evaluation & Report Generation</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Upon connection close, live telemetry streaming stops. The Evaluation Engine consolidates all recorded logs, applies normalized weight coefficients to compute category scores (Technical, Communication, Professionalism, Pacing), and triggers the Reporting Engine to generate SVG radar charts and personalized coaching roadmaps.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-emerald-500/5 border border-emerald-500/10 p-5 rounded-2xl mt-8 text-xs text-gray-400">
+                    <strong class="text-emerald-400 font-mono block mb-2 uppercase tracking-wider">Dual Deployment Model (Live Gateway + Local Docker)</strong>
+                    <p class="leading-relaxed mb-2">
+                        To optimize deployment and keep hosting costs minimal, KEIKO implements a segregated hosting design:
+                    </p>
+                    <ul class="list-disc list-inside space-y-1 pl-2">
+                        <li><strong>Static Portal Gateway (24/7 Live Website)</strong>: Hosts documentation, tutorials, user profiles, and static pages on the public web server.</li>
+                        <li><strong>Telemetry Sandbox Container (Dockerized Engine)</strong>: The heavy-duty media analyzer is packaged as a local <code class="text-primary font-mono">Dockerfile</code> package. Candidates pull the container locally to host the CPU/GPU-bound MediaPipe/OpenCV pipelines and WebSocket endpoint on their own machine, preserving absolute privacy and preventing external bandwidth costs.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-400/5 border border-blue-500/10 p-5 rounded-2xl mt-6 mb-8 text-xs text-gray-400 font-mono">
+                    <strong class="text-blue-400 font-mono block mb-1">Workflow Duration Benchmarks</strong>
+                    <ul class="list-disc list-inside space-y-1 mt-2">
+                        <li>Session Setup: 30 – 60 seconds</li>
+                        <li>Workspace Initialization: 5 – 10 seconds</li>
+                        <li>WebSocket Connection Handshake: &lt; 1 second</li>
+                        <li>Live Interview Runtime: 15 – 45 minutes</li>
+                        <li>Telemetry Evaluation & Score Mapping: 3 – 10 seconds</li>
+                        <li>Report Dashboard Compilation: 2 – 5 seconds</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab Section 7: Resume & JD Parser -->
+            <div id="tab-resume-jd-parser" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#71f8e4]">SEMANTIC PROFILE PARSING & VECTORIZATION</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    Resume & Job Description Parser
+                </h1>
+                
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    The quality of an interview depends heavily on how well the interviewer understands both the candidate and the role being applied for. Traditional interview systems often rely on static question banks that ignore the unique experiences of individual candidates and the specific requirements of different job positions. As a result, interviews become repetitive, generic, and incapable of accurately evaluating a candidate's suitability for a particular role.
+                </p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    KEIKO addresses this limitation through its Resume & Job Description Intelligence Module, a dedicated subsystem responsible for transforming unstructured documents into structured knowledge representations. Before an interview begins, the platform analyzes the candidate's resume and the uploaded Job Description (JD) using Natural Language Processing (NLP) techniques to identify technical competencies, professional experience, educati                <!-- Processing Pipeline -->
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Processing Pipeline</h3>
+                <div class="bg-[#111012]/30 border border-white/5 p-6 rounded-3xl mb-8">
+                    <div class="grid grid-cols-2 gap-4 text-center mb-4">
+                        <div class="bg-[#111012] border border-white/10 p-3 rounded-2xl">
+                            <strong class="text-white text-xs block font-mono">Resume PDF Upload</strong>
+                            <span class="text-gray-500 text-[9px] block mt-1">Parsed to Candidate Profile</span>
+                        </div>
+                        <div class="bg-[#111012] border border-white/10 p-3 rounded-2xl">
+                            <strong class="text-white text-xs block font-mono">Job Description TXT</strong>
+                            <span class="text-gray-500 text-[9px] block mt-1">Parsed to Role Requirements</span>
+                        </div>
+                    </div>
+                    <div class="text-center text-[#71f8e4] text-sm mb-4">▼</div>
+                    <div class="bg-[#111012] border border-white/10 p-4 rounded-2xl text-center max-w-lg mx-auto shadow-lg">
+                        <strong class="text-emerald-400 text-xs block font-mono">Semantic Alignment Engine</strong>
+                        <span class="text-gray-400 text-[10px] block mt-1">Projects skills into a multidimensional vector space to map tech gap queries</span>
+                    </div>
+                    <div class="text-center text-[#71f8e4] text-sm my-4">▼</div>
+                    <div class="bg-[#111012] border border-white/10 p-4 rounded-2xl text-center max-w-lg mx-auto shadow-lg">
+                        <strong class="text-white text-xs block font-mono">Interview Intelligence Engine</strong>
+                        <span class="text-gray-400 text-[10px] block mt-1">Constructs tailored roadmaps & adaptive follow-up contexts</span>
+                    </div>
+                </div>
+
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Resume Parsing Pipeline</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                    The parser parses uploaded documents (PDF/DOCX) using a sequential pipeline coordinated via backend threads, saving parsed metrics directly to <code class="text-primary font-mono">session_metadata</code> tables in <code class="text-primary font-mono">app.db</code>:
+                </p>
+                <div class="flex flex-wrap items-center justify-center gap-2 mb-6 text-[10px] font-mono text-gray-400">
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Upload</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Validation</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Extraction</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Cleaning</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Entity Mapping</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-[#71f8e4]/20 text-[#71f8e4]">Profile Object</span>
+                </div>
+
+                <!-- Skill clusters table -->
+                <h4 class="text-xs font-bold text-gray-400 font-mono uppercase tracking-wider mb-3">Extracted Competency Clusters</h4>
+                <div class="overflow-x-auto border border-white/5 rounded-2xl mb-8">
+                    <table class="w-full text-xs text-left text-gray-400">
+                        <thead class="bg-white/5 text-white font-mono text-[10px]">
+                            <tr>
+                                <th class="p-3">Category</th>
+                                <th class="p-3">Extracted Technologies</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5 font-mono text-[10px]">
+                            <tr>
+                                <td class="p-3 text-white font-semibold">Programming Languages</td>
+                                <td class="p-3">Python, Java, C++, JavaScript, Go, Rust</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white font-semibold">Web Frameworks</td>
+                                <td class="p-3">FastAPI, Django, React, Angular, Spring Boot</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white font-semibold">Databases & Caches</td>
+                                <td class="p-3">PostgreSQL, MySQL, MongoDB, Redis, SQLite</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white font-semibold">Infrastructure & Cloud</td>
+                                <td class="p-3">AWS, Azure, Google Cloud, Docker, Kubernetes, Terraform</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Parsed Candidate Profile -->
+                    <div class="rounded-2xl overflow-hidden border border-white/5 bg-[#09090b]">
+                        <div class="flex bg-white/5 px-4 py-2 border-b border-white/5 justify-between items-center">
+                            <span class="text-[10px] font-mono text-gray-400">Candidate JSON Profile</span>
+                            <span class="text-[9px] font-mono text-primary uppercase">Parsed Resume</span>
+                        </div>
+                        <pre class="p-4 text-xs text-emerald-400 overflow-x-auto leading-relaxed"><code>{
+  "experience": "3 years",
+  "primary_domain": "Backend Development",
+  "languages": ["Python", "JavaScript"],
+  "frameworks": ["FastAPI", "React"],
+  "cloud": ["AWS", "Docker"],
+  "projects": [
+    {
+      "title": "Inventory Manager",
+      "stack": ["FastAPI", "Docker", "Redis"]
+    }
+  ]
+}</code></pre>
+                    </div>
+
+                    <!-- Parsed Role Profile -->
+                    <div class="rounded-2xl overflow-hidden border border-white/5 bg-[#09090b]">
+                        <div class="flex bg-white/5 px-4 py-2 border-b border-white/5 justify-between items-center">
+                            <span class="text-[10px] font-mono text-gray-400">Target Role JSON Profile</span>
+                            <span class="text-[9px] font-mono text-primary uppercase">Parsed Job Description</span>
+                        </div>
+                        <pre class="p-4 text-xs text-[#adc6ff] overflow-x-auto leading-relaxed"><code>{
+  "role": "Backend Engineer",
+  "experience_required": "3+ years",
+  "primary_stack": ["Python", "FastAPI", "AWS"],
+  "responsibilities": [
+    "Develop scalable microservice APIs",
+    "Deploy cloud-native containers"
+  ],
+  "soft_skills": ["Problem Solving"]
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Semantic Alignment Engine</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                    Rather than performing simple, rigid ATS keyword checking which often flags false negatives, KEIKO projects candidate skills into a multidimensional vector space. Related technologies (e.g. mapping FastAPI ➔ REST APIs ➔ Python ➔ Backend) are evaluated conceptually. The system scores Framework Compatibility, Technical Skill Match, Experience gaps, and Soft Skill coverage to construct a dynamically targeted roadmap of interview questions.
+                </p>
+
+                <div class="bg-blue-400/5 border border-blue-500/10 p-5 rounded-2xl mb-8">
+                    <h4 class="text-xs font-bold text-blue-400 font-mono mb-2 uppercase tracking-wider font-mono">Future Roadmap Enhancements</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Upcoming updates to the parsing module include scanning resumes with Optical Character Recognition (OCR) for image-based PDFs, crawling candidate GitHub repositories to build source-code capability profiles, and verifying certifications directly via third-party APIs.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tab Section 8: Video Intelligence -->
+            <div id="tab-video-module" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#71f8e4]">COMPUTER VISION SENSORS</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    Video Intelligence Module
+                </h1>
+                
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    In modern interviews, communication extends far beyond verbal responses. Human interviewers subconsciously evaluate a wide range of non-verbal behavioral cues including eye contact, posture, facial expressions, attentiveness, confidence, and overall professional presence. These behavioral indicators often influence hiring decisions as much as technical knowledge, yet they are inherently subjective and susceptible to personal bias.
+                </p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    KEIKO addresses this challenge through its Video Intelligence Module, a real-time computer vision subsystem responsible for continuously monitoring candidate behavior during the interview. Rather than recording video solely for playback, the module processes incoming webcam frames in real time to extract measurable behavioral metrics that contribute to the overall interview evaluation.
+                </p>
+
+                <!-- System Architecture -->
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Visual Processing Flow</h3>
+                <div class="flex flex-wrap items-center justify-center gap-2 mb-8 text-[10px] font-mono text-gray-400">
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Webcam Capture</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Downsample (10 FPS)</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Base64 Encode</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">WebSocket Tunnel</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-[#71f8e4]/20 text-[#71f8e4]">MediaPipe Mesh Pipeline</span>
+                </div>
+
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Face Mesh & Landmarks Mapping</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                    Using MediaPipe's Face Mesh models, the CV pipeline extracts structural coordinate arrays representing anatomical landmarks (pupil positions, eyelids, nose contours, jawline):
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-[#111012]/50 border border-white/5 p-6 rounded-3xl flex justify-center items-center h-48">
+                        <svg class="w-32 h-32 text-primary" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <!-- Face outline contour -->
+                            <path d="M 20 40 C 20 80, 80 80, 80 40 C 80 20, 20 20, 20 40 Z" stroke-dasharray="2,2" class="opacity-30" />
+                            <!-- Eyes -->
+                            <circle cx="35" cy="40" r="3" fill="#71f8e4" />
+                            <circle cx="65" cy="40" r="3" fill="#71f8e4" />
+                            <line x1="30" y1="40" x2="40" y2="40" stroke="#71f8e4" />
+                            <line x1="60" y1="40" x2="70" y2="40" stroke="#71f8e4" />
+                            <!-- Gaze vectors -->
+                            <line x1="35" y1="40" x2="35" y2="34" stroke="#adc6ff" stroke-width="1" />
+                            <line x1="65" y1="40" x2="65" y2="34" stroke="#adc6ff" stroke-width="1" />
+                            <!-- Nose -->
+                            <circle cx="50" cy="52" r="2.5" fill="#71f8e4" />
+                            <!-- Mouth -->
+                            <path d="M 38 65 Q 50 72 62 65" stroke="#71f8e4" fill="none" />
+                            <!-- Text labels -->
+                            <text x="50" y="15" fill="#71f8e4" font-size="7" font-family="monospace" text-anchor="middle" class="tracking-widest">FACIAL MESH</text>
+                        </svg>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl text-xs text-gray-400 flex flex-col justify-center">
+                        <strong class="text-white block mb-1">Gaze Contact Scoring</strong>
+                        <p class="leading-relaxed">
+                            Implemented in <code class="text-primary">eye_contact_analyzer.py</code>. Calculates pupil iris centers relative to eye contours to measure gaze alignment towards screen focus. Looking away for more than 2.0 seconds registers focus warnings.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-sm text-gray-400">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Head Pose Orientation</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Estimates Head Pitch (looking up/down), Yaw (looking left/right), and Roll (side tilts) using landmark geometry to monitor distraction behaviors over time.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Expressions Classification</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Calculated inside <code class="text-primary">facial_expression_analyzer.py</code>. Analyzes landmark changes to classify neutral, happy, focused, confused, or nervous states.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Posture alignment details -->
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Posture Analysis & Scoring</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                    Implemented inside <code class="text-primary">posture_analyzer.py</code>, the posture estimator checks the geometric angle between the candidate's nose, shoulders, and vertical axis:
+                </p>
+
+                <!-- Posture table -->
+                <div class="overflow-x-auto border border-white/5 rounded-2xl mb-8">
+                    <table class="w-full text-xs text-left text-gray-400">
+                        <thead class="bg-white/5 text-white font-mono text-[10px]">
+                            <tr>
+                                <th class="p-3">Angle Range</th>
+                                <th class="p-3">Rating</th>
+                                <th class="p-3">Scoring Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5 font-mono text-[10px]">
+                            <tr>
+                                <td class="p-3 text-white">160° – 180°</td>
+                                <td class="p-3 text-emerald-400 font-semibold">Excellent / Ideal</td>
+                                <td class="p-3">No penalty, standard scores preserved</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white">145° – 159°</td>
+                                <td class="p-3 text-yellow-400 font-semibold">Good / Slight Slouch</td>
+                                <td class="p-3">Minor baseline warnings recorded</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white">130° – 144°</td>
+                                <td class="p-3 text-orange-400 font-semibold">Warning / Slouching</td>
+                                <td class="p-3">Active slouch warnings triggered, small score penalty</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white">&lt; 130°</td>
+                                <td class="p-3 text-red-400 font-semibold">Poor Alignment</td>
+                                <td class="p-3">Deductions applied to Professional Presence baseline</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Real-Time Telemetry JSON schema -->
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Structured Telemetry Packet</h3>
+                <div class="rounded-2xl overflow-hidden border border-white/5 bg-[#09090b] mb-8">
+                    <div class="flex bg-white/5 px-4 py-2 border-b border-white/5 justify-between items-center">
+                        <span class="text-[10px] font-mono text-gray-400">WebSocket visual packet payload</span>
+                        <span class="text-[9px] font-mono text-primary uppercase">JSON Schema</span>
+                    </div>
+                    <pre class="p-5 text-xs text-[#adc6ff] overflow-x-auto leading-relaxed"><code>{
+  "event": "gaze_telemetry",
+  "coordinates": {
+    "x": 0.041,
+    "y": -0.128
+  },
+  "is_making_contact": true,
+  "confidence": 0.96,
+  "timestamp": 1784910283
+}</code></pre>
+                </div>
+
+                <div class="bg-blue-400/5 border border-blue-500/10 p-5 rounded-2xl mb-8">
+                    <h4 class="text-xs font-bold text-blue-400 font-mono mb-2 uppercase tracking-wider font-mono">Engagement Monitoring</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Visual tracking metrics are aggregated inside <code class="text-primary font-mono">engagement_tracker.py</code> and combined with posture alerts, face presence verification, and frame quality calculations to produce a unified temporal metric mapping candidate attention.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tab Section 9: Audio Intelligence -->
+            <div id="tab-audio-module" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#71f8e4]">VOCAL & SPEECH SENSORS</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    Audio Intelligence Module
+                </h1>
+                
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    Effective communication is one of the most important aspects of a successful interview. While technical knowledge determines whether a candidate possesses the required expertise, the ability to communicate ideas clearly, confidently, and professionally often determines how that expertise is perceived by interviewers. Factors such as speech clarity, speaking pace, pronunciation, hesitation, confidence, and response structure collectively influence interview outcomes.
+                </p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    Traditional interview platforms primarily record audio for later playback, requiring manual review by recruiters or candidates. This approach is time-consuming and often subjective, as different evaluators may interpret the same response differently. KEIKO overcomes this limitation through its Audio Intelligence Module, an independent real-time speech analysis subsystem responsible for continuously monitoring and evaluating the candidate's verbal communication throughout the interview.
+                </p>
+
+                <!-- Module Architecture -->
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Auditory Processing Flow</h3>
+                <div class="flex flex-wrap items-center justify-center gap-2 mb-8 text-[10px] font-mono text-gray-400">
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Microphone</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Raw PCM Buffering</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Bandpass Noise Filter</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">STT Transcription Engine</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-[#71f8e4]/20 text-[#71f8e4]">Pace & Tone Telemetry</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-sm text-gray-400">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">PCM Stream Buffering</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Mic inputs are sliced into 3-5 second binary PCM chunks (16-bit, mono channel, sampled at 16kHz) to minimize streaming network overhead and reduce transcript processing latency.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1 font-mono">Speech-to-Text (STT)</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Converts speech audio inputs into clean text strings, forwarding the transcript directly to the Interview Dialogue Engine to grade question responses.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Speaking Pace WPM table -->
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Speaking Pace & Words-Per-Minute (WPM)</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                    Calculated inside <code class="text-primary font-mono">voice_analyzer.py</code>, words-per-minute (WPM) metrics are computed continuously by dividing the word count of transcribed sentences by the speaking duration:
+                </p>
+
+                <!-- Pace table -->
+                <div class="overflow-x-auto border border-white/5 rounded-2xl mb-8">
+                    <table class="w-full text-xs text-left text-gray-400">
+                        <thead class="bg-white/5 text-white font-mono text-[10px]">
+                            <tr>
+                                <th class="p-3">Speaking Speed</th>
+                                <th class="p-3">Pacing Classification</th>
+                                <th class="p-3">Comprehension Quality</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5 font-mono text-[10px]">
+                            <tr>
+                                <td class="p-3 text-white">&lt; 110 WPM</td>
+                                <td class="p-3 text-yellow-400 font-semibold">Too Slow / Deliberate</td>
+                                <td class="p-3">May indicate difficulty recalling info or uncertainty</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white">130 WPM – 150 WPM</td>
+                                <td class="p-3 text-emerald-400 font-semibold">Optimal Speed</td>
+                                <td class="p-3">Clear cadence, highly professional, easy to follow</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white">151 WPM – 170 WPM</td>
+                                <td class="p-3 text-yellow-400 font-semibold">Moderate Fast</td>
+                                <td class="p-3">Acceptable pacing but can degrade in complex system topics</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white">&gt; 170 WPM</td>
+                                <td class="p-3 text-red-400 font-semibold">Too Fast / Rushed</td>
+                                <td class="p-3">Likely reduces clarity, signals high nervousness levels</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-sm text-gray-400">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Hesitation & Filler Detections</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Analyzes spoken text against verbal hesitation lists to extract filler tags (e.g. "um", "uh", "like", "you know", "basically", "actually") to score vocal presence.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Vocal Modulation & Pitch</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Monitors tone fluctuations and rhythm deviations, helping distinguish structured verbal delivery from monotonous or flat acoustic responses.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Speech Telemetry JSON -->
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Auditory Telemetry Packet</h3>
+                <div class="rounded-2xl overflow-hidden border border-white/5 bg-[#09090b] mb-8">
+                    <div class="flex bg-white/5 px-4 py-2 border-b border-white/5 justify-between items-center">
+                        <span class="text-[10px] font-mono text-gray-400">WebSocket speech packet payload</span>
+                        <span class="text-[9px] font-mono text-primary uppercase">JSON Schema</span>
+                    </div>
+                    <pre class="p-5 text-xs text-[#adc6ff] overflow-x-auto leading-relaxed"><code>{
+  "event": "speech_telemetry",
+  "words_per_minute": 142,
+  "clarity_score": 0.91,
+  "hesitation_score": 0.08,
+  "confidence": 0.88,
+  "timestamp": 1784910283
+}</code></pre>
+                </div>
+
+                <div class="bg-blue-400/5 border border-blue-500/10 p-5 rounded-2xl mb-8">
+                    <h4 class="text-xs font-bold text-blue-400 font-mono mb-2 uppercase tracking-wider font-mono">Privacy Encrypted buffers</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        To protect candidate confidentiality, raw microphone audio samples are processed directly in transient memory buffers. Temporary data segments are deleted immediately after evaluation processing completes.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tab Section 10: Interview Engine -->
+            <div id="tab-interview-engine" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#71f8e4]">COGNITIVE CONVERSATIONAL ORCHESTRATOR</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    Interview Engine & Adaptivity
+                </h1>
+                
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    The Interview Intelligence Engine is the central decision-making component of the KEIKO platform. While the Resume Intelligence Module understands the candidate's background, the Job Description Intelligence Module interprets employer expectations, and the Video and Audio Intelligence Modules continuously analyze behavioral signals, it is the Interview Intelligence Engine that transforms these independent sources of information into an adaptive, human-like interview experience.
+                </p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    Unlike conventional mock interview platforms that rely on static question banks or predefined interview scripts, KEIKO employs a dynamic conversational engine capable of understanding context, remembering previous discussions, adjusting                 <!-- Architecture Overview -->
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Multimodal Context Aggregation</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 text-center text-xs">
+                    <div class="bg-[#111012] border border-white/5 p-3 rounded-2xl">
+                        <strong class="text-[#adc6ff] block mb-1">Resume Profiles</strong>
+                        <span class="text-gray-500 text-[9px] block">Candidate Context</span>
+                    </div>
+                    <div class="bg-[#111012] border border-white/5 p-3 rounded-2xl">
+                        <strong class="text-[#adc6ff] block mb-1">Job Descriptions</strong>
+                        <span class="text-gray-500 text-[9px] block">Role Requirements</span>
+                    </div>
+                    <div class="bg-[#111012] border border-white/5 p-3 rounded-2xl">
+                        <strong class="text-[#71f8e4] block mb-1">Webcam Inputs</strong>
+                        <span class="text-gray-500 text-[9px] block">Gaze/Posture Telemetry</span>
+                    </div>
+                    <div class="bg-[#111012] border border-white/5 p-3 rounded-2xl">
+                        <strong class="text-[#71f8e4] block mb-1">Speech Streams</strong>
+                        <span class="text-gray-500 text-[9px] block">Vocal Transcripts</span>
+                    </div>
+                    <div class="col-span-2 md:col-span-4 text-center text-[#71f8e4] text-sm my-1">▼</div>
+                    <div class="col-span-2 md:col-span-4 bg-emerald-500/5 border border-emerald-500/10 p-4 rounded-2xl shadow-lg max-w-lg mx-auto">
+                        <strong class="text-emerald-400 text-xs block font-mono">Interview Dialogue Engine</strong>
+                        <span class="text-gray-400 text-[10px] block mt-1">Generates adaptive technical queries inside conversation_manager.py</span>
+                    </div>
+                </div>
+
+                <!-- Interview roadmap block -->
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Session Planning & Roadmaps</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                    Rather than selecting random questions, KEIKO creates an interview roadmap:
+                </p>
+                <div class="flex flex-wrap justify-center gap-2 mb-8 text-[9px] font-mono text-gray-400">
+                    <span class="bg-[#111012] px-2.5 py-1.5 rounded-lg border border-white/5">Introduction</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-2.5 py-1.5 rounded-lg border border-white/5">Resume Deep Dive</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-2.5 py-1.5 rounded-lg border border-white/5">Core Tech Topics</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-2.5 py-1.5 rounded-lg border border-white/5">Scenario Systems Design</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-2.5 py-1.5 rounded-lg border border-white/5">Advanced Follow-up</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-2.5 py-1.5 rounded-lg border border-white/5">Behavioral/HR</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-2.5 py-1.5 rounded-lg border border-[#71f8e4]/20 text-[#71f8e4]">Outro</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-sm text-gray-400">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Context-Aware Memory</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Maintains dialogue history (Questions asked, candidate answers, covered concepts) inside the SQLite session context table, preventing repetitive questioning.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1 font-mono">Dynamic Difficulty Tuning</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Adjusts the complexity rating of follow-ups dynamically. Strong answers trigger architect-level system design topics, whereas weak answers trigger basic guided reviews.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Technical evaluation comparisons -->
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Technical Reasoning Evaluation</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                    The engine evaluates more than factual correctness, tracking response completeness, logical reasoning, and design thinking:
+                </p>
+
+                <!-- Poor vs. Strong Response comparison panels -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Poor Response Card -->
+                    <div class="bg-red-500/5 border border-red-500/10 p-5 rounded-2xl">
+                        <strong class="text-red-400 text-xs block mb-2 font-mono">Example: Poor/Incomplete Response</strong>
+                        <div class="text-[11px] text-gray-500 font-mono mb-2">Question: "Explain dependency injection in FastAPI."</div>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            "It injects dependencies."
+                        </p>
+                        <div class="mt-3 text-[10px] text-red-400 font-mono">
+                            ➔ Result: Low accuracy, triggers basic conceptual review follow-up questions.
+                        </div>
+                    </div>
+
+                    <!-- Strong Response Card -->
+                    <div class="bg-emerald-500/5 border border-emerald-500/10 p-5 rounded-2xl">
+                        <strong class="text-emerald-400 text-xs block mb-2 font-mono">Example: Strong/Complete Response</strong>
+                        <div class="text-[11px] text-gray-500 font-mono mb-2">Question: "Explain dependency injection in FastAPI."</div>
+                        <p class="text-xs text-gray-400 leading-relaxed font-sans">
+                            "Dependency injection separates object instantiation from business logic. In FastAPI, we use the 'Depends' function to manage database session resources and simplify unit testing."
+                        </p>
+                        <div class="mt-3 text-[10px] text-emerald-400 font-mono">
+                            ➔ Result: High accuracy, triggers advanced system design scenario questions.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-400/5 border border-blue-500/10 p-5 rounded-2xl mb-8">
+                    <h4 class="text-xs font-bold text-blue-400 font-mono mb-2 uppercase tracking-wider font-mono">Multimodal Integration</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Vocal hesitation factors and eye contact tracking scores are continuously synchronized with the dialogue model. If the system detects high vocal stress or dropping attention, it dynamically modulates prompt difficulty to encourage confidence recovery before climbing back up.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tab Section 11: Evaluation Framework -->
+            <div id="tab-evaluation-framework" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#71f8e4]">ANALYTIC GRADING CONSOLE</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    Evaluation Framework
+                </h1>
+                
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    The ultimate objective of an interview is not merely to ask questions but to accurately evaluate a candidate's suitability for a role. Traditional interview evaluations are often subjective, relying heavily on the personal judgment of interviewers. Factors such as interviewer experience, unconscious bias, memory limitations, and inconsistent evaluation criteria can significantly influence hiring decisions. Two interviewers assessing the same candidate may produce entirely different conclusions despite observing identical responses.
+                </p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    KEIKO addresses this challenge through a comprehensive Evaluation Framework that transforms interview observations into objective, measurable, and explainable performance metrics. Rather than relying on a single overall score, the framework evaluates multiple dimensions of candidate performance, including technical competency, communication effectiveness, behavioral presence, confidence, and engagement.
+                </p>
+
+                <!-- Processing pipeline -->
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Evaluation Pipeline Flow</h3>
+                <div class="flex flex-wrap items-center justify-center gap-2 mb-8 text-[10px] font-mono text-gray-400">
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Telemetry Capture</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Metric Extraction</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Score Calculation</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Weight Normalization (weight_config.py)</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-[#71f8e4]/20 text-[#71f8e4]">Reporting Engine</span>
+                </div>
+
+                <!-- Categorized score grids -->
+                <h3 class="text-lg font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif">Multi-Dimensional Assessments</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-sm text-gray-400">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Technical Competency</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Meases candidate subject-matter depth, accuracy, and engineering design thinking. This category holds the largest baseline scoring ratio.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Communication Skills</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Tracks vocal pacing clarity (words-per-minute target loops) and structural organization of responses.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Professional Presence</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Monitors eye contact stability (gaze alignment vectors) and shoulder posture posture calculations.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1 font-mono">Confidence Indicators</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Monitors verbal hesitation patterns, pause intervals, and expressiveness to track confidence levels over time.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Weighted Scoring math example -->
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Weighted Scoring Logic</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                    Rather than averaging metrics uniformly, the Evaluation Framework computes category ratings using a weighted sum representation:
+                </p>
+
+                <!-- Score formula table -->
+                <div class="overflow-x-auto border border-white/5 rounded-2xl mb-8">
+                    <table class="w-full text-xs text-left text-gray-400">
+                        <thead class="bg-white/5 text-white font-mono text-[10px]">
+                            <tr>
+                                <th class="p-3">Category</th>
+                                <th class="p-3">Raw Score</th>
+                                <th class="p-3">Weight Coefficient</th>
+                                <th class="p-3">Weighted Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5 font-mono text-[10px]">
+                            <tr>
+                                <td class="p-3 text-white">Technical Competency</td>
+                                <td class="p-3">92.00%</td>
+                                <td class="p-3">0.40</td>
+                                <td class="p-3 text-emerald-400">36.80</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white">Communication Skills</td>
+                                <td class="p-3">88.00%</td>
+                                <td class="p-3">0.25</td>
+                                <td class="p-3 text-emerald-400">22.00</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white">Professional Presence</td>
+                                <td class="p-3">90.00%</td>
+                                <td class="p-3">0.20</td>
+                                <td class="p-3 text-emerald-400">18.00</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white">Confidence Indicators</td>
+                                <td class="p-3">85.00%</td>
+                                <td class="p-3">0.15</td>
+                                <td class="p-3 text-emerald-400">12.75</td>
+                            </tr>
+                            <tr class="bg-white/5 text-white font-semibold">
+                                <td class="p-3">Aggregated Session Rating</td>
+                                <td class="p-3">-</td>
+                                <td class="p-3">1.00 (100%)</td>
+                                <td class="p-3 text-primary">89.55%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-blue-400/5 border border-blue-500/10 p-5 rounded-2xl mb-8">
+                    <h4 class="text-xs font-bold text-blue-400 font-mono mb-2 uppercase tracking-wider font-mono">Traceability & Explanations</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Every scoring parameter maps directly back to transparent evidence (e.g. eye contact scores map to gaze coordinates, speech clarity to STT model confidence indices). Upon interview close, reports are compiled and saved directly into the session metrics tables.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tab Section 12: Weights & Normalizer -->
+            <div id="tab-weights-normalizer-section" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#71f8e4]">METRIC COEFFICIENT CALIBRATOR</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    Weights & Normalizer API
+                </h1>
+                
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    Different organizations evaluate candidates using different hiring priorities. A software startup may emphasize technical expertise above all else, while a customer-facing organization may prioritize communication skills and professional presence. Likewise, senior engineering roles often require deeper architectural reasoning, whereas entry-level positions may focus more on learning ability and problem-solving potential.
+                </p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    Recognizing that no single evaluation model is universally applicable, KEIKO incorporates a Weights & Normalization API, a configurable subsystem that enables interview administrators or candidates to define the relative importance of different evaluation parameters before an interview session begins. Instead of relying on fixed scoring formulas, the platform allows individual evaluation metrics to be assigned configurable weight coefficients, automatically normalized so that the total contribution equals 1.0 (100%).
+                </p>
+
+                <!-- Normalizer Workflow -->
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Normalization Workflow</h3>
+                <div class="flex flex-wrap items-center justify-center gap-2 mb-8 text-[10px] font-mono text-gray-400">
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Submit Raw Weights</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Normalization Engine (weight_config.py)</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Unified Coefficients (1.00)</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-[#71f8e4]/20 text-[#71f8e4]">Evaluation Framework</span>
+                </div>
+
+                <!-- Interactive Normalizer Sandbox Widget -->
+                <h3 class="text-lg font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif">Interactive Normalizer Widget</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-[#111012]/40 border border-white/5 rounded-3xl p-6 shadow-2xl mb-8">
+                    <!-- Left: Sliders inputs -->
+                    <div class="space-y-4">
+                        <h4 class="text-xs font-bold text-gray-400 font-mono uppercase tracking-wider">Raw Target Ratios</h4>
+                        
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 font-mono">
+                                <span class="text-gray-400">Posture Weight</span>
+                                <span id="val-posture" class="text-primary font-bold">20</span>
+                            </div>
+                            <input type="range" id="slide-posture" min="0" max="100" value="20" oninput="calculateNormalizedWeights()" class="w-full accent-primary bg-white/5 h-1 rounded-lg outline-none" />
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 font-mono">
+                                <span class="text-gray-400">Eye Contact Weight</span>
+                                <span id="val-contact" class="text-primary font-bold">20</span>
+                            </div>
+                            <input type="range" id="slide-contact" min="0" max="100" value="20" oninput="calculateNormalizedWeights()" class="w-full accent-primary bg-white/5 h-1 rounded-lg outline-none" />
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 font-mono">
+                                <span class="text-gray-400">Voice Pacing Weight</span>
+                                <span id="val-voice" class="text-primary font-bold">20</span>
+                            </div>
+                            <input type="range" id="slide-voice" min="0" max="100" value="20" oninput="calculateNormalizedWeights()" class="w-full accent-primary bg-white/5 h-1 rounded-lg outline-none" />
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 font-mono">
+                                <span class="text-gray-400">Attire Quality Weight</span>
+                                <span id="val-attire" class="text-primary font-bold">20</span>
+                            </div>
+                            <input type="range" id="slide-attire" min="0" max="100" value="20" oninput="calculateNormalizedWeights()" class="w-full accent-primary bg-white/5 h-1 rounded-lg outline-none" />
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs mb-1 font-mono">
+                                <span class="text-gray-400">Engagement Score Weight</span>
+                                <span id="val-engagement" class="text-primary font-bold">20</span>
+                            </div>
+                            <input type="range" id="slide-engagement" min="0" max="100" value="20" oninput="calculateNormalizedWeights()" class="w-full accent-primary bg-white/5 h-1 rounded-lg outline-none" />
+                        </div>
+                    </div>
+
+                    <!-- Right: Normalized JSON output -->
+                    <div class="flex flex-col justify-between">
+                        <h4 class="text-xs font-bold text-gray-400 font-mono uppercase tracking-wider mb-2">Normalized JSON output</h4>
+                        <div class="bg-black/60 rounded-2xl border border-white/5 p-4 flex-1">
+                            <pre class="text-[11px] font-mono text-emerald-400 leading-relaxed overflow-x-auto" id="json-normalized-output">
+{
+  "weights": {
+    "posture": 0.20,
+    "eye_contact": 0.20,
+    "voice_pacing": 0.20,
+    "attire_quality": 0.20,
+    "engagement": 0.20
+  },
+  "normalized_sum": "1.00"
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Math Normalization formulation -->
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Mathematical Normalization</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                    The Normalization Engine converts raw arbitrary user values into unified fractional weights so they always sum to exactly 1.00:
+                </p>
+                <div class="bg-black/60 border border-white/5 rounded-2xl p-4 font-mono text-center text-[#71f8e4] text-xs mb-6">
+                    Normalized Weight = (Individual Weight) / (Sum of All Raw Weights)
+                </div>
+
+                <!-- Normalization with Arbitrary Values table -->
+                <h4 class="text-xs font-bold text-gray-400 font-mono uppercase tracking-wider mb-3">Arbitrary Configuration Example (Sum = 28)</h4>
+                <div class="overflow-x-auto border border-white/5 rounded-2xl mb-8">
+                    <table class="w-full text-xs text-left text-gray-400">
+                        <thead class="bg-white/5 text-white font-mono text-[10px]">
+                            <tr>
+                                <th class="p-3">Metric Name</th>
+                                <th class="p-3">Raw Weight</th>
+                                <th class="p-3">Normalization Math</th>
+                                <th class="p-3">Normalized Coefficient</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5 font-mono text-[10px]">
+                            <tr>
+                                <td class="p-3 text-white">Technical Competency</td>
+                                <td class="p-3">12</td>
+                                <td class="p-3">12 / 28</td>
+                                <td class="p-3 text-emerald-400">0.428 (42.8%)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white">Communication Skills</td>
+                                <td class="p-3">8</td>
+                                <td class="p-3">8 / 28</td>
+                                <td class="p-3 text-emerald-400">0.286 (28.6%)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white">Confidence Indicators</td>
+                                <td class="p-3">5</td>
+                                <td class="p-3">5 / 28</td>
+                                <td class="p-3 text-emerald-400">0.179 (17.9%)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 text-white">Eye Contact</td>
+                                <td class="p-3">3</td>
+                                <td class="p-3">3 / 28</td>
+                                <td class="p-3 text-emerald-400">0.107 (10.7%)</td>
+                            </tr>
+                            <tr class="bg-white/5 text-white font-semibold">
+                                <td class="p-3">Total Sum</td>
+                                <td class="p-3">28</td>
+                                <td class="p-3">28 / 28</td>
+                                <td class="p-3 text-primary">1.000 (100.0%)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-xs text-gray-400">
+                    <!-- API Request -->
+                    <div class="rounded-2xl overflow-hidden border border-white/5 bg-[#09090b]">
+                        <div class="flex bg-white/5 px-4 py-2 border-b border-white/5 justify-between items-center">
+                            <span class="text-[10px] font-mono text-gray-400">POST /api/v1/session/weights</span>
+                            <span class="text-[9px] font-mono text-primary uppercase">API Request</span>
+                        </div>
+                        <pre class="p-4 text-xs text-emerald-400 overflow-x-auto leading-relaxed"><code>{
+  "weights": {
+    "technical": 40,
+    "communication": 25,
+    "confidence": 15,
+    "eye_contact": 10,
+    "posture": 10
+  }
+}</code></pre>
+                    </div>
+
+                    <!-- API Response -->
+                    <div class="rounded-2xl overflow-hidden border border-white/5 bg-[#09090b]">
+                        <div class="flex bg-white/5 px-4 py-2 border-b border-white/5 justify-between items-center">
+                            <span class="text-[10px] font-mono text-gray-400">Normalized Schema Payload</span>
+                            <span class="text-[9px] font-mono text-primary uppercase">API Response</span>
+                        </div>
+                        <pre class="p-4 text-xs text-[#adc6ff] overflow-x-auto leading-relaxed"><code>{
+  "weights": {
+    "technical": 0.40,
+    "communication": 0.25,
+    "confidence": 0.15,
+    "eye_contact": 0.10,
+    "posture": 0.10
+  },
+  "normalized_sum": 1.00
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="bg-blue-400/5 border border-blue-500/10 p-5 rounded-2xl mb-8 text-xs text-gray-400">
+                    <strong class="text-blue-400 font-mono block mb-1">Session-Level Safeguards & Validation Rules</strong>
+                    <p class="leading-relaxed">
+                        To maintain evaluation integrity, weight configurations are stored per session inside <code class="text-primary font-mono">app.db</code> and validated against server-side validation rules (missing parameters checks, empty config checks, negative value restrictions). Weight profiles become completely immutable after the session WebSocket connection officially establishes to prevent rating manipulation.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tab Section 13: WS Telemetry Packets -->
+            <div id="tab-websocket-spec" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#71f8e4]">REAL-TIME COMMUNICATIONS SOCKET</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    WebSocket Telemetry Packets
+                </h1>
+                
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    Modern AI-powered interview systems require continuous communication between the client application and the backend server. Unlike conventional web applications that rely on individual HTTP requests for every interaction, KEIKO operates as a real-time intelligent system where video frames, microphone audio, interview questions, behavioral telemetry, and evaluation metrics must flow continuously throughout the interview session.
+                </p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    To achieve this, KEIKO employs WebSocket-based bidirectional communication, allowing the client and server to exchange information instantly without repeatedly establishing new network connections. This persistent communication channel forms the backbone of the platform, enabling synchronized multimedia streaming, adaptive AI interactions, and real-time telemetry generation.
+                </p>
+
+                <!-- Interactive Payload Swapper Widget -->
+                <h3 class="text-lg font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif">Interactive Live Event Payload Selector</h3>
+                <div class="rounded-3xl border border-white/5 bg-[#111012]/40 p-6 mb-8">
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button onclick="switchPayloadData('gaze')" id="btn-payload-gaze" class="text-xs font-mono font-bold text-[#71f8e4] bg-[#71f8e4]/10 border border-[#71f8e4]/20 px-4 py-2 rounded-full focus:outline-none">Gaze Event</button>
+                        <button onclick="switchPayloadData('posture')" id="btn-payload-posture" class="text-xs font-mono text-gray-400 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full focus:outline-none">Posture Event</button>
+                        <button onclick="switchPayloadData('speech')" id="btn-payload-speech" class="text-xs font-mono text-gray-400 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full focus:outline-none">Speech Event</button>
+                    </div>
+
+                    <div class="bg-black/60 rounded-2xl border border-white/5 p-4">
+                        <pre class="text-[11px] font-mono text-[#adc6ff] leading-relaxed overflow-x-auto" id="payload-output-container">{
+  "event": "gaze_telemetry",
+  "coordinates": {
+    "x": 0.041,
+    "y": -0.128
+  },
+  "is_making_contact": true,
+  "timestamp": 1784910283
+}</pre>
+                    </div>
+                </div>
+
+                <!-- Network architecture comparison cards -->
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">WebSockets vs. HTTP Networking</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-xs text-gray-400">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl shadow-xl flex flex-col justify-between">
+                        <div>
+                            <strong class="text-red-400 block mb-2 font-mono">Traditional HTTP Request-Response</strong>
+                            <p class="text-[11px] text-gray-500 leading-relaxed mb-4">
+                                Connection closes immediately after every request. Inefficient for streaming high-frequency video frames and audio packages.
+                            </p>
+                        </div>
+                        <div class="bg-black/40 p-4 rounded-xl border border-white/5 font-mono text-[10px] space-y-1">
+                            <div class="flex justify-between"><span class="text-gray-500">HTTP GET /api/session</span><span class="text-red-400">➔ Request</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">HTTP/1.1 200 OK</span><span class="text-[#adc6ff]">◄ Response</span></div>
+                            <div class="text-center text-red-500/60 pt-2 border-t border-white/5 text-[9px]">CONNECTION SHUT DOWN</div>
+                        </div>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl shadow-xl flex flex-col justify-between">
+                        <div>
+                            <strong class="text-emerald-400 block mb-2 font-mono">Persistent WebSocket Tunnel</strong>
+                            <p class="text-[11px] text-gray-500 leading-relaxed mb-4">
+                                Handshake upgrades HTTP to a TCP connection that stays open. Allows instant bidirectional frame and transcript events.
+                            </p>
+                        </div>
+                        <div class="bg-black/40 p-4 rounded-xl border border-white/5 font-mono text-[10px] space-y-1">
+                            <div class="flex justify-between"><span class="text-gray-500">WS Handshake Upgrade</span><span class="text-emerald-400">➔ Upgrade</span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Switching Protocols 101</span><span class="text-[#adc6ff]">◄ Accepted</span></div>
+                            <div class="text-center text-emerald-400 pt-2 border-t border-white/5 text-[9px] animate-pulse">STREAM ACTIVE (BIDIRECTIONAL)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Structured API payloads details -->
+                <h3 class="text-lg font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif">Supported Telemetry Schemas</h3>
+                <div class="space-y-6">
+                    <!-- Video Frame Payload -->
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Video Frame Stream Payload</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-3">
+                            Webcam captures encoded as base64 JPEG buffers are streamed from the client at ~10 FPS:
+                        </p>
+                        <pre class="bg-black/40 p-4 rounded-xl text-[10px] text-emerald-400 overflow-x-auto leading-relaxed"><code>{
+  "event": "video_frame",
+  "frame": "data:image/jpeg;base64,/9j/4AAQSkZJRg...",
+  "timestamp": 1784910283
+}</code></pre>
+                    </div>
+
+                    <!-- Audio Chunk Payload -->
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Audio Chunk Stream Payload</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-3">
+                            Microphone inputs are sliced as raw PCM chunks and streamed dynamically:
+                        </p>
+                        <pre class="bg-black/40 p-4 rounded-xl text-[10px] text-emerald-400 overflow-x-auto leading-relaxed"><code>{
+  "event": "audio_chunk",
+  "format": "pcm16",
+  "sample_rate": 16000,
+  "buffer": "base64_binary_audio_data",
+  "timestamp": 1784910283
+}</code></pre>
+                    </div>
+
+                    <!-- Question Events Payload -->
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white text-xs block mb-2 font-mono">Server Dialogue Question Payload</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-3">
+                            Adaptive questions constructed by the Dialogue Engine are pushed to the client immediately:
+                        </p>
+                        <pre class="bg-black/40 p-4 rounded-xl text-[10px] text-[#adc6ff] overflow-x-auto leading-relaxed"><code>{
+  "event": "question",
+  "question": "Explain dependency injection in FastAPI.",
+  "difficulty": "medium"
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="bg-blue-400/5 border border-blue-500/10 p-5 rounded-2xl mt-8 mb-8 text-xs text-gray-400">
+                    <strong class="text-blue-400 font-mono block mb-1">Heartbeat Ping-Pong & Session Recovery</strong>
+                    <p class="leading-relaxed">
+                        To maintain connection state, client and server exchange cyclic <code class="text-primary font-mono">ping</code> / <code class="text-primary font-mono">pong</code> frames. In the event of network dropout, the client-side socket registers a connection warning and immediately triggers auto-reconnection scripts to verify the UUID session and resume the interview thread.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tab Section 14: Performance Reports -->
+            <div id="tab-performance-reports" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#71f8e4]">DIAGNOSTIC ANALYTICS CONSOLE</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                    Performance Reports
+                </h1>
+                
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    The interview process does not end when the final question is answered. In many traditional interview environments, candidates receive little or no feedback regarding their performance. Recruiters may internally evaluate responses, but candidates often remain unaware of their strengths, weaknesses, or areas requiring improvement. This lack of actionable feedback significantly reduces the educational value of mock interviews.
+                </p>
+                <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                    KEIKO addresses this limitation through its Performance Reporting & Candidate Feedback Dashboard, a comprehensive reporting subsystem that consolidates technical evaluations, behavioral telemetry, communication analysis, and interview intelligence into a unified performance report. Rather than providing only a single interview score, KEIKO presents detailed multidimensional analytics that help candidates understand exactly how they performed and identify practical strategies for improvement.
+                </p>
+
+                <!-- Processing Pipeline -->
+                <h3 class="text-lg font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Report Generation Pipeline</h3>
+                <div class="flex flex-wrap items-center justify-center gap-2 mb-8 text-[10px] font-mono text-gray-400">
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Telemetry Streams</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Aggregator</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">Normalization Engine</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-white/5">SQLite (app.db)</span>
+                    <span class="text-[#71f8e4]">➔</span>
+                    <span class="bg-[#111012] px-3 py-1.5 rounded-lg border border-[#71f8e4]/20 text-[#71f8e4]">Diagnostic Dashboard</span>
+                </div>
+
+                <!-- Executive Summary breakdown -->
+                <h3 class="text-lg font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif">Feedback Categories</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-sm text-gray-400">
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Overall Alignment</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Tracks Resume-JD Semantic Alignment (technical skills match, frameworks compatibility, experience thresholds, tool coverage) to evaluate job readiness.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1 font-mono">Vocal Cadence Analysis</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Tracks clarity metrics, filler word usage (um, like, basically), and speaking speed curves mapped throughout the session timeline.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1 font-mono">Visual Analytics</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Aggregates pupil coordinates tracking profiles and posture alignment angles calculated continuously at 10 FPS.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-5 rounded-2xl">
+                        <strong class="text-white block mb-1">Radar Projections</strong>
+                        <p class="text-xs text-gray-400 leading-relaxed mt-1">
+                            Converts categorical data vectors (Technical Competency, Communication, Professional Presence, Confidence, Engagement) into custom SVG radar charts.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Strengths vs. Recommendations lists -->
+                <h3 class="text-xl font-bold text-white mb-3" style="font-family:'Space Grotesk',sans-serif">Strengths & Coaching Recommendations</h3>
+                <p class="text-xs text-gray-400 leading-relaxed mb-6">
+                    Rather than assigning generic feedback, KEIKO provides actionable recommendations based on observed behavioral and technical telemetry:
+                </p>
+
+                <!-- Comparison grids -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Strengths Card -->
+                    <div class="bg-emerald-500/5 border border-emerald-500/10 p-5 rounded-2xl text-xs text-gray-400">
+                        <strong class="text-emerald-400 font-mono block mb-3 uppercase tracking-wider">Identified Performance Strengths</strong>
+                        <ul class="list-disc list-inside space-y-2">
+                            <li>Strong Python fundamentals and FastAPI architectural knowledge.</li>
+                            <li>Optimal speaking pace (avg. WPM: 141) during core coding sections.</li>
+                            <li>Consistent eye contact (avg. gaze: 89%) maintained throughout.</li>
+                            <li>Logical, structured responses to system design questions.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Recommendations Card -->
+                    <div class="bg-yellow-500/5 border border-yellow-500/10 p-5 rounded-2xl text-xs text-gray-400">
+                        <strong class="text-yellow-400 font-mono block mb-3 uppercase tracking-wider font-mono">Coaching Recommendations</strong>
+                        <ul class="list-disc list-inside space-y-2">
+                            <li>Reduce verbal hesitations (filler words frequency: 1.1%).</li>
+                            <li>Expand microservice architectural explanations with specific tools.</li>
+                            <li>Maintain consistent spine posture during complex reasoning.</li>
+                            <li>Increase confidence when tackling expert-level system designs.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-blue-400/5 border border-blue-500/10 p-5 rounded-2xl mb-8 text-xs text-gray-400">
+                    <strong class="text-blue-400 font-mono block mb-1">Exporting & Long-Term Tracking</strong>
+                    <p class="leading-relaxed">
+                        Completed evaluations can be exported directly as downloadable formats (PDF, JSON, CSV). The system tracks session-by-session scores in SQLite databases, allowing candidates to visualize their progress as they continue practicing.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tab Section 15: Release Changelogs -->
+            <div id="tab-changelogs" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#d2bbff]">Version Log & Platform Updates</span>
+                </div>
+                
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-4" style="font-family:'Space Grotesk',sans-serif">
+                    Release Changelogs
+                </h1>
+                <p class="text-xs text-gray-400 leading-relaxed mb-8">
+                    Every significant feature, architecture refinement, and bug fix across KEIKO platform releases is recorded here.
+                </p>
+
+                <div class="space-y-6 font-sans text-xs text-gray-400">
+                    <!-- v4.2.0 -->
+                    <div class="bg-[#111012]/60 border border-white/5 p-6 rounded-3xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 font-mono text-[11px] font-bold border border-emerald-500/20">v4.2.0</span>
+                                <span class="text-white font-semibold font-mono text-xs">Current Stable</span>
+                            </div>
+                            <span class="text-[11px] text-gray-500 font-mono">July 2026</span>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-gray-400 text-xs">
+                            <li>Rebuilt the visual Candidate Self-Training console to integrate SVG Pentagon Skill Radar chart projections.</li>
+                            <li>Delayed timeline connector line growth calculations on architecture.html until upper cards completely scroll out of screen view.</li>
+                            <li>Replaced raw text labels inside Detailed Telemetry panels with modular cockpit HUD components (signals, progress fills, badges).</li>
+                        </ul>
+                    </div>
+
+                    <!-- v4.1.0 -->
+                    <div class="bg-[#111012]/60 border border-white/5 p-6 rounded-3xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 rounded-lg bg-purple-500/10 text-primary font-mono text-[11px] font-bold border border-purple-500/20">v4.1.0</span>
+                            </div>
+                            <span class="text-[11px] text-gray-500 font-mono">June 2026</span>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-gray-400 text-xs">
+                            <li>Shifted platform vocabulary from Recruiter monitoring workflows to Candidate Self-Guided practice HUD.</li>
+                            <li>Removed mock video placeholder tags and replaced them with graphical vector geometry overlays.</li>
+                        </ul>
+                    </div>
+
+                    <!-- v4.0.0 -->
+                    <div class="bg-[#111012]/60 border border-white/5 p-6 rounded-3xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 rounded-lg bg-blue-500/10 text-secondary font-mono text-[11px] font-bold border border-blue-500/20">v4.0.0</span>
+                            </div>
+                            <span class="text-[11px] text-gray-500 font-mono">May 2026</span>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-gray-400 text-xs">
+                            <li>Migrated static interfaces to a unified premium obsidian dark color system.</li>
+                            <li>Built interactive particle physics sphere layouts on features.html supporting scroll parallax and cursor deflection.</li>
+                        </ul>
+                    </div>
+
+                    <!-- v3.5.0 -->
+                    <div class="bg-[#111012]/60 border border-white/5 p-6 rounded-3xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 rounded-lg bg-teal-500/10 text-tertiary font-mono text-[11px] font-bold border border-teal-500/20">v3.5.0</span>
+                            </div>
+                            <span class="text-[11px] text-gray-500 font-mono">March 2026</span>
+                        </div>
+                        <ul class="list-disc list-inside space-y-2 text-gray-400 text-xs">
+                            <li>Added REST endpoints config mapping for dynamic HTTP weights CRUD controls.</li>
+                            <li>Optimized MediaPipe video frames processing thread throttling to target every 3rd frame.</li>
+                        </ul>
+                    </div>
+
+                    <!-- v2.4.0 -->
+                    <div class="bg-[#111012]/60 border border-white/5 p-6 rounded-3xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-400 font-mono text-[11px] font-bold border border-amber-500/20">v2.4.0</span>
+                                <span class="text-xs font-mono text-amber-400/80">Major Release</span>
+                            </div>
+                            <span class="text-[11px] text-gray-500 font-mono">October 24, 2024</span>
+                        </div>
+                        <p class="text-xs text-gray-300 mb-3">Introduced Quantum Node integration, expanding multi-cluster routing capabilities and security payload verification.</p>
+                        <div class="space-y-3 text-xs">
+                            <div>
+                                <span class="text-emerald-400 font-mono font-semibold uppercase text-[10px]">Added</span>
+                                <ul class="list-disc list-inside mt-1 text-gray-400 space-y-1">
+                                    <li><strong>Quantum Node Support:</strong> Initial beta support for multi-cluster quantum routing.</li>
+                                    <li>New webhook payload signatures to verify event authenticity.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <span class="text-primary font-mono font-semibold uppercase text-[10px]">Improved</span>
+                                <ul class="list-disc list-inside mt-1 text-gray-400 space-y-1">
+                                    <li><strong>Dashboard Latency:</strong> Reduced initial load times by 40% using edge caching.</li>
+                                    <li>Refined visual hierarchy in analytics overview.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- v2.3.5 -->
+                    <div class="bg-[#111012]/60 border border-white/5 p-6 rounded-3xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <span class="px-2.5 py-1 rounded-lg bg-gray-500/10 text-gray-300 font-mono text-[11px] font-bold border border-gray-500/20">v2.3.5</span>
+                            </div>
+                            <span class="text-[11px] text-gray-500 font-mono">October 10, 2024</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-300 font-mono font-semibold uppercase text-[10px]">Fixed</span>
+                            <ul class="list-disc list-inside mt-1 text-gray-400 space-y-1">
+                                <li>Resolved race condition in async data pipelines causing intermittent timeouts.</li>
+                                <li>Fixed UI overflow issue on mobile devices in the settings panel.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Section 16: Frequently Asked Questions -->
+            <div id="tab-faq" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#71f8e4]">Knowledge Base & System FAQ</span>
+                </div>
+                
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-4" style="font-family:'Space Grotesk',sans-serif">
+                    Frequently Asked Questions
+                </h1>
+                <p class="text-xs text-gray-400 leading-relaxed mb-8">
+                    Comprehensive intelligence regarding KEIKO architecture, telemetry scoring, deployment options, and data privacy protocols.
+                </p>
+
+                <div class="space-y-8">
+                    <!-- Category: General Intelligence -->
+                    <div>
+                        <h3 class="text-sm font-mono font-semibold text-primary uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-base">dataset</span> General Intelligence
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="bg-[#111012]/60 border border-white/5 p-5 rounded-2xl">
+                                <h4 class="text-sm font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">What is KEIKO?</h4>
+                                <p class="text-xs text-gray-400 leading-relaxed">
+                                    KEIKO is an advanced multi-agent AI platform for talent intelligence and candidate self-training. It processes multi-modal sensor inputs (vision, audio, natural language) in real-time to generate objective, engineering-grade interview evaluation telemetry.
+                                </p>
+                            </div>
+
+                            <div class="bg-[#111012]/60 border border-white/5 p-5 rounded-2xl">
+                                <h4 class="text-sm font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">How does KEIKO differ from traditional interview tools?</h4>
+                                <p class="text-xs text-gray-400 leading-relaxed">
+                                    Traditional tools assess only the textual correctness of spoken or written answers. KEIKO evaluates full-spectrum interview performance including body language, gaze contact, vocal pacing, filler frequency, and structured technical reasoning.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category: Technology Stack & Execution -->
+                    <div>
+                        <h3 class="text-sm font-mono font-semibold text-secondary uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-base">memory</span> Technology Stack & Execution
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="bg-[#111012]/60 border border-white/5 p-5 rounded-2xl">
+                                <h4 class="text-sm font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">What infrastructure powers the real-time AI agents?</h4>
+                                <p class="text-xs text-gray-400 leading-relaxed">
+                                    KEIKO runs on a FastAPI backend with asynchronous WebSocket channels, MediaPipe visual posture tracking, WebAudio API processing, and integrated LLM evaluation chains running locally or via API endpoints.
+                                </p>
+                            </div>
+
+                            <div class="bg-[#111012]/60 border border-white/5 p-5 rounded-2xl">
+                                <h4 class="text-sm font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Can KEIKO operate locally without external cloud connectivity?</h4>
+                                <p class="text-xs text-gray-400 leading-relaxed">
+                                    Yes. KEIKO supports a local application node configuration where backend servers and lightweight models execute on localhost (port 8000), eliminating external API token dependencies.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category: Data Privacy & Security -->
+                    <div>
+                        <h3 class="text-sm font-mono font-semibold text-tertiary uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-base">shield</span> Data Privacy & Security
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="bg-[#111012]/60 border border-white/5 p-5 rounded-2xl">
+                                <h4 class="text-sm font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">How is candidate video and audio telemetry handled?</h4>
+                                <p class="text-xs text-gray-400 leading-relaxed">
+                                    All sensory video frames and audio chunks are processed transiently in memory. Numerical telemetry metrics (gaze coordinates, posture angles, WPM) are sanitized before saving to local SQLite stores.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Section 17: Open Source Community -->
+            <div id="tab-opensource" class="doc-tab-content hidden">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                    <span class="font-mono text-[9px] text-[#adc6ff]">Community & Open Source Protocol</span>
+                </div>
+                
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-4" style="font-family:'Space Grotesk',sans-serif">
+                    Open Source Community
+                </h1>
+                <p class="text-xs text-gray-400 leading-relaxed mb-8">
+                    Built together. Improved together. KEIKO core evaluation modules, sensor drivers, and frontend UI templates are open for global contribution.
+                </p>
+
+                <!-- Why Open Source Grid -->
+                <h3 class="text-lg font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif">Core Principles</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-[#111012]/60 border border-white/5 p-5 rounded-2xl">
+                        <span class="material-symbols-outlined text-primary mb-2 text-2xl">verified</span>
+                        <h4 class="text-xs font-bold text-white mb-1">Quality & Security</h4>
+                        <p class="text-[11px] text-gray-400 leading-relaxed">
+                            Open review ensures rapid vulnerability detection and code optimization across all system modules.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/60 border border-white/5 p-5 rounded-2xl">
+                        <span class="material-symbols-outlined text-secondary mb-2 text-2xl">lightbulb</span>
+                        <h4 class="text-xs font-bold text-white mb-1">Rapid Innovation</h4>
+                        <p class="text-[11px] text-gray-400 leading-relaxed">
+                            Community contributions drive new sensor integrations, custom scoring models, and localized features.
+                        </p>
+                    </div>
+                    <div class="bg-[#111012]/60 border border-white/5 p-5 rounded-2xl">
+                        <span class="material-symbols-outlined text-tertiary mb-2 text-2xl">fact_check</span>
+                        <h4 class="text-xs font-bold text-white mb-1">Auditability</h4>
+                        <p class="text-[11px] text-gray-400 leading-relaxed">
+                            AI evaluation mechanisms must be transparent and verifiable by independent researchers and developers.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Development Workflow Steps -->
+                <h3 class="text-lg font-bold text-white mb-4" style="font-family:'Space Grotesk',sans-serif">Contribution Workflow</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 mb-8">
+                    <div class="bg-[#111012]/40 border border-white/5 p-4 rounded-xl text-center">
+                        <div class="w-8 h-8 rounded-full bg-primary/10 text-primary mx-auto flex items-center justify-center mb-2">
+                            <span class="material-symbols-outlined text-sm">call_split</span>
+                        </div>
+                        <span class="font-mono text-[9px] text-gray-500 block">STEP 01</span>
+                        <span class="text-xs font-bold text-white">Fork</span>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-4 rounded-xl text-center">
+                        <div class="w-8 h-8 rounded-full bg-secondary/10 text-secondary mx-auto flex items-center justify-center mb-2">
+                            <span class="material-symbols-outlined text-sm">code</span>
+                        </div>
+                        <span class="font-mono text-[9px] text-gray-500 block">STEP 02</span>
+                        <span class="text-xs font-bold text-white">Develop</span>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-4 rounded-xl text-center">
+                        <div class="w-8 h-8 rounded-full bg-tertiary/10 text-tertiary mx-auto flex items-center justify-center mb-2">
+                            <span class="material-symbols-outlined text-sm">merge</span>
+                        </div>
+                        <span class="font-mono text-[9px] text-gray-500 block">STEP 03</span>
+                        <span class="text-xs font-bold text-white">Pull Request</span>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-4 rounded-xl text-center">
+                        <div class="w-8 h-8 rounded-full bg-purple-500/10 text-purple-400 mx-auto flex items-center justify-center mb-2">
+                            <span class="material-symbols-outlined text-sm">rate_review</span>
+                        </div>
+                        <span class="font-mono text-[9px] text-gray-500 block">STEP 04</span>
+                        <span class="text-xs font-bold text-white">Review</span>
+                    </div>
+                    <div class="bg-[#111012]/40 border border-white/5 p-4 rounded-xl text-center">
+                        <div class="w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-400 mx-auto flex items-center justify-center mb-2">
+                            <span class="material-symbols-outlined text-sm">rocket_launch</span>
+                        </div>
+                        <span class="font-mono text-[9px] text-gray-500 block">STEP 05</span>
+                        <span class="text-xs font-bold text-white">Release</span>
+                    </div>
+                </div>
+
+                <!-- Repository Action Banner -->
+                <div class="bg-gradient-to-r from-purple-900/20 via-blue-900/20 to-teal-900/20 border border-white/10 p-6 rounded-3xl text-center">
+                    <h4 class="text-base font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Shape the Future of AI Interview Telemetry</h4>
+                    <p class="text-xs text-gray-400 max-w-xl mx-auto mb-4">
+                        Explore the codebase on GitHub, submit issues, or contribute pull requests to help advance talent intelligence technology.
+                    </p>
+                    <a href="https://github.com/aaroninplayz" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-on-primary font-bold text-xs hover:opacity-90 transition-all">
+                        <span class="material-symbols-outlined text-sm">terminal</span> Access GitHub Repository
+                    </a>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- KEIKO Footer -->
+    <footer class="bg-[#050506] border-t border-white/5 w-full py-16 mt-24">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-8 max-w-[1440px] mx-auto font-sans">
+        <div class="lg:col-span-1">
+          <div class="text-3xl text-white mb-4 font-bold tracking-tighter" style="font-family:'Space Grotesk',sans-serif">KEIKO</div>
+          <p class="text-sm text-gray-500 mb-6 max-w-xs" style="font-family:'Inter',sans-serif">Engineering-grade intelligence for the modern technical interview.</p>
+          <p class="text-xs text-gray-600" style="font-family:'Inter',sans-serif">&copy; 2026 KEIKO Intelligence. All rights reserved.</p>
+        </div>
+        <div>
+          <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Platform</h5>
+          <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="about.html">About Us</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="interview-journey.html">Interview Journey</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="features.html">Features</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="architecture.html">Architecture</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="download.html">Experience KEIKO</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Resources</h5>
+          <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">Documentation</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">API Configuration</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#opensource">Open Source</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#faq">FAQ</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Legal</h5>
+          <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Privacy Policy</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Terms of Service</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Contact Research</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+    // Tab switching routing
+    function navigateToTab(tabId) {
+        // Hide all tabs content
+        document.querySelectorAll('.doc-tab-content').forEach(el => {
+            el.classList.add('hidden');
+        });
+        
+        // Show selected tab content
+        const targetTab = document.getElementById('tab-' + tabId);
+        if (targetTab) {
+            targetTab.classList.remove('hidden');
+        }
+
+        // Remove active class from all sidebar links
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            link.classList.remove('active');
+        });
+
+        // Add active class to clicked sidebar link
+        const targetLink = document.getElementById('link-' + tabId);
+        if (targetLink) {
+            targetLink.classList.add('active');
+        }
+
+        // Scroll to top of tab view smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Update URL hash state
+        window.location.hash = tabId;
+    }
+
+    // Dynamic weights normalizer calculations
+    function calculateNormalizedWeights() {
+        const pRaw = parseFloat(document.getElementById("slide-posture").value);
+        const cRaw = parseFloat(document.getElementById("slide-contact").value);
+        const vRaw = parseFloat(document.getElementById("slide-voice").value);
+        const aRaw = parseFloat(document.getElementById("slide-attire").value);
+        const eRaw = parseFloat(document.getElementById("slide-engagement").value);
+
+        // Update indicators
+        document.getElementById("val-posture").innerText = pRaw;
+        document.getElementById("val-contact").innerText = cRaw;
+        document.getElementById("val-voice").innerText = vRaw;
+        document.getElementById("val-attire").innerText = aRaw;
+        document.getElementById("val-engagement").innerText = eRaw;
+
+        const sum = pRaw + cRaw + vRaw + aRaw + eRaw;
+        let pNorm = 0, cNorm = 0, vNorm = 0, aNorm = 0, eNorm = 0;
+        
+        if (sum > 0) {
+            pNorm = pRaw / sum;
+            cNorm = cRaw / sum;
+            vNorm = vRaw / sum;
+            aNorm = aRaw / sum;
+            eNorm = eRaw / sum;
+        } else {
+            pNorm = cNorm = vNorm = aNorm = eNorm = 0.20; // fallback evenly
+        }
+
+        // Output JSON representation
+        const mockJSON = `{
+  "weights": {
+    "posture": ${pNorm.toFixed(2)},
+    "eye_contact": ${cNorm.toFixed(2)},
+    "voice_pacing": ${vNorm.toFixed(2)},
+    "attire_quality": ${aNorm.toFixed(2)},
+    "engagement": ${eNorm.toFixed(2)}
+  },
+  "normalized_sum": "${(pNorm + cNorm + vNorm + aNorm + eNorm).toFixed(2)}"
+}`;
+        document.getElementById("json-normalized-output").innerText = mockJSON;
+    }
+
+    // WebSockets mock payloads swapper
+    const mockPayloads = {
+        gaze: `{
+  "event": "gaze_telemetry",
+  "coordinates": {
+    "x": 0.041,
+    "y": -0.128
+  },
+  "is_making_contact": true,
+  "timestamp": 1784910283
+}`,
+        posture: `{
+  "event": "posture_telemetry",
+  "metrics": {
+    "alignment_deviation": 0.082,
+    "leaning_angle": 2.45
+  },
+  "is_slouching": false,
+  "timestamp": 1784910285
+}`,
+        speech: `{
+  "event": "speech_telemetry",
+  "metrics": {
+    "tempo_wpm": 135.5,
+    "filler_word_count": 2
+  },
+  "fluency_status": "OPTIMAL",
+  "timestamp": 1784910289
+}`
+    };
+
+    function switchPayloadData(type) {
+        const types = ['gaze', 'posture', 'speech'];
+        types.forEach(item => {
+            const btn = document.getElementById("btn-payload-" + item);
+            if (item === type) {
+                btn.className = "text-xs font-mono font-bold text-[#71f8e4] bg-[#71f8e4]/10 border border-[#71f8e4]/20 px-4 py-2 rounded-full focus:outline-none";
+            } else {
+                btn.className = "text-xs font-mono text-gray-400 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full focus:outline-none";
+            }
+        });
+        document.getElementById("payload-output-container").innerText = mockPayloads[type];
+    }
+
+    // Initialize state on window load
+    window.addEventListener("load", () => {
+        // Read initial hash routing if available
+        const currentHash = window.location.hash.replace('#', '');
+        if (currentHash && document.getElementById('tab-' + currentHash)) {
+            navigateToTab(currentHash);
+        } else {
+            navigateToTab('introduction');
+        }
+        calculateNormalizedWeights();
+    });
+    </script>
+</body>
+</html>

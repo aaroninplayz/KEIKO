@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Job Intelligence — KEIKO Intelligence Board</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-raised": "#141416",
+                        "error": "#ffb4ab",
+                        "on-background": "#e5e2e3",
+                        "inverse-primary": "#732ee4",
+                        "text-primary": "#F4F4F5",
+                        "outline-variant": "#4a4455",
+                        "surface": "#131314",
+                        "secondary-container": "#0566d9",
+                        "primary-container": "#7c3aed",
+                        "on-secondary-container": "#e6ecff",
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#e5e2e3",
+                        "danger": "#EF4444",
+                        "on-tertiary-container": "#75fce8",
+                        "surface-glass": "rgba(20, 20, 22, 0.7)",
+                        "on-tertiary-fixed-variant": "#005048",
+                        "primary-fixed-dim": "#d2bbff",
+                        "surface-container-lowest": "#0e0e0f",
+                        "tertiary": "#4fdbc8",
+                        "outline": "#958da1",
+                        "surface-dim": "#131314",
+                        "surface-container": "#201f20",
+                        "surface-base": "#0A0A0B",
+                        "on-primary-fixed": "#25005a",
+                        "on-secondary": "#002e6a",
+                        "tertiary-fixed": "#71f8e4",
+                        "tertiary-container": "#007468",
+                        "on-primary-container": "#ede0ff",
+                        "on-secondary-fixed": "#001a42",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "inverse-on-surface": "#313031",
+                        "text-supporting": "#71717A",
+                        "surface-tint": "#d2bbff",
+                        "on-primary": "#3f008e",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#4fdbc8",
+                        "on-surface-variant": "#ccc3d8",
+                        "primary-fixed": "#eaddff",
+                        "on-error": "#690005",
+                        "on-surface": "#e5e2e3",
+                        "on-tertiary-fixed": "#00201c",
+                        "secondary": "#adc6ff",
+                        "surface-container-highest": "#353436",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-container-high": "#2a2a2b",
+                        "surface-bright": "#3a393a",
+                        "surface-container-low": "#1c1b1c",
+                        "on-secondary-fixed-variant": "#004395",
+                        "surface-variant": "#353436",
+                        "primary": "#d2bbff",
+                        "text-secondary": "#A1A1AA",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #14B8A6 100%)",
+                        "on-tertiary": "#003731",
+                        "background": "#131314"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-desktop": "160px",
+                        "section-tablet": "120px",
+                        "micro": "4px",
+                        "base": "8px",
+                        "section-mobile": "96px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "heading-m": ["Space Grotesk"],
+                        "mono-label": ["IBM Plex Mono"],
+                        "heading-l": ["Space Grotesk"],
+                        "display-xl": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "body-large": ["Inter"],
+                        "heading-xl": ["Space Grotesk"],
+                        "display-l": ["Space Grotesk"],
+                        "display-xl-mobile": ["Space Grotesk"],
+                        "body-small": ["Inter"]
+                    },
+                    "fontSize": {
+                        "heading-m": ["20px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "mono-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "heading-l": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "display-xl": ["72px", { "lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-large": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "heading-xl": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "display-l": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-xl-mobile": ["40px", { "lineHeight": "48px", "fontWeight": "700" }],
+                        "body-small": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.text-primary');
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-panel {
+            background: theme('colors.surface-glass');
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .gradient-text {
+            background: theme('colors.accent-gradient');
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .ambient-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, rgba(19, 19, 20, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="relative overflow-x-hidden min-h-screen">
+<!-- Ambient Background -->
+<div class="fixed inset-0 z-[-2] bg-background"></div>
+<div class="fixed inset-0 z-[-1] opacity-30" style="background-image: radial-gradient(theme('colors.outline-variant') 1px, transparent 1px); background-size: 32px 32px;"></div>
+<div class="ambient-glow top-[-200px] left-[-200px]"></div>
+<div class="ambient-glow bottom-[-200px] right-[-200px] bg-[radial-gradient(circle,rgba(20,184,166,0.1)0%,rgba(19,19,20,0)70%)]"></div>
+<!-- TopNavBar -->
+<!-- KEIKO TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131314]/85 backdrop-blur-md border-b border-white/10 h-20">
+  <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+    <a href="index.html" class="text-2xl md:text-3xl font-bold text-white tracking-tighter hover:opacity-90 transition-opacity" style="font-family:'Space Grotesk',sans-serif">KEIKO</a>
+    <div class="hidden md:flex items-center space-x-8">
+      <a id="nav-about" class="text-sm text-gray-400 hover:text-white transition-colors" href="about.html" style="font-family:'Inter',sans-serif">About</a>
+      <a id="nav-journey" class="text-sm text-gray-400 hover:text-white transition-colors" href="interview-journey.html" style="font-family:'Inter',sans-serif">Journey</a>
+      <a id="nav-features" class="text-sm text-gray-400 hover:text-white transition-colors" href="features.html" style="font-family:'Inter',sans-serif">Features</a>
+      <a id="nav-architecture" class="text-sm text-gray-400 hover:text-white transition-colors" href="architecture.html" style="font-family:'Inter',sans-serif">Architecture</a>
+    </div>
+    <a class="bg-[#7c3aed] text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:scale-105 hover:opacity-90 active:scale-95" href="download.html" style="font-family:'Inter',sans-serif">Experience KEIKO</a>
+  </div>
+</nav>
+<!-- Main Content -->
+<main class="w-full max-w-[1280px] mx-auto px-margin-desktop">
+<!-- Hero Section -->
+<section class="py-section-desktop flex flex-col items-center justify-center text-center relative">
+<div class="max-w-4xl z-10">
+<h1 class="font-display-xl text-display-xl mb-6">
+                    Every Great Interview Begins With <br/>
+<span class="gradient-text">Understanding the Role</span>
+</h1>
+<p class="font-body-large text-body-large text-text-secondary mb-12 max-w-2xl mx-auto">
+                    KEIKO doesn't just read job titles; it deconstructs the entire landscape of requirements, expectations, and cultural fit to build a comprehensive Job Blueprint.
+                </p>
+</div>
+<div class="w-full max-w-5xl rounded-xl overflow-hidden relative glass-panel p-2">
+<img class="w-full h-auto object-cover rounded-lg opacity-90" data-alt="A high-end 3D visualization of a glowing technological blueprint. Suspended layers of translucent glass display interconnected nodes and data streams in vibrant violet and teal hues against a deep obsidian background. The composition suggests complex, analytical parsing of structural data." src="https://lh3.googleusercontent.com/aida/AP1WRLs63B5IkkwQFVy4dOgN2D1WwdYJtmjd1atBI5XXlHIqLGmxXOTknKnPu-N1a07DM2gpY51nTPRfaZiXMb2WpduRU5Jf0zSvb6vk-TBKz2YgAj5Z-b8X0D_HWkjDdu6TOk0fBQC14OBr0xPkZzvfpC6kyvNVVZihODadK8kUvq_7moEI6m09BXBxem9MIhDUk7jOcDIVdR-LY20VDhoCXRUNkPgZi9qd7ZV2nhcT436aDeT13mEmaYa5HP8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+</div>
+</section>
+<!-- Section 1: The Why -->
+<section class="py-section-tablet border-t border-surface-container-high">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div>
+<h2 class="font-heading-xl text-heading-xl mb-6">Not Every Interview Should Be the Same</h2>
+<p class="font-body text-body text-text-secondary mb-6">
+                        A generic approach yields generic insights. To truly evaluate a candidate's potential, the intelligence driving the interview must deeply comprehend the specific demands of the open position.
+                    </p>
+<p class="font-body text-body text-text-secondary">
+                        Job Intelligence is the foundation. It provides the context required to ask relevant questions, assess critical competencies, and ensure a fair, structured evaluation aligned with organizational goals.
+                    </p>
+</div>
+<div class="bg-surface-raised rounded-xl p-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-20">
+<span class="material-symbols-outlined text-6xl text-primary" data-icon="troubleshoot">troubleshoot</span>
+</div>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-tertiary mt-1" data-icon="check_circle">check_circle</span>
+<div>
+<h4 class="font-heading-m text-heading-m mb-2">Contextual Relevance</h4>
+<p class="font-body-small text-body-small text-text-secondary">Questions tailored to the specific tech stack and methodologies.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-tertiary mt-1" data-icon="check_circle">check_circle</span>
+<div>
+<h4 class="font-heading-m text-heading-m mb-2">Reduced Bias</h4>
+<p class="font-body-small text-body-small text-text-secondary">Focusing purely on documented job requirements.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Beyond the Description (Bento Grid) -->
+<section class="py-section-tablet">
+<div class="text-center mb-16">
+<h2 class="font-heading-xl text-heading-xl mb-4">Reading Beyond the Job Description</h2>
+<p class="font-body text-body text-text-secondary max-w-2xl mx-auto">
+                    Transforming unstructured text into a structured analytical framework.
+                </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Core Card -->
+<div class="md:col-span-2 bg-surface-raised rounded-xl p-8 hover:bg-surface-variant transition-colors duration-300 flex flex-col justify-between min-h-[300px]">
+<div>
+<span class="font-mono-label text-mono-label text-primary mb-4 block">EXTRACTION ENGINE</span>
+<h3 class="font-heading-l text-heading-l mb-4">Semantic Skill Parsing</h3>
+<p class="font-body text-body text-text-secondary">
+                            Identifying not just mentioned technologies, but inferring required foundational knowledge and domain expertise based on industry standards.
+                        </p>
+</div>
+<div class="flex gap-2 flex-wrap mt-6">
+<span class="px-3 py-1 bg-primary-fixed-dim/10 text-primary rounded-full font-mono-label text-mono-label">React.js</span>
+<span class="px-3 py-1 bg-tertiary/10 text-tertiary rounded-full font-mono-label text-mono-label">System Design</span>
+<span class="px-3 py-1 bg-secondary/10 text-secondary rounded-full font-mono-label text-mono-label">Agile</span>
+</div>
+</div>
+<!-- Secondary Card 1 -->
+<div class="bg-surface-raised rounded-xl p-8 hover:bg-surface-variant transition-colors duration-300">
+<span class="font-mono-label text-mono-label text-tertiary mb-4 block">LEVELING</span>
+<h3 class="font-heading-m text-heading-m mb-4">Seniority Calibration</h3>
+<p class="font-body-small text-body-small text-text-secondary">
+                        Adjusting evaluation rigor based on expected experience levels, from Junior to Principal.
+                    </p>
+</div>
+<!-- Secondary Card 2 -->
+<div class="bg-surface-raised rounded-xl p-8 hover:bg-surface-variant transition-colors duration-300">
+<span class="font-mono-label text-mono-label text-secondary mb-4 block">CULTURE</span>
+<h3 class="font-heading-m text-heading-m mb-4">Soft Skills &amp; Traits</h3>
+<p class="font-body-small text-body-small text-text-secondary">
+                        Detecting implicit behavioral requirements like "cross-functional collaboration."
+                    </p>
+</div>
+<!-- Wide Card -->
+<div class="md:col-span-2 bg-surface-raised rounded-xl p-8 hover:bg-surface-variant transition-colors duration-300 flex items-center justify-between">
+<div>
+<span class="font-mono-label text-mono-label text-error mb-2 block">COMPLIANCE</span>
+<h3 class="font-heading-m text-heading-m">Certifications &amp; Clearances</h3>
+</div>
+<span class="material-symbols-outlined text-4xl text-text-secondary" data-icon="verified_user">verified_user</span>
+</div>
+</div>
+</section>
+<!-- Section 6: Connecting Perspectives -->
+<section class="py-section-tablet border-t border-surface-container-high">
+<div class="text-center mb-16">
+<h2 class="font-heading-xl text-heading-xl mb-4">Connecting Two Perspectives</h2>
+<p class="font-body text-body text-text-secondary max-w-2xl mx-auto">
+                    The true power lies in the intersection of Job Intelligence and Candidate Reality.
+                </p>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-center gap-8 relative">
+<!-- Job Node -->
+<div class="w-64 p-6 glass-panel rounded-xl text-center z-10">
+<span class="material-symbols-outlined text-4xl text-primary mb-4 block" data-icon="work">work</span>
+<h4 class="font-heading-m text-heading-m">Job Blueprint</h4>
+<p class="font-mono-label text-mono-label text-text-supporting mt-2">REQUIREMENTS</p>
+</div>
+<!-- Connection Area (Visual only) -->
+<div class="hidden md:flex items-center justify-center w-32 relative z-0">
+<div class="h-[2px] w-full bg-gradient-to-r from-primary to-tertiary absolute"></div>
+<span class="material-symbols-outlined text-2xl text-on-background bg-surface-raised rounded-full p-2 relative z-10" data-icon="sync">sync</span>
+</div>
+<!-- Resume Node -->
+<div class="w-64 p-6 glass-panel rounded-xl text-center z-10">
+<span class="material-symbols-outlined text-4xl text-tertiary mb-4 block" data-icon="description">description</span>
+<h4 class="font-heading-m text-heading-m">Candidate Resume</h4>
+<p class="font-mono-label text-mono-label text-text-supporting mt-2">CAPABILITIES</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<!-- KEIKO Footer -->
+<footer class="bg-[#0A0A0B] border-t border-white/10 w-full py-16 mt-32">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-8 max-w-[1440px] mx-auto">
+    <div class="lg:col-span-1">
+      <div class="text-3xl text-white mb-4 font-bold tracking-tighter" style="font-family:'Space Grotesk',sans-serif">KEIKO</div>
+      <p class="text-sm text-gray-500 mb-6 max-w-xs" style="font-family:'Inter',sans-serif">Engineering-grade intelligence for the modern technical interview.</p>
+      <p class="text-xs text-gray-600" style="font-family:'Inter',sans-serif">&copy; 2026 KEIKO Intelligence. All rights reserved.</p>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Platform</h5>
+      <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="about.html">About Us</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="interview-journey.html">Interview Journey</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="features.html">Features</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="architecture.html">Architecture</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="download.html">Experience KEIKO</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Resources</h5>
+      <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">Documentation</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">API Configuration</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Roadmap</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#opensource">Open Source</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#faq">FAQ</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Legal</h5>
+      <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Privacy Policy</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Terms of Service</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Contact Research</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var p = window.location.pathname.split('/').pop() || 'index.html';
+  var m = {'about.html':'nav-about','interview-journey.html':'nav-journey','features.html':'nav-features','architecture.html':'nav-architecture'};
+  var id = m[p];
+  if(id){var el=document.getElementById(id);if(el){el.style.color='#d2bbff';el.style.fontWeight='bold';el.style.borderBottom='2px solid #d2bbff';el.style.paddingBottom='4px';}}
+})();
+</script>
+</body></html>

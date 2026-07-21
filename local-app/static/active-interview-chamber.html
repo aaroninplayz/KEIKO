@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>KEIKO | Active Interview Chamber</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-base": "#0A0A0B",
+                        "surface-raised": "#141416",
+                        "surface": "#131314",
+                        "background": "#131314",
+                        "text-primary": "#F4F4F5",
+                        "text-secondary": "#A1A1AA",
+                        "primary": "#d2bbff",
+                        "primary-container": "#7c3aed",
+                        "tertiary": "#4fdbc8",
+                        "surface-glass": "rgba(20, 20, 22, 0.7)",
+                        "surface-variant": "#353436",
+                        "outline-variant": "#4a4455"
+                    },
+                    fontFamily: {
+                        "display-l": ["Space Grotesk"],
+                        "heading-xl": ["Space Grotesk"],
+                        "heading-l": ["Space Grotesk"],
+                        "heading-m": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "body-large": ["Inter"],
+                        "mono-label": ["IBM Plex Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #050506;
+            color: #F4F4F5;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(20, 20, 22, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .pulse-red {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-[#050506] text-on-background font-body selection:bg-primary/30 min-h-screen flex flex-col overflow-hidden">
+
+    <!-- Chamber Header -->
+    <header class="h-16 border-b border-white/5 px-8 flex justify-between items-center bg-[#0C0C0E]">
+        <div class="flex items-center gap-4">
+            <span class="font-display-l text-lg font-bold tracking-tighter text-on-surface">KEIKO CHAMBER</span>
+            <div class="h-2 w-2 rounded-full bg-tertiary"></div>
+            <span class="font-mono-label text-[10px] text-text-secondary">Connection: Excellent</span>
+        </div>
+        
+        <!-- Timer Controls -->
+        <div class="flex items-center gap-6 font-mono-label text-xs">
+            <div class="flex items-center gap-2">
+                <span class="text-text-secondary">Elapsed:</span>
+                <span class="text-on-surface font-bold">14:32</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-text-secondary">Remaining:</span>
+                <span class="text-primary font-bold">30:28</span>
+            </div>
+            <a href="dashboard.html" class="bg-red-500/10 border border-red-500/20 text-[#ef4444] px-4 py-1.5 rounded text-xs font-semibold hover:bg-red-500/20 transition-colors">
+                Exit Chamber
+            </a>
+        </div>
+    </header>
+
+    <div class="flex-grow flex flex-col md:flex-row overflow-hidden">
+
+        <!-- Left Timeline (Chamber stage progression) -->
+        <aside class="hidden md:flex flex-col justify-between w-64 border-r border-white/5 bg-[#0C0C0E] p-6 shrink-0">
+            <div class="space-y-6">
+                <h3 class="font-mono-label text-xs text-text-secondary uppercase tracking-wider pl-2">Session Flow</h3>
+                <!-- KEIKO TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131314]/85 backdrop-blur-md border-b border-white/10 h-20">
+  <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+    <a href="index.html" class="text-2xl md:text-3xl font-bold text-white tracking-tighter hover:opacity-90 transition-opacity" style="font-family:'Space Grotesk',sans-serif">KEIKO</a>
+    <div class="hidden md:flex items-center space-x-8">
+      <a id="nav-about" class="text-sm text-gray-400 hover:text-white transition-colors" href="about.html" style="font-family:'Inter',sans-serif">About</a>
+      <a id="nav-journey" class="text-sm text-gray-400 hover:text-white transition-colors" href="interview-journey.html" style="font-family:'Inter',sans-serif">Journey</a>
+      <a id="nav-features" class="text-sm text-gray-400 hover:text-white transition-colors" href="features.html" style="font-family:'Inter',sans-serif">Features</a>
+      <a id="nav-architecture" class="text-sm text-gray-400 hover:text-white transition-colors" href="architecture.html" style="font-family:'Inter',sans-serif">Architecture</a>
+    </div>
+    <a class="bg-[#7c3aed] text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:scale-105 hover:opacity-90 active:scale-95" href="interview.html" style="font-family:'Inter',sans-serif">Experience KEIKO</a>
+  </div>
+</nav>
+            </div>
+
+            <!-- Back navigation / breadcrumbs helper -->
+            <div class="text-[10px] font-mono-label text-text-secondary border-t border-white/5 pt-4">
+                <span>Ref: </span>
+                <a href="documentation.html" class="hover:text-primary underline">Chamber Guidelines</a>
+            </div>
+        </aside>
+
+        <!-- Center Active Workspace -->
+        <main id="chamber-workspace" class="flex-grow p-8 flex flex-col justify-between max-w-4xl mx-auto overflow-y-auto">
+            
+            <!-- Video & Avatar side-by-side placeholder -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 my-auto items-center">
+                <!-- AI Peer Avatar -->
+                <div class="glass-card aspect-video rounded-2xl flex flex-col justify-center items-center relative overflow-hidden border-primary/20 bg-primary/5">
+                    <span class="material-symbols-outlined text-primary text-5xl animate-pulse">psychology</span>
+                    <h5 class="font-display-l text-sm font-semibold text-on-surface mt-4">KEIKO Evaluation Node</h5>
+                    <div class="absolute bottom-4 left-4 flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+                        <span class="font-mono-label text-[10px] text-primary">Evaluating Input...</span>
+                    </div>
+                </div>
+
+                <!-- Candidate Video -->
+                <div class="glass-card aspect-video rounded-2xl flex flex-col justify-center items-center relative overflow-hidden bg-[#18181B]">
+                    <!-- Simulate Camera feeds -->
+                    <span class="material-symbols-outlined text-text-secondary text-4xl mb-2">face</span>
+                    <span class="text-xs text-text-secondary">Camera stream initialized</span>
+                    <div class="absolute bottom-4 right-4 flex items-center gap-2 bg-[#000]/60 px-3 py-1.5 rounded-lg border border-white/10">
+                        <button class="material-symbols-outlined text-sm text-text-secondary hover:text-on-surface">mic</button>
+                        <button class="material-symbols-outlined text-sm text-text-secondary hover:text-on-surface">videocam</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Questions & Response Area -->
+            <div class="space-y-6 mt-8">
+                <!-- Question Card -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <div class="flex justify-between items-center text-xs font-mono-label">
+                        <span class="text-primary font-bold uppercase">Dynamic Technical Prompt</span>
+                        <span class="text-text-secondary bg-white/5 px-2 py-0.5 rounded">Topic: Systems Architecture</span>
+                    </div>
+                    <h3 class="font-display-l text-lg md:text-xl font-bold leading-relaxed text-on-surface">
+                        "How would you optimize database indexing configurations on a multi-master replication pipeline when concurrency peaks?"
+                    </h3>
+                    <div class="flex gap-4">
+                        <button class="text-xs text-text-secondary hover:text-primary transition-colors flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">refresh</span> Repeat Prompt
+                        </button>
+                        <button class="text-xs text-text-secondary hover:text-primary transition-colors flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm">question_mark</span> Request Clarification
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Input Response Controls -->
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white/5 border border-white/10 p-4 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-red-500 pulse-red"></span>
+                        <span class="text-xs font-semibold text-text-secondary">Recording Voice Stream...</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="border border-white/10 hover:bg-white/5 text-text-primary px-4 py-2 rounded-lg text-xs font-semibold">
+                            Stop Recording
+                        </button>
+                        <button onclick="showCompletion()" class="bg-primary text-on-primary px-6 py-2 rounded-lg text-xs font-bold hover:opacity-90">
+                            Submit Response
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Right Side Panel: System health indicators -->
+        <aside class="hidden lg:block w-64 border-l border-white/5 bg-[#0C0C0E] p-6 shrink-0">
+            <h3 class="font-mono-label text-xs text-text-secondary uppercase tracking-wider mb-6">Active Agents</h3>
+            <div class="space-y-4 font-mono-label text-xs">
+                <div class="flex justify-between items-center">
+                    <span class="text-text-secondary">Resume Ingestion</span>
+                    <span class="text-tertiary">ON</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-text-secondary">Job Profiler</span>
+                    <span class="text-tertiary">ON</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-text-secondary">Vocal Analytics</span>
+                    <span class="text-tertiary">ON</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-text-secondary">Kinetics Track</span>
+                    <span class="text-tertiary">ON</span>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/5 pt-6 mt-6">
+                <h4 class="font-mono-label text-[10px] uppercase text-text-secondary tracking-widest mb-3">Model Engine Status</h4>
+                <div class="bg-white/5 p-3 rounded-lg border border-white/5">
+                    <span class="text-[10px] text-text-secondary font-mono">llm_gateway: active</span>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- MOCK COMPLETION SCREEN OVERLAY (Hidden by default) -->
+    <div id="completion-screen" class="fixed inset-0 z-50 bg-[#050506] flex items-center justify-center hidden">
+        <div class="max-w-md w-full p-8 text-center space-y-6">
+            <span class="material-symbols-outlined text-tertiary text-6xl">check_circle</span>
+            <div class="space-y-2">
+                <h1 class="font-display-l text-3xl font-bold">Interview Completed</h1>
+                <p class="text-text-secondary text-sm">Chamber variables closed. Candidate metrics submitted to evaluation queue.</p>
+            </div>
+            
+            <div class="bg-white/5 border border-white/10 rounded-xl p-4 grid grid-cols-3 gap-2 font-mono-label text-[11px] text-text-secondary">
+                <div>
+                    <span class="block text-on-surface font-bold text-sm">45m</span>
+                    <span>Duration</span>
+                </div>
+                <div>
+                    <span class="block text-on-surface font-bold text-sm">18</span>
+                    <span>Questions</span>
+                </div>
+                <div>
+                    <span class="block text-tertiary font-bold text-sm">Ready</span>
+                    <span>Report Status</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+                <a href="evaluation-report.html" class="bg-primary text-on-primary py-3 rounded-lg font-bold text-sm hover:opacity-90 block">
+                    View Evaluation Report
+                </a>
+                <a href="dashboard.html" class="border border-white/10 hover:bg-white/5 py-3 rounded-lg font-semibold text-xs block text-text-primary">
+                    Return to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showCompletion() {
+            document.getElementById('completion-screen').classList.remove('hidden');
+        }
+    </script>
+<!-- KEIKO Footer -->
+<footer class="bg-[#0A0A0B] border-t border-white/10 w-full py-16 mt-32">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-8 max-w-[1440px] mx-auto">
+    <div class="lg:col-span-1">
+      <div class="text-3xl text-white mb-4 font-bold tracking-tighter" style="font-family:'Space Grotesk',sans-serif">KEIKO</div>
+      <p class="text-sm text-gray-500 mb-6 max-w-xs" style="font-family:'Inter',sans-serif">Engineering-grade intelligence for the modern technical interview.</p>
+      <p class="text-xs text-gray-600" style="font-family:'Inter',sans-serif">&copy; 2026 KEIKO Intelligence. All rights reserved.</p>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Platform</h5>
+      <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="about.html">About Us</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="interview-journey.html">Interview Journey</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="features.html">Features</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="architecture.html">Architecture</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="interview.html">Experience KEIKO</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Resources</h5>
+      <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">Documentation</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">API Configuration</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Roadmap</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#opensource">Open Source</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#faq">FAQ</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Legal</h5>
+      <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Privacy Policy</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Terms of Service</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Contact Research</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var p = window.location.pathname.split('/').pop() || 'index.html';
+  var m = {'about.html':'nav-about','interview-journey.html':'nav-journey','features.html':'nav-features','architecture.html':'nav-architecture'};
+  var id = m[p];
+  if(id){var el=document.getElementById(id);if(el){el.style.color='#d2bbff';el.style.fontWeight='bold';el.style.borderBottom='2px solid #d2bbff';el.style.paddingBottom='4px';}}
+})();
+</script>
+</body>
+</html>

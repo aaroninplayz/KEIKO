@@ -1,0 +1,71 @@
+# ===========================
+# Python
+# ===========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ===========================
+# Virtual Environments
+# ===========================
+venv/
+keiko_venv/
+.venv/
+env/
+
+# ===========================
+# ML Model Binaries (large files)
+# ===========================
+local-app/models/*.pth
+local-app/models/*.task
+local-app/models/hub/
+local-app/models/models/
+local-app/models/models--*/
+local-app/models/xet/
+local-app/models/.locks/
+local-app/models/CACHEDIR.TAG
+local-app/models/.agent_harnesses.json
+
+# ===========================
+# Training Data (large datasets)
+# ===========================
+local-app/data/
+
+# ===========================
+# Databases
+# ===========================
+*.db
+
+# ===========================
+# Agent / Orchestrator Workspace
+# ===========================
+.agents/
+
+# ===========================
+# Scratch / Non-essential
+# ===========================
+scratch/
+non esesentioal/
+
+# ===========================
+# OS & Editor
+# ===========================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# ===========================
+# Logs & Temp
+# ===========================
+*.log
+tmp/
+temp/

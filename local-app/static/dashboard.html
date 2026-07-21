@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Portal Dashboard — KEIKO</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#1c1b1c",
+                        "primary-fixed": "#eaddff",
+                        "secondary": "#adc6ff",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "tertiary-fixed": "#71f8e4",
+                        "on-tertiary-fixed": "#00201c",
+                        "outline-variant": "#4a4455",
+                        "inverse-surface": "#e5e2e3",
+                        "background": "#131314",
+                        "on-tertiary-fixed-variant": "#005048",
+                        "on-secondary-fixed": "#001a42",
+                        "surface-base": "#0A0A0B",
+                        "on-primary": "#3f008e",
+                        "text-supporting": "#71717A",
+                        "on-tertiary-container": "#75fce8",
+                        "surface": "#131314",
+                        "surface-container-highest": "#353436",
+                        "on-secondary": "#002e6a",
+                        "surface-bright": "#3a393a",
+                        "surface-container-lowest": "#0e0e0f",
+                        "tertiary": "#4fdbc8",
+                        "danger": "#EF4444",
+                        "on-background": "#e5e2e3",
+                        "surface-container": "#201f20",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "on-error": "#690005",
+                        "inverse-primary": "#732ee4",
+                        "tertiary-container": "#007468",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#2a2a2b",
+                        "surface-glass": "rgba(20, 20, 22, 0.7)",
+                        "primary": "#d2bbff",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-tertiary": "#003731",
+                        "on-error-container": "#ffdad6",
+                        "text-primary": "#F4F4F5",
+                        "surface-raised": "#141416",
+                        "on-surface-variant": "#ccc3d8",
+                        "primary-fixed-dim": "#d2bbff",
+                        "on-primary-container": "#ede0ff",
+                        "tertiary-fixed-dim": "#4fdbc8",
+                        "on-primary-fixed": "#25005a",
+                        "surface-variant": "#353436",
+                        "error": "#ffb4ab",
+                        "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #14B8A6 100%)",
+                        "text-secondary": "#A1A1AA",
+                        "surface-tint": "#d2bbff",
+                        "secondary-container": "#0566d9",
+                        "surface-dim": "#131314",
+                        "on-surface": "#e5e2e3",
+                        "inverse-on-surface": "#313031",
+                        "secondary-fixed": "#d8e2ff",
+                        "primary-container": "#7c3aed",
+                        "outline": "#958da1",
+                        "on-secondary-container": "#e6ecff"
+                    },
+                    "fontFamily": {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "mono": ["IBM Plex Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #131314; color: #F4F4F5; font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(20, 20, 22, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(74, 68, 85, 0.2); }
+        .glass-neo-stitch {
+            background: rgba(20, 20, 22, 0.65);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                inset 1px 1px 2px rgba(255, 255, 255, 0.12),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.8),
+                0 15px 35px rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            outline: 1.5px dashed rgba(210, 187, 255, 0.15);
+            outline-offset: -8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-neo-stitch:hover {
+            outline-color: rgba(113, 248, 228, 0.35);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 
+                inset 1px 1px 2px rgba(255, 255, 255, 0.18),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.8),
+                0 25px 45px rgba(0, 0, 0, 0.7);
+        }
+        .gradient-text {
+            background-image: linear-gradient(135deg, #d2bbff 0%, #adc6ff 50%, #71f8e4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        .bg-accent-gradient { background: linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #14B8A6 100%); }
+    </style>
+</head>
+<body class="font-body text-body bg-background text-text-primary min-h-screen flex flex-col justify-between">
+
+<!-- KEIKO TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#131314]/85 backdrop-blur-md border-b border-white/10 h-20">
+  <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+    <a href="dashboard.html" class="text-2xl md:text-3xl font-bold text-white tracking-tighter hover:opacity-90 transition-opacity font-display">KEIKO</a>
+    <div class="hidden md:flex items-center space-x-8">
+      <a id="nav-dashboard" class="text-sm text-primary font-bold transition-colors" href="dashboard.html">Dashboard</a>
+      <a id="nav-setup" class="text-sm text-gray-400 hover:text-white transition-colors" href="interview-setup.html">Setup Session</a>
+      <a id="nav-docs" class="text-sm text-gray-400 hover:text-white transition-colors" href="documentation.html">Documentation</a>
+      <a id="nav-admin" class="text-sm text-gray-400 hover:text-white transition-colors" href="admin.html">Admin</a>
+    </div>
+    <a class="bg-accent-gradient text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:scale-105 hover:opacity-90 active:scale-95 shadow-lg shadow-purple-500/20" href="interview-setup.html">Start Setup</a>
+  </div>
+</nav>
+
+<!-- Main Content Area -->
+<main class="flex-grow pt-24 pb-12 px-8 max-w-[1440px] mx-auto w-full">
+
+  <!-- Header Breadcrumb & Search Bar -->
+  <header class="py-4 mb-8 border-b border-white/10 flex items-center justify-between z-30">
+    <div class="flex items-center gap-3 text-text-supporting font-mono text-xs uppercase tracking-wider">
+      <span class="text-primary font-bold">KEIKO SYSTEM</span>
+      <span class="material-symbols-outlined text-sm">chevron_right</span>
+      <span class="text-text-primary">PORTAL DASHBOARD</span>
+    </div>
+    <div class="flex items-center gap-6">
+      <div class="relative w-64 hidden lg:block">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-supporting text-sm">search</span>
+        <input class="w-full bg-[#141416] border border-white/10 rounded-xl py-2 pl-9 pr-4 text-xs focus:border-primary focus:outline-none transition-colors text-text-primary placeholder:text-text-supporting font-mono" placeholder="Query Intelligence..." type="text"/>
+      </div>
+      <button class="text-text-supporting hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">notifications</span>
+      </button>
+      <div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-white/10">
+        <div class="w-full h-full bg-accent-gradient flex items-center justify-center font-bold text-xs text-white">KA</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Workspace Grid -->
+  <div class="grid grid-cols-1 xl:grid-cols-4 gap-8">
+    
+    <!-- Central Main Column (3 Cols) -->
+    <div class="xl:col-span-3 space-y-8">
+      
+      <!-- Welcome Section (Stitch Style) -->
+      <section class="glass-neo-stitch p-8 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="relative z-10 space-y-2">
+          <div class="inline-flex items-center gap-2 text-xs font-mono text-tertiary uppercase tracking-widest">
+            <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+            System Status: Active
+          </div>
+          <h2 class="text-3xl font-bold font-display text-white">Good Morning, <span class="gradient-text">Analyst</span>.</h2>
+          <p class="text-text-secondary text-sm max-w-lg leading-relaxed">
+            Neural telemetry nodes operational. 12 intelligence reports generated in the last 24 hours. System readiness at 99.8%.
+          </p>
+        </div>
+        <a href="interview-setup.html" class="relative z-10 bg-accent-gradient text-white px-6 py-3.5 rounded-xl text-sm font-semibold flex items-center gap-2 hover:shadow-[0_0_25px_rgba(124,58,237,0.45)] transition-all hover:scale-105 active:scale-95">
+          <span class="material-symbols-outlined text-base">play_arrow</span>
+          Start New Interview
+        </a>
+      </section>
+
+      <!-- Stats Row -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="glass-neo-stitch p-6 flex flex-col gap-2">
+          <span class="font-mono text-xs text-text-supporting tracking-wider uppercase">COMPLETED</span>
+          <span class="font-mono text-2xl font-bold text-text-primary">1,204</span>
+          <span class="text-xs font-mono text-tertiary">+12% this week</span>
+        </div>
+        <div class="glass-neo-stitch p-6 flex flex-col gap-2">
+          <span class="font-mono text-xs text-text-supporting tracking-wider uppercase">PENDING ANALYSIS</span>
+          <span class="font-mono text-2xl font-bold text-text-primary">34</span>
+          <span class="text-xs font-mono text-text-supporting">Processing...</span>
+        </div>
+        <div class="glass-neo-stitch p-6 flex flex-col gap-2">
+          <span class="font-mono text-xs text-text-supporting tracking-wider uppercase">REPORTS GENERATED</span>
+          <span class="font-mono text-2xl font-bold text-text-primary">892</span>
+          <span class="text-xs font-mono text-tertiary">All nodes active</span>
+        </div>
+        <div class="glass-neo-stitch p-6 flex flex-col gap-2">
+          <span class="font-mono text-xs text-text-supporting tracking-wider uppercase">AVG PERFORMANCE</span>
+          <span class="font-mono text-2xl font-bold text-text-primary">94.2%</span>
+          <span class="text-xs font-mono text-text-supporting">Metric stable</span>
+        </div>
+      </section>
+
+      <!-- Recent Interviews Table -->
+      <section class="glass-neo-stitch p-6 space-y-6">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-bold font-display text-text-primary">Recent Operations</h3>
+          <a href="#" class="text-xs font-mono text-primary hover:underline">View All</a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-white/10">
+                <th class="pb-4 font-mono text-xs text-text-supporting font-semibold uppercase tracking-wider">SUBJECT</th>
+                <th class="pb-4 font-mono text-xs text-text-supporting font-semibold uppercase tracking-wider">ROLE/TARGET</th>
+                <th class="pb-4 font-mono text-xs text-text-supporting font-semibold uppercase tracking-wider">TIMESTAMP</th>
+                <th class="pb-4 font-mono text-xs text-text-supporting font-semibold uppercase tracking-wider">STATUS</th>
+                <th class="pb-4 font-mono text-xs text-text-supporting font-semibold uppercase tracking-wider text-right">ACTION</th>
+              </tr>
+            </thead>
+            <tbody class="text-xs">
+              <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td class="py-4 font-medium text-text-primary">E. Ripley</td>
+                <td class="py-4 text-text-supporting">Flight Officer</td>
+                <td class="py-4 font-mono text-text-supporting">2026-07-21 08:12</td>
+                <td class="py-4">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-tertiary/10 text-tertiary font-mono text-[10px] border border-tertiary/20">COMPLETED</span>
+                </td>
+                <td class="py-4 text-right">
+                  <button class="text-text-supporting hover:text-primary transition-colors"><span class="material-symbols-outlined text-base">description</span></button>
+                </td>
+              </tr>
+              <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td class="py-4 font-medium text-text-primary">D. Bowman</td>
+                <td class="py-4 text-text-supporting">Mission Commander</td>
+                <td class="py-4 font-mono text-text-supporting">2026-07-20 14:45</td>
+                <td class="py-4">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-primary/10 text-primary font-mono text-[10px] border border-primary/20">ANALYZING</span>
+                </td>
+                <td class="py-4 text-right">
+                  <button class="text-text-supporting hover:text-primary transition-colors"><span class="material-symbols-outlined text-base">description</span></button>
+                </td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="py-4 font-medium text-text-primary">S. Connor</td>
+                <td class="py-4 text-text-supporting">Tactical Lead</td>
+                <td class="py-4 font-mono text-text-supporting">2026-07-19 09:30</td>
+                <td class="py-4">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-tertiary/10 text-tertiary font-mono text-[10px] border border-tertiary/20">COMPLETED</span>
+                </td>
+                <td class="py-4 text-right">
+                  <button class="text-text-supporting hover:text-primary transition-colors"><span class="material-symbols-outlined text-base">description</span></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Right System Feed Sidebar (1 Col) -->
+    <aside class="space-y-6">
+      <div class="glass-neo-stitch p-6 space-y-6">
+        <h3 class="text-base font-bold font-display text-text-primary">System Feed</h3>
+        <div class="space-y-6 relative before:absolute before:inset-y-0 before:left-[11px] before:w-[2px] before:bg-white/10">
+          <div class="relative pl-8">
+            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-[#141416] border-2 border-primary flex items-center justify-center">
+              <div class="w-2 h-2 rounded-full bg-tertiary"></div>
+            </div>
+            <p class="text-xs text-text-primary font-medium">Report Generated: E. Ripley</p>
+            <p class="font-mono text-[10px] text-text-supporting mt-1">10 MINS AGO</p>
+          </div>
+          <div class="relative pl-8">
+            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-[#141416] border-2 border-primary flex items-center justify-center">
+              <div class="w-2 h-2 rounded-full bg-primary"></div>
+            </div>
+            <p class="text-xs text-text-primary font-medium">Analysis Started: D. Bowman</p>
+            <p class="font-mono text-[10px] text-text-supporting mt-1">2 HRS AGO</p>
+          </div>
+          <div class="relative pl-8">
+            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-[#141416] border-2 border-primary flex items-center justify-center">
+              <div class="w-2 h-2 rounded-full bg-gray-500"></div>
+            </div>
+            <p class="text-xs text-text-primary font-medium">Node Synchronization Complete</p>
+            <p class="font-mono text-[10px] text-text-supporting mt-1">04:00 AM</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-neo-stitch p-6 space-y-4">
+        <h4 class="font-mono text-xs text-primary font-bold uppercase tracking-wider flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm">lightbulb</span>
+          INTELLIGENCE TIP
+        </h4>
+        <p class="text-xs text-text-secondary leading-relaxed">
+          Pre-configure 9 telemetry sensor weights during candidate setup to optimize biometric evaluation accuracy.
+        </p>
+        <a class="text-xs text-text-primary hover:text-primary transition-colors flex items-center gap-1 font-medium" href="documentation.html">
+          View Documentation <span class="material-symbols-outlined text-xs">arrow_forward</span>
+        </a>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<!-- KEIKO Footer -->
+<footer class="bg-[#0A0A0B] border-t border-white/10 w-full py-12">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-8 max-w-[1440px] mx-auto text-xs text-gray-500">
+    <div>
+      <div class="text-xl text-white mb-2 font-bold tracking-tighter font-display">KEIKO</div>
+      <p class="text-xs text-gray-400">Engineering-grade intelligence for modern technical interviews.</p>
+    </div>
+    <div class="flex space-x-6 items-center">
+      <a class="hover:text-primary transition-colors" href="dashboard.html">Dashboard</a>
+      <a class="hover:text-primary transition-colors" href="interview-setup.html">Interview Setup</a>
+      <a class="hover:text-primary transition-colors" href="documentation.html">Documentation</a>
+      <a class="hover:text-primary transition-colors" href="admin.html">Admin</a>
+    </div>
+    <div class="text-right">
+      &copy; 2026 KEIKO AI Platform. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

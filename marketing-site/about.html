@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>KEIKO | Intelligence Board</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="js/particles-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "background": "#050506",
+              "bg-card": "#0c0c0e",
+              "primary": "#d2bbff",
+              "secondary": "#adc6ff",
+              "tertiary": "#71f8e4",
+              "text-primary": "#F4F4F5",
+              "text-secondary": "#9E9E9F",
+              "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #14B8A6 100%)"
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+              "mono": ["IBM Plex Mono", "monospace"]
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+        body {
+            background-color: #050506;
+            color: #F4F4F5;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+        .glass-panel {
+            background: rgba(12, 12, 14, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .glass-neo-stitch {
+            background: rgba(12, 12, 14, 0.45);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                inset 1px 1px 2px rgba(255, 255, 255, 0.12),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.8),
+                0 15px 35px rgba(0, 0, 0, 0.6);
+            border-radius: 24px;
+            outline: 1.5px dashed rgba(210, 187, 255, 0.12);
+            outline-offset: -8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-neo-stitch:hover {
+            outline-color: rgba(113, 248, 228, 0.3);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 
+                inset 1px 1px 2px rgba(255, 255, 255, 0.18),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.8),
+                0 25px 45px rgba(0, 0, 0, 0.7);
+            transform: translateY(-2px);
+        }
+        .gradient-text {
+            background-image: linear-gradient(135deg, #d2bbff 0%, #adc6ff 50%, #71f8e4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        .grid-bg {
+            background-size: 30px 30px;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="font-body text-sm overflow-x-hidden selection:bg-primary/20 grid-bg">
+
+<!-- Fixed Background Particle Canvas -->
+<canvas id="fixed-particle-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 bg-transparent"></canvas>
+
+<!-- Top Navigation (Aligned with homepage) -->
+<nav class="fixed top-0 w-full z-50 bg-[#050506]/50 backdrop-blur-lg border-b border-white/5 h-20">
+  <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+    <a href="index.html" class="text-2xl font-bold tracking-tighter hover:opacity-90 transition-opacity" style="font-family:'Space Grotesk',sans-serif">KEIKO</a>
+    <div class="hidden md:flex items-center space-x-8">
+      <a id="nav-about" class="text-sm text-gray-400 hover:text-white transition-colors" href="about.html">About</a>
+      <a id="nav-journey" class="text-sm text-gray-400 hover:text-white transition-colors" href="interview-journey.html">Journey</a>
+      <a id="nav-features" class="text-sm text-gray-400 hover:text-white transition-colors" href="features.html">Features</a>
+      <a id="nav-architecture" class="text-sm text-gray-400 hover:text-white transition-colors" href="architecture.html">Architecture</a>
+      <a id="nav-download" class="text-sm text-gray-400 hover:text-white transition-colors" href="download.html">Download</a>
+    </div>
+    <a class="bg-[#7c3aed] text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:scale-105 hover:opacity-90 active:scale-95" href="download.html">Experience KEIKO</a>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<header class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden z-10 pt-20">
+    <div class="max-w-4xl space-y-8 select-none">
+        <div class="text-[10px] font-mono tracking-[0.4em] text-primary uppercase font-bold text-glow mb-6">INTELLIGENCE BOARD</div>
+        
+        <h1 class="font-display text-4xl md:text-7xl font-bold leading-[1.05] tracking-tight text-white mb-6">
+            Meet the modular<br/><span class="gradient-text italic">Intelligence Board.</span>
+        </h1>
+        
+        <p class="text-text-secondary text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light mb-10">
+            A scientific collective of specialized neural entities working in concert to decode human potential. Precision through modular reasoning.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a class="px-8 py-3.5 rounded-full font-bold text-white bg-accent-gradient hover:scale-103 active:scale-97 transition-all shadow-xl shadow-violet-500/10" href="architecture.html">
+                Explore Architecture
+            </a>
+            <a class="px-8 py-3.5 rounded-full font-bold text-gray-300 border border-white/10 hover:bg-white/5 transition-all" href="interview-journey.html">
+                View Journey
+            </a>
+        </div>
+    </div>
+    
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-20">
+        <span class="font-mono text-[9px] uppercase tracking-widest">Scroll</span>
+        <span class="material-symbols-outlined text-sm">expand_more</span>
+    </div>
+</header>
+
+<!-- Title Section for Bento Grid Modules -->
+<section class="pt-32 pb-8 text-center relative z-10 px-8">
+    <span class="font-mono text-[9px] text-primary uppercase font-bold tracking-[0.4em] block mb-3">SYSTEM MODULES</span>
+    <h2 class="font-display text-3xl md:text-5xl font-bold text-white tracking-tight">The Modular Intelligence Nodes</h2>
+</section>
+
+<!-- Detailed Bento Grid Section -->
+<section class="pb-32 pt-12 px-8 max-w-5xl mx-auto relative z-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Resume Intelligence -->
+        <div class="glass-neo-stitch p-8 flex flex-col justify-center h-[300px]">
+            <span class="font-mono text-[9px] text-primary uppercase font-bold tracking-widest">SYSTEM-01</span>
+            <h3 class="font-display text-white text-lg font-bold mt-2 mb-3">Resume Intelligence</h3>
+            <p class="text-text-secondary text-xs font-light leading-relaxed">
+                Parses candidate historical trajectories, skill density metrics, and chronological timelines using semantic graph mapping.
+            </p>
+        </div>
+
+        <!-- Job Intelligence -->
+        <div class="glass-neo-stitch p-8 flex flex-col justify-center h-[300px]">
+            <span class="font-mono text-[9px] text-primary uppercase font-bold tracking-widest">SYSTEM-02</span>
+            <h3 class="font-display text-white text-lg font-bold mt-2 mb-3">Job Intelligence</h3>
+            <p class="text-text-secondary text-xs font-light leading-relaxed">
+                Decodes implicit role qualifications and baseline attributes directly to identify key calibration thresholds.
+            </p>
+        </div>
+
+        <!-- Interview Intelligence -->
+        <div class="glass-neo-stitch p-8 flex flex-col justify-center h-[300px]">
+            <span class="font-mono text-[9px] text-primary uppercase font-bold tracking-widest">SYSTEM-03</span>
+            <h3 class="font-display text-white text-lg font-bold mt-2 mb-3">Interview Intelligence</h3>
+            <p class="text-text-secondary text-xs font-light leading-relaxed">
+                Coordinates the dynamic conversational loop, adapting question branches in real-time based on verbal depth.
+            </p>
+        </div>
+
+        <!-- Split Sensory Clusters: Audio Intelligence Card -->
+        <a href="audio-intelligence.html" class="glass-neo-stitch p-8 flex flex-col justify-between h-[300px] hover:scale-[1.03] transition-all cursor-pointer group">
+            <div class="space-y-4">
+                <span class="font-mono text-[9px] text-primary uppercase font-bold tracking-widest">SYSTEM-04</span>
+                <h3 class="font-display font-bold text-white text-lg group-hover:text-primary transition-colors flex items-center justify-between">
+                    Audio Intelligence
+                    <span class="material-symbols-outlined text-sm">open_in_new</span>
+                </h3>
+                <p class="text-text-secondary text-xs font-light leading-relaxed">
+                    Vocal modulation, speed variations, filler word frequencies, pronunciation clarity estimation, and speech patterns.
+                </p>
+            </div>
+            <div class="glass-panel h-20 rounded-xl flex items-center justify-center gap-1.5 px-4 bg-[#0c0c0e]/60 border-white/5">
+                <span class="h-4 w-1 bg-primary/20 rounded-full"></span>
+                <span class="h-8 w-1 bg-primary/40 rounded-full"></span>
+                <span class="h-12 w-1 bg-primary/60 rounded-full"></span>
+                <span class="h-16 w-1 bg-primary rounded-full"></span>
+                <span class="h-12 w-1 bg-primary/60 rounded-full"></span>
+                <span class="h-8 w-1 bg-primary/40 rounded-full"></span>
+                <span class="h-4 w-1 bg-primary/20 rounded-full"></span>
+            </div>
+        </a>
+
+        <!-- Split Sensory Clusters: Video Intelligence Card -->
+        <a href="video-intelligence.html" class="glass-neo-stitch p-8 flex flex-col justify-between h-[300px] hover:scale-[1.03] transition-all cursor-pointer group">
+            <div class="space-y-4">
+                <span class="font-mono text-[9px] text-primary uppercase font-bold tracking-widest">SYSTEM-05</span>
+                <h3 class="font-display font-bold text-white text-lg group-hover:text-primary transition-colors flex items-center justify-between">
+                    Video Intelligence
+                    <span class="material-symbols-outlined text-sm">open_in_new</span>
+                </h3>
+                <p class="text-text-secondary text-xs font-light leading-relaxed">
+                    MediaPipe mesh posture tracking, eye contact anomalies, shoulder pose deflection, and body movement kinesics.
+                </p>
+            </div>
+            <div class="glass-panel h-20 rounded-xl flex items-center justify-center bg-[#0c0c0e]/60 border-white/5 overflow-hidden relative">
+                <div class="absolute inset-0 flex items-center justify-center opacity-30">
+                    <svg class="w-full h-full text-primary" viewBox="0 0 100 60" fill="none" stroke="currentColor" stroke-width="0.3">
+                        <circle cx="35" cy="30" r="1.5" />
+                        <circle cx="65" cy="30" r="1.5" />
+                        <path d="M 35 30 Q 50 20 65 30" />
+                        <path d="M 35 30 Q 50 45 65 30" />
+                    </svg>
+                </div>
+                <span class="material-symbols-outlined text-xl text-primary opacity-80 z-10">face_retouching_natural</span>
+            </div>
+        </a>
+
+        <!-- Evaluation Intelligence -->
+        <div class="glass-neo-stitch p-8 flex flex-col justify-center h-[300px]">
+            <span class="font-mono text-[9px] text-primary uppercase font-bold tracking-widest">SYSTEM-06</span>
+            <h3 class="font-display text-white text-lg font-bold mt-2 mb-3">Evaluation Engine</h3>
+            <p class="text-text-secondary text-xs font-light leading-relaxed">
+                Fuses telemetry signals and conversation structures, scoring posture, gaze consistency, and vocal speed matrices.
+            </p>
+        </div>
+
+        <!-- Report Intelligence (Full Width) -->
+        <div class="lg:col-span-3 glass-neo-stitch p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center">
+            <div class="space-y-4 flex-grow">
+                <span class="font-mono text-[9px] text-primary uppercase font-bold tracking-widest">SYSTEM-07</span>
+                <h3 class="font-display font-bold text-white text-xl">Report Intelligence</h3>
+                <p class="text-text-secondary text-xs font-light leading-relaxed max-w-xl">
+                    The final narrator. Compiles findings into a comprehensive structured report highlighting skill gap details and customized preparation exercises.
+                </p>
+            </div>
+            <div class="flex-shrink-0 relative">
+                <div class="w-32 h-40 border border-dashed border-primary/20 rounded-2xl flex items-center justify-center relative overflow-hidden group bg-white/5 hover:border-primary/50 transition-colors">
+                    <span class="material-symbols-outlined text-primary text-5xl opacity-60">article</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Upgraded Stream Workflow Section: Interactive Ingress-Egress Terminal -->
+<section class="py-32 px-8 max-w-5xl mx-auto relative z-10">
+    <div class="text-center mb-16">
+        <h2 class="font-display text-3xl font-bold text-white mb-2">The Intelligence Stream</h2>
+        <span class="font-mono text-[9px] text-text-secondary tracking-widest uppercase">INGRESS-EGRESS DATA STREAM PIPELINE</span>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+        <!-- Step 1: Ingest -->
+        <div class="glass-neo-stitch p-6 flex flex-col justify-between min-h-[200px] border-l-2 border-l-primary/30">
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="font-mono text-[10px] text-primary font-bold">01 / INGEST</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                </div>
+                <h5 class="font-display font-bold text-white text-xs mb-1">Resume &amp; JD Mapping</h5>
+                <p class="text-[10px] text-text-secondary font-light leading-relaxed">Loads and parses qualifications into vector anchors.</p>
+            </div>
+            <div class="font-mono text-[8px] text-gray-500 uppercase mt-4">
+                LATENCY: 180ms
+            </div>
+        </div>
+        <!-- Step 2: Stimulus -->
+        <div class="glass-neo-stitch p-6 flex flex-col justify-between min-h-[200px] border-l-2 border-l-primary/30">
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="font-mono text-[10px] text-primary font-bold">02 / STIMULUS</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                </div>
+                <h5 class="font-display font-bold text-white text-xs mb-1">Dynamic Prompting</h5>
+                <p class="text-[10px] text-text-secondary font-light leading-relaxed">Escalates and branches topic lists dynamically.</p>
+            </div>
+            <div class="font-mono text-[8px] text-gray-500 uppercase mt-4">
+                SPEED: 220 Tok/s
+            </div>
+        </div>
+        <!-- Step 3: Perception -->
+        <div class="glass-neo-stitch p-6 flex flex-col justify-between min-h-[200px] border-l-2 border-l-tertiary/30">
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="font-mono text-[10px] text-tertiary font-bold">03 / PERCEPTION</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                </div>
+                <h5 class="font-display font-bold text-white text-xs mb-1">Sensory Stream</h5>
+                <p class="text-[10px] text-text-secondary font-light leading-relaxed">Monitors raw audio-video coordinate payloads.</p>
+            </div>
+            <div class="font-mono text-[8px] text-gray-500 uppercase mt-4">
+                SAMPLING: 30 FPS
+            </div>
+        </div>
+        <!-- Step 4: Synthesis -->
+        <div class="glass-neo-stitch p-6 flex flex-col justify-between min-h-[200px] border-l-2 border-l-primary/30">
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="font-mono text-[10px] text-primary font-bold">04 / SYNTHESIS</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                </div>
+                <h5 class="font-display font-bold text-white text-xs mb-1">Cross-Validation</h5>
+                <p class="text-[10px] text-text-secondary font-light leading-relaxed">Resolves semantic content against vocal timelines.</p>
+            </div>
+            <div class="font-mono text-[8px] text-gray-500 uppercase mt-4">
+                CONSENSUS: SECURE
+            </div>
+        </div>
+        <!-- Step 5: Insight -->
+        <div class="glass-neo-stitch p-6 flex flex-col justify-between min-h-[200px] border-l-2 border-l-tertiary/30">
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="font-mono text-[10px] text-tertiary font-bold">05 / INSIGHT</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                </div>
+                <h5 class="font-display font-bold text-white text-xs mb-1">Report Egress</h5>
+                <p class="text-[10px] text-text-secondary font-light leading-relaxed">Assembles final report narrative matrix and coaching cards.</p>
+            </div>
+            <div class="font-mono text-[8px] text-gray-500 uppercase mt-4">
+                FORMAT: PDF + JSON
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Advantages Section -->
+<section class="py-32 px-8 max-w-5xl mx-auto relative z-10">
+    <div class="glass-neo-stitch p-8 md:p-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="space-y-10">
+                <h2 class="font-display text-3xl font-bold text-white">Unparalleled Precision</h2>
+                <div class="space-y-8">
+                    <!-- Point 1 -->
+                    <div class="flex gap-4">
+                        <span class="material-symbols-outlined text-primary text-2xl">verified_user</span>
+                        <div>
+                            <h4 class="font-display font-bold text-white text-xs mb-1">Explainable AI (XAI)</h4>
+                            <p class="text-[10px] text-text-secondary leading-normal">Every conclusion links to specific transcript tags and telemetry coordinate streams.</p>
+                        </div>
+                    </div>
+                    <!-- Point 2 -->
+                    <div class="flex gap-4">
+                        <span class="material-symbols-outlined text-primary text-2xl">grid_view</span>
+                        <div>
+                            <h4 class="font-display font-bold text-white text-xs mb-1">Decoupled Processing</h4>
+                            <p class="text-[10px] text-text-secondary leading-normal">Independent threads calculate visuals, audio, and language context separately.</p>
+                        </div>
+                    </div>
+                    <!-- Point 3 -->
+                    <div class="flex gap-4">
+                        <span class="material-symbols-outlined text-primary text-2xl">security</span>
+                        <div>
+                            <h4 class="font-display font-bold text-white text-xs mb-1">Sanitized Evaluation Boundaries</h4>
+                            <p class="text-[10px] text-text-secondary leading-normal">Filters personal data elements at node input points to prevent evaluation bias.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard illustration -->
+            <div class="relative h-[340px] rounded-2xl overflow-hidden glass-panel border-white/5 flex items-center justify-center p-8 bg-[#0c0c0e]/40">
+                <div class="text-center space-y-4">
+                    <span class="text-5xl font-display font-bold gradient-text">99.8%</span>
+                    <p class="font-mono text-[9px] uppercase tracking-widest text-text-secondary">Data Precision Rating</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA Section -->
+<section class="py-32 px-8 max-w-4xl mx-auto text-center relative z-10">
+    <div class="glass-neo-stitch p-12 md:p-16 border-cyan-500/10 shadow-lg shadow-cyan-500/5 relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-b from-cyan-500/30 to-transparent"></div>
+        <div class="max-w-2xl mx-auto space-y-8 relative z-10">
+            <h2 class="font-display text-4xl font-bold text-white leading-tight">
+                Ready to experience<br/>interview intelligence?
+            </h2>
+            <p class="text-text-secondary text-sm font-light">
+                Explore the modular Intelligence Board.
+            </p>
+            <div class="pt-6">
+                <a class="px-12 py-5 rounded-full font-bold text-white bg-accent-gradient hover:scale-103 active:scale-97 transition-all shadow-xl shadow-violet-500/20 inline-block text-sm" href="download.html">
+                    Experience KEIKO
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-[#050506] border-t border-white/5 w-full py-16 relative z-10">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-8 max-w-[1440px] mx-auto">
+    <div class="lg:col-span-1 space-y-4">
+      <div class="text-3xl text-white font-bold tracking-tighter" style="font-family:'Space Grotesk',sans-serif">KEIKO</div>
+      <p class="text-xs text-gray-500 leading-relaxed max-w-xs">
+          KEIKO — Knowledge-Guided Evaluation for Insights into Kinetics and Optimization in Interviews.
+      </p>
+      <p class="text-xs text-gray-600">&copy; 2026 KEIKO Intelligence. All rights reserved.</p>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold font-mono">Platform</h5>
+      <ul class="space-y-4 text-xs text-gray-500">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="about.html">About Us</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="interview-journey.html">Interview Journey</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="features.html">Features</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="architecture.html">Architecture</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="download.html">Experience KEIKO</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold font-mono">Resources</h5>
+      <ul class="space-y-4 text-xs text-gray-500">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">Documentation</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#opensource">Open Source</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Roadmap</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Changelog</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold font-mono">Legal</h5>
+      <ul class="space-y-4 text-xs text-gray-500">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Privacy Policy</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Terms of Service</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Contact Research</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- Interactive 3D Wireframe Rotating Cube Particle System Pinned bottom-right -->
+<script>
+(function() {
+    const canvas = document.getElementById('fixed-particle-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const maxParticles = 600; // Large particle count for dense cube outline
+
+    // Center is fixed at the bottom right corner
+    let center = { x: width, y: height };
+    
+    // Size is set dynamically so it spans about half the viewport height/width
+    let halfSize = Math.max(width, height) * 0.40;
+
+    window.addEventListener('resize', () => {
+        center.x = width;
+        center.y = height;
+        halfSize = Math.max(width, height) * 0.40;
+    });
+
+    let angleX = 0;
+    let angleY = 0;
+
+    let mouse = { x: -1000, y: -1000 };
+
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+
+    window.addEventListener('mouseleave', () => {
+        mouse.x = -1000;
+        mouse.y = -1000;
+    });
+
+    class Particle {
+        constructor(index) {
+            this.index = index;
+            
+            // 95% Purple, 5% Cyan
+            this.isCyan = (Math.random() < 0.05);
+
+            // Coordinates in 3D relative to cube center
+            this.x3d = 0;
+            this.y3d = 0;
+            this.z3d = 0;
+
+            // Distribute particles evenly across the 6 faces of the 3D Cube (600 total)
+            const particlesPerFace = 100;
+            const gridSize = 10;
+            const face = Math.floor(this.index / particlesPerFace);
+            const localIdx = this.index % particlesPerFace;
+            const r = Math.floor(localIdx / gridSize);
+            const c = localIdx % gridSize;
+
+            // Normalized coordinates between -1 and 1
+            const u = (gridSize > 1) ? (r / (gridSize - 1) * 2 - 1) : 0;
+            const v = (gridSize > 1) ? (c / (gridSize - 1) * 2 - 1) : 0;
+
+            this.face = face;
+            this.u = u;
+            this.v = v;
+
+            // Small random jitter offset on edges/faces for volumetric organic detail
+            this.noiseX = (Math.random() - 0.5) * 12;
+            this.noiseY = (Math.random() - 0.5) * 12;
+            this.noiseZ = (Math.random() - 0.5) * 12;
+
+            // Physics spring vectors
+            this.x = center.x;
+            this.y = center.y;
+            this.vx = 0;
+            this.vy = 0;
+
+            // Variable base sizing ranging from 1.2px to 3.4px
+            this.baseSize = Math.random() * 2.2 + 1.2;
+            this.size = this.baseSize;
+        }
+
+        update() {
+            // Apply scale logic matching dynamically updated halfSize
+            const uVal = this.u * halfSize;
+            const vVal = this.v * halfSize;
+
+            switch(this.face) {
+                case 0: this.x3d = halfSize;  this.y3d = uVal;      this.z3d = vVal;      break;
+                case 1: this.x3d = -halfSize; this.y3d = uVal;      this.z3d = vVal;      break;
+                case 2: this.x3d = uVal;      this.y3d = halfSize;  this.z3d = vVal;      break;
+                case 3: this.x3d = uVal;      this.y3d = -halfSize; this.z3d = vVal;      break;
+                case 4: this.x3d = uVal;      this.y3d = vVal;      this.z3d = halfSize;  break;
+                case 5: this.x3d = uVal;      this.y3d = vVal;      this.z3d = -halfSize; break;
+            }
+
+            const x3d_j = this.x3d + this.noiseX;
+            const y3d_j = this.y3d + this.noiseY;
+            const z3d_j = this.z3d + this.noiseZ;
+
+            // 3D Rotations
+            // Y-Axis rotation
+            let x1 = x3d_j * Math.cos(angleY) - z3d_j * Math.sin(angleY);
+            let z1 = x3d_j * Math.sin(angleY) + z3d_j * Math.cos(angleY);
+            // X-Axis rotation
+            let y2 = y3d_j * Math.cos(angleX) - z1 * Math.sin(angleX);
+            let z2 = y3d_j * Math.sin(angleX) + z1 * Math.cos(angleX);
+
+            // Perspective math
+            const fov = 3000;
+            const scale = fov / Math.max(100, fov + z2);
+
+            // Projected viewport coordinates centered at bottom-right
+            const targetX = center.x + x1 * scale;
+            const targetY = center.y + y2 * scale;
+
+            // Mouse deflection physics
+            let dx = this.x - mouse.x;
+            let dy = this.y - mouse.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 120) {
+                let force = (120 - dist) / 120;
+                let pushAngle = Math.atan2(dy, dx);
+                // Push particles away
+                this.vx += Math.cos(pushAngle) * force * 15;
+                this.vy += Math.sin(pushAngle) * force * 15;
+            }
+
+            // Elastic spring back to rotating coordinates
+            let ax = targetX - this.x;
+            let ay = targetY - this.y;
+            this.vx += ax * 0.08;
+            this.vy += ay * 0.08;
+
+            // Damping friction
+            this.vx *= 0.8;
+            this.vy *= 0.8;
+
+            this.x += this.vx;
+            this.y += this.vy;
+
+            // Dynamic depth scale sizing
+            this.size = this.baseSize * scale;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.isCyan ? 'rgba(113, 248, 228, 0.75)' : 'rgba(210, 187, 255, 0.55)';
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < maxParticles; i++) {
+        particles.push(new Particle(i));
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Slow, continuous rotation
+        angleX += 0.0012;
+        angleY += 0.0022;
+
+        particles.forEach(p => {
+            p.update();
+        });
+
+        // Draw crystal-lattice grid connections on the faces of the 3D cube
+        ctx.lineWidth = 0.8;
+        ctx.strokeStyle = 'rgba(210, 187, 255, 0.08)';
+        
+        const particlesPerFace = 100;
+        const gridSize = 10;
+
+        for (let i = 0; i < maxParticles; i++) {
+            const p = particles[i];
+            const localIdx = i % particlesPerFace;
+            const r = Math.floor(localIdx / gridSize);
+            const c = localIdx % gridSize;
+
+            // Draw line to next column neighbor on same face
+            if (c < gridSize - 1) {
+                const neighbor = particles[i + 1];
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(neighbor.x, neighbor.y);
+                ctx.stroke();
+            }
+            // Draw line to next row neighbor on same face
+            if (r < gridSize - 1) {
+                const neighbor = particles[i + gridSize];
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(neighbor.x, neighbor.y);
+                ctx.stroke();
+            }
+        }
+
+        // Draw remaining particles
+        particles.forEach(p => {
+            p.draw();
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+})();</script>
+
+<script>
+    // Navigation highlighting
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    const navItems = {
+        'about.html': 'nav-about',
+        'interview-journey.html': 'nav-journey',
+        'features.html': 'nav-features',
+        'architecture.html': 'nav-architecture'
+    };
+    const activeId = navItems[currentPath];
+    if (activeId) {
+        const activeLink = document.getElementById(activeId);
+        if (activeLink) {
+            activeLink.className = "font-body text-body text-[#d2bbff] font-bold border-b-2 border-[#d2bbff] pb-1 transition-all";
+        }
+    }
+</script>
+</body>
+</html>

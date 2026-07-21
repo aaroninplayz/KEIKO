@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Interview Journey | KEIKO Intelligence</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "background": "#050506",
+              "bg-card": "#0C0C0E",
+              "primary": "#d2bbff",
+              "secondary": "#adc6ff",
+              "tertiary": "#71f8e4",
+              "text-primary": "#F4F4F5",
+              "text-secondary": "#9E9E9F",
+              "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #14B8A6 100%)"
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+              "mono": ["IBM Plex Mono", "monospace"]
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+        body {
+            background-color: #050506;
+            color: #F4F4F5;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-panel {
+            background: rgba(12, 12, 14, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .accent-text-gradient {
+            background: linear-gradient(135deg, #d2bbff 0%, #adc6ff 50%, #71f8e4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        .grid-bg {
+            background-size: 30px 30px;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+        }
+        /* Custom timeline connector tracks */
+        .timeline-vertical::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 24px;
+            bottom: 24px;
+            width: 1px;
+            background: linear-gradient(to bottom, rgba(210, 187, 255, 0.25), rgba(113, 248, 228, 0.05));
+            z-index: 0;
+        }
+        /* Pulsing status indicators */
+        @keyframes flow-pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        .status-dot-pulse {
+            animation: flow-pulse 2s infinite;
+        }
+        /* Real-time wave dynamics */
+        @keyframes flow-wave {
+            0%, 100% { transform: scaleY(0.5); }
+            50% { transform: scaleY(1.3); }
+        }
+        .telemetry-wave-bar {
+            animation: flow-wave 1.6s ease-in-out infinite;
+        }
+        .telemetry-wave-bar:nth-child(2) { animation-delay: 0.15s; }
+        .telemetry-wave-bar:nth-child(3) { animation-delay: 0.3s; }
+        .telemetry-wave-bar:nth-child(4) { animation-delay: 0.45s; }
+        .telemetry-wave-bar:nth-child(5) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body class="font-body text-sm overflow-x-hidden selection:bg-primary/20 grid-bg">
+
+<!-- Fixed Background Particle Canvas -->
+<canvas id="fixed-particle-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 bg-transparent"></canvas>
+
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-[#050506]/85 backdrop-blur-md border-b border-white/5 h-20">
+  <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+    <a href="index.html" class="text-2xl font-bold tracking-tighter hover:opacity-90 transition-opacity" style="font-family:'Space Grotesk',sans-serif">KEIKO</a>
+    <div class="hidden md:flex items-center space-x-8">
+      <a id="nav-about" class="text-sm text-gray-400 hover:text-white transition-colors" href="about.html">About</a>
+      <a id="nav-journey" class="text-sm text-gray-400 hover:text-white transition-colors" href="interview-journey.html">Journey</a>
+      <a id="nav-features" class="text-sm text-gray-400 hover:text-white transition-colors" href="features.html">Features</a>
+      <a id="nav-architecture" class="text-sm text-gray-400 hover:text-white transition-colors" href="architecture.html">Architecture</a>
+      <a id="nav-download" class="text-sm text-gray-400 hover:text-white transition-colors" href="download.html">Download</a>
+    </div>
+    <a class="bg-[#7c3aed] text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:scale-105 hover:opacity-90 active:scale-95" href="download.html">Experience KEIKO</a>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="relative pt-32 pb-16 text-center">
+    <div class="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto px-6 relative z-10 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tertiary/5 border border-tertiary/20 mb-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+            <span class="font-mono text-[9px] text-tertiary uppercase font-bold tracking-widest">Interactive Sequence Timeline</span>
+        </div>
+        <h1 class="font-display text-4xl md:text-5xl font-bold tracking-tight text-white">
+            The Candidate Journey,<br/><span class="accent-text-gradient">Fully Deconstructed.</span>
+        </h1>
+        <p class="text-text-secondary text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+            Follow the live interview progression steps. Click any stage on the vertical timeline track to inspect the interactive UI dashboard panels built for each phase.
+        </p>
+    </div>
+</section>
+
+<!-- Timeline Sandbox Workspace -->
+<section class="pb-32 px-8 max-w-[1440px] mx-auto relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        
+        <!-- Left Sidebar: Stage buttons (4 cols) -->
+        <div class="lg:col-span-4 space-y-4 relative timeline-vertical">
+            
+            <!-- Stage 1 Button -->
+            <button onclick="switchJourneyStage(1)" id="btn-stage-1" class="w-full text-left relative z-10 glass-panel rounded-2xl p-5 border border-primary/30 shadow-lg shadow-violet-500/5 hover:-translate-y-0.5 transition-all flex items-start gap-4 focus:outline-none">
+                <div class="w-9 h-9 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center text-xs text-primary font-mono font-bold shrink-0">01</div>
+                <div>
+                    <span class="text-[9px] font-mono text-primary font-bold uppercase tracking-widest block mb-0.5" id="lbl-stage-1">Stage 01</span>
+                    <strong class="font-display text-sm font-bold text-white block">Profile Ingestion & Parsing</strong>
+                    <p class="text-[11px] text-text-secondary mt-1 leading-relaxed">Synthesizes candidate resumes and requirements metadata into skill vectors.</p>
+                </div>
+            </button>
+
+            <!-- Stage 2 Button -->
+            <button onclick="switchJourneyStage(2)" id="btn-stage-2" class="w-full text-left relative z-10 glass-panel rounded-2xl p-5 border border-white/5 hover:border-white/10 hover:-translate-y-0.5 transition-all flex items-start gap-4 focus:outline-none">
+                <div class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xs text-gray-400 font-mono shrink-0">02</div>
+                <div>
+                    <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest block mb-0.5" id="lbl-stage-2">Stage 02</span>
+                    <strong class="font-display text-sm font-bold text-white block">Dynamic Agenda Planning</strong>
+                    <p class="text-[11px] text-text-secondary mt-1 leading-relaxed">Configures specific topic roadmaps, scoring weights, and complexity limits.</p>
+                </div>
+            </button>
+
+            <!-- Stage 3 Button -->
+            <button onclick="switchJourneyStage(3)" id="btn-stage-3" class="w-full text-left relative z-10 glass-panel rounded-2xl p-5 border border-white/5 hover:border-white/10 hover:-translate-y-0.5 transition-all flex items-start gap-4 focus:outline-none">
+                <div class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xs text-gray-400 font-mono shrink-0">03</div>
+                <div>
+                    <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest block mb-0.5" id="lbl-stage-3">Stage 03</span>
+                    <strong class="font-display text-sm font-bold text-white block">Vocal & Visual Telemetry</strong>
+                    <p class="text-[11px] text-text-secondary mt-1 leading-relaxed">Tracks webcam pupil focus coordinates, head pose tilt, and speaking speed.</p>
+                </div>
+            </button>
+
+            <!-- Stage 4 Button -->
+            <button onclick="switchJourneyStage(4)" id="btn-stage-4" class="w-full text-left relative z-10 glass-panel rounded-2xl p-5 border border-white/5 hover:border-white/10 hover:-translate-y-0.5 transition-all flex items-start gap-4 focus:outline-none">
+                <div class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xs text-gray-400 font-mono shrink-0">04</div>
+                <div>
+                    <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest block mb-0.5" id="lbl-stage-4">Stage 04</span>
+                    <strong class="font-display text-sm font-bold text-white block">Cognitive Adaptation</strong>
+                    <p class="text-[11px] text-text-secondary mt-1 leading-relaxed">Adjusts conversational complexity paths dynamically based on answer depth.</p>
+                </div>
+            </button>
+
+            <!-- Stage 5 Button -->
+            <button onclick="switchJourneyStage(5)" id="btn-stage-5" class="w-full text-left relative z-10 glass-panel rounded-2xl p-5 border border-white/5 hover:border-white/10 hover:-translate-y-0.5 transition-all flex items-start gap-4 focus:outline-none">
+                <div class="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xs text-gray-400 font-mono shrink-0">05</div>
+                <div>
+                    <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest block mb-0.5" id="lbl-stage-5">Stage 05</span>
+                    <strong class="font-display text-sm font-bold text-white block">Calibration Report Card</strong>
+                    <p class="text-[11px] text-text-secondary mt-1 leading-relaxed">Synthesizes overall metrics, speech pace timelines, and coaching checklists.</p>
+                </div>
+            </button>
+        </div>
+
+        <!-- Right Column: Interactive Sandbox Screen Canvas (8 cols) -->
+        <div class="lg:col-span-8 glass-panel rounded-[32px] p-6 shadow-2xl relative overflow-hidden min-h-[500px] flex flex-col justify-between">
+            
+            <!-- Stage 1 Mockup (Ingestion dashboard) -->
+            <div id="panel-stage-1" class="transition-all duration-300 opacity-100 scale-100 flex-1 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between pb-3 border-b border-white/5 mb-6">
+                        <div class="flex items-center gap-2 font-mono text-[10px] text-primary">
+                            <span class="material-symbols-outlined text-xs">upload_file</span>
+                            PROFILE INGESTION GATEWAY
+                        </div>
+                        <span class="bg-primary/10 text-primary border border-primary/20 text-[8px] font-mono px-2 py-0.5 rounded uppercase">SYSTEM STATUS: MAPPED</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-text-secondary">
+                        <!-- Uploaded files list -->
+                        <div class="bg-black/50 border border-white/5 p-5 rounded-2xl space-y-4">
+                            <span class="font-mono text-[9px] text-gray-500 block uppercase tracking-wider">Ingested Context Logs</span>
+                            
+                            <div class="flex items-center justify-between p-3.5 bg-white/5 rounded-xl border border-white/5 hover:border-primary/20 transition-all">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="material-symbols-outlined text-primary text-xl">description</span>
+                                    <div>
+                                        <strong class="text-white block text-[11px] font-bold">aaron_resume.pdf</strong>
+                                        <span class="text-[9px] text-gray-500 block font-mono">Parsed: 18 technical capabilities</span>
+                                    </div>
+                                </div>
+                                <span class="material-symbols-outlined text-emerald-400 text-sm">check_circle</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-3.5 bg-white/5 rounded-xl border border-white/5 hover:border-primary/20 transition-all">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="material-symbols-outlined text-primary text-xl">work</span>
+                                    <div>
+                                        <strong class="text-white block text-[11px] font-bold">backend_engineer_jd.txt</strong>
+                                        <span class="text-[9px] text-gray-500 block font-mono">Mapped Target: Backend Architect</span>
+                                    </div>
+                                </div>
+                                <span class="material-symbols-outlined text-emerald-400 text-sm">check_circle</span>
+                            </div>
+                        </div>
+
+                        <!-- Parsed skill vectors mockup -->
+                        <div class="bg-black/50 border border-white/5 p-5 rounded-2xl space-y-4">
+                            <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                                <span class="font-mono text-[9px] text-gray-500 uppercase tracking-wider">Parsed skill vectors</span>
+                                <span class="text-[9px] text-tertiary font-mono font-bold">94.1% MATCH</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="space-y-1">
+                                    <div class="flex justify-between font-mono text-[9px] text-gray-400"><span>Python (FastAPI / Asyncio)</span><span>92%</span></div>
+                                    <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-primary h-full rounded-full" style="width: 92%"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="flex justify-between font-mono text-[9px] text-gray-400"><span>Databases (SQL / Redis locks)</span><span>88%</span></div>
+                                    <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-primary h-full rounded-full" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <div class="flex justify-between font-mono text-[9px] text-gray-400"><span>Container Routing (Docker / K8s)</span><span>82%</span></div>
+                                    <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-primary h-full rounded-full" style="width: 82%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-white/5 pt-4 mt-6 text-[9px] font-mono text-gray-500 leading-normal uppercase">
+                    SEMANTIC MAPPING RESOLUTION COMPLETE. PRE-INTERVIEW INDEX MATRIX ESTABLISHED.
+                </div>
+            </div>
+
+            <!-- Stage 2 Mockup (Adaptive Agenda matrix) -->
+            <div id="panel-stage-2" class="transition-all duration-300 opacity-0 scale-95 hidden flex-1 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between pb-3 border-b border-white/5 mb-6">
+                        <div class="flex items-center gap-2 font-mono text-[10px] text-[#adc6ff]">
+                            <span class="material-symbols-outlined text-xs">tune</span>
+                            ADAPTIVE ROADMAP PLANNING
+                        </div>
+                        <span class="bg-secondary/10 text-secondary border border-secondary/20 text-[8px] font-mono px-2 py-0.5 rounded uppercase">SYSTEM STATUS: CONFIG-READY</span>
+                    </div>
+
+                    <!-- Roadmap Matrix Table -->
+                    <div class="overflow-x-auto border border-white/5 rounded-2xl text-xs text-text-secondary">
+                        <table class="w-full text-left">
+                            <thead class="bg-white/5 font-mono text-[9px] text-white border-b border-white/5">
+                                <tr>
+                                    <th class="p-3">Sequence Phase</th>
+                                    <th class="p-3">Target Subject Domain</th>
+                                    <th class="p-3">Starting Complexity</th>
+                                    <th class="p-3">Estimated Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/5 font-mono text-[10px]">
+                                <tr>
+                                    <td class="p-3 text-white">PHASE 01</td>
+                                    <td class="p-3">FastAPI lifespan lifecycle handlers</td>
+                                    <td class="p-3 text-[#adc6ff]">Medium</td>
+                                    <td class="p-3">8 minutes</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-white">PHASE 02</td>
+                                    <td class="p-3">Concurrency lock-contention mechanics</td>
+                                    <td class="p-3 text-[#adc6ff]">Medium-High</td>
+                                    <td class="p-3">12 minutes</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-white">PHASE 03</td>
+                                    <td class="p-3">Distributed cache-stampede failovers</td>
+                                    <td class="p-3 text-tertiary">High / Expert</td>
+                                    <td class="p-3">15 minutes</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-white">PHASE 04</td>
+                                    <td class="p-3">Architectural tradeoff evaluations</td>
+                                    <td class="p-3 text-emerald-400">Behavioral</td>
+                                    <td class="p-3">5 minutes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-secondary/5 border border-secondary/10 p-4 rounded-xl mt-6 text-xs text-text-secondary">
+                    <strong class="text-white block mb-1">Score weight profile calibration</strong>
+                    <p class="leading-relaxed text-[11px]">
+                        Based on the parsed Backend Architect profile requirements, scoring coefficients are set to: <strong>Technical Depth: 45%</strong> | <strong>Acoustic Pacing: 25%</strong> | <strong>Composure posture: 15%</strong> | <strong>Gaze Stability: 15%</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Stage 3 Mockup (Vocal & Visual Telemetry) -->
+            <div id="panel-stage-3" class="transition-all duration-300 opacity-0 scale-95 hidden flex-1 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between pb-3 border-b border-white/5 mb-6">
+                        <div class="flex items-center gap-2 font-mono text-[10px] text-tertiary">
+                            <span class="material-symbols-outlined text-xs">graphic_eq</span>
+                            REAL-TIME SENSORY TELEMETRY
+                        </div>
+                        <span class="bg-tertiary/10 text-tertiary border border-tertiary/20 text-[8px] font-mono px-2 py-0.5 rounded uppercase">STREAM ACTIVE</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                        <!-- Webcam overlay box (5 cols) -->
+                        <div class="md:col-span-5 bg-black/50 border border-white/5 rounded-2xl aspect-[4/3] relative flex items-center justify-center overflow-hidden">
+                            <div class="absolute inset-0 z-10">
+                                <svg class="w-full h-full text-tertiary" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="0.4">
+                                    <circle cx="39" cy="40" r="1.2" fill="#71f8e4" />
+                                    <circle cx="61" cy="40" r="1.2" fill="#71f8e4" />
+                                    <line x1="39" y1="40" x2="61" y2="40" stroke-dasharray="2,2" class="opacity-40" />
+                                    <circle cx="50" cy="51" r="1" fill="#71f8e4" />
+                                    <line x1="25" y1="76" x2="75" y2="76" stroke="#adc6ff" stroke-width="0.8" />
+                                    <text x="5" y="93" fill="#71f8e4" font-size="4" font-family="monospace">PUPIL FOCUS: SECURE</text>
+                                </svg>
+                            </div>
+                            <span class="material-symbols-outlined text-3xl text-primary opacity-55">face</span>
+                            <div class="absolute bottom-2 left-2 bg-black/80 px-2 py-0.5 rounded text-[8px] font-mono text-gray-500 border border-white/5">CAM: 10 FPS</div>
+                        </div>
+
+                        <!-- Metrics lists (7 cols) -->
+                        <div class="md:col-span-7 space-y-3 text-xs text-text-secondary flex flex-col justify-center">
+                            <div class="bg-white/5 p-3.5 rounded-xl border border-white/5 flex items-center justify-between">
+                                <div>
+                                    <strong class="text-white block font-mono">Shoulder Pose Axis</strong>
+                                    <span class="text-[9px] text-gray-500 font-mono">Posture deflection tracking</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-bold text-white font-mono block">171.4°</span>
+                                    <span class="text-[8px] text-emerald-400 font-bold font-mono">ALIGNMENT EXCELLENT</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-white/5 p-3.5 rounded-xl border border-white/5 flex items-center justify-between">
+                                <div>
+                                    <strong class="text-white block font-mono">Vocal pacing frequency</strong>
+                                    <span class="text-[9px] text-gray-500 font-mono">Speech words-per-minute curve</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-bold text-white font-mono block">141 WPM</span>
+                                    <span class="text-[8px] text-emerald-400 font-bold font-mono">SPEED OPTIMAL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acoustic waves indicator footer -->
+                <div class="border-t border-white/5 pt-4 mt-6 flex items-center justify-between gap-4">
+                    <span class="text-[9px] font-mono text-gray-500 uppercase tracking-wider">Tone Modulation Wave:</span>
+                    <div class="flex items-end gap-1 h-6">
+                        <span class="w-1 bg-[#71f8e4] rounded-full telemetry-wave-bar" style="height: 50%"></span>
+                        <span class="w-1 bg-[#71f8e4] rounded-full telemetry-wave-bar" style="height: 90%"></span>
+                        <span class="w-1 bg-[#71f8e4] rounded-full telemetry-wave-bar" style="height: 35%"></span>
+                        <span class="w-1 bg-[#71f8e4] rounded-full telemetry-wave-bar" style="height: 70%"></span>
+                        <span class="w-1 bg-[#71f8e4] rounded-full telemetry-wave-bar" style="height: 40%"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage 4 Mockup (Cognitive Adaptation dialogue) -->
+            <div id="panel-stage-4" class="transition-all duration-300 opacity-0 scale-95 hidden flex-1 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between pb-3 border-b border-white/5 mb-6">
+                        <div class="flex items-center gap-2 font-mono text-[10px] text-primary">
+                            <span class="material-symbols-outlined text-xs">psychology</span>
+                            DYNAMIC DIALOGUE ROUTING
+                        </div>
+                        <span class="bg-primary/10 text-primary border border-primary/20 text-[8px] font-mono px-2 py-0.5 rounded uppercase">DIFFICULTY LEVELING UP</span>
+                    </div>
+
+                    <!-- Chat layout mockup -->
+                    <div class="space-y-4 text-xs">
+                        <div class="flex items-start gap-3">
+                            <div class="w-7 h-7 rounded-full bg-violet-500/10 border border-violet-500/30 flex items-center justify-center text-primary font-bold shrink-0 font-mono text-[10px]">AI</div>
+                            <div class="bg-white/5 border border-white/5 rounded-2xl rounded-tl-none p-4 max-w-[85%] text-text-secondary leading-relaxed">
+                                <span class="font-mono text-[8px] text-gray-500 block mb-1">INTERVIEWER AGENT • 11:24:02</span>
+                                "How would you handle database connection pools are efficiently disposed of under heavy worker scaling inside FastAPI?"
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3 justify-end">
+                            <div class="bg-primary/5 border border-primary/15 rounded-2xl rounded-tr-none p-4 max-w-[85%] text-text-secondary leading-relaxed text-right">
+                                <span class="font-mono text-[8px] text-primary block mb-1">CANDIDATE SPEECH TRANSCRIPT • 11:24:44</span>
+                                "I utilize async database connection managers tied directly to the FastAPI lifecycle lifespan context helper. On application shutdown events, we await closing calls on the connection engine."
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold shrink-0 font-mono text-[10px]">ME</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Path escalation notification -->
+                <div class="flex items-center gap-2 bg-[#71f8e4]/5 border border-[#71f8e4]/20 p-3 rounded-xl font-mono text-[9px] text-[#71f8e4] justify-center mt-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#71f8e4] animate-pulse"></span>
+                    RESPONSE EVALUATION MATCH: 94.8% — DYNAMIC ROUTING ESCALATED TO [EXPERT: CAP SYSTEM CONTROLS]
+                </div>
+            </div>
+
+            <!-- Stage 5 Mockup (Calibration score dashboard) -->
+            <div id="panel-stage-5" class="transition-all duration-300 opacity-0 scale-95 hidden flex-1 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between pb-3 border-b border-white/5 mb-6">
+                        <div class="flex items-center gap-2 font-mono text-[10px] text-emerald-400">
+                            <span class="material-symbols-outlined text-xs">analytics</span>
+                            EVALUATION EXECUTIVE SCORECARD
+                        </div>
+                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[8px] font-mono px-2 py-0.5 rounded uppercase">EVALUATION FINALIZED</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center text-xs text-text-secondary">
+                        <!-- Score dial (5 cols) -->
+                        <div class="md:col-span-5 flex flex-col items-center justify-center text-center">
+                            <div class="relative w-36 h-36 flex items-center justify-center">
+                                <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                    <path class="text-white/5" stroke-width="2" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="text-emerald-400" stroke-dasharray="89, 100" stroke-width="2" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                </svg>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-3xl font-bold font-mono text-white leading-none">8.9</span>
+                                    <span class="text-[9px] font-mono text-gray-500 mt-1 uppercase">OVERALL RATING</span>
+                                </div>
+                            </div>
+                            <strong class="text-white font-display mt-4 block">RECOMMENDATION: HIRE</strong>
+                        </div>
+
+                        <!-- Category meters (7 cols) -->
+                        <div class="md:col-span-7 space-y-3">
+                            <span class="font-mono text-[9px] text-gray-500 uppercase tracking-widest block mb-1">Subcategory Ratings</span>
+                            
+                            <div class="space-y-1">
+                                <div class="flex justify-between font-mono text-[9px] text-gray-400"><span>Technical Subject Depth</span><span>92%</span></div>
+                                <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                                    <div class="bg-emerald-400 h-full rounded-full" style="width: 92%"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex justify-between font-mono text-[9px] text-gray-400"><span>Vocal cadence & pacing metrics</span><span>91%</span></div>
+                                <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                                    <div class="bg-emerald-400 h-full rounded-full" style="width: 91%"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex justify-between font-mono text-[9px] text-gray-400"><span>Speech clarity & expressions</span><span>88%</span></div>
+                                <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                                    <div class="bg-emerald-400 h-full rounded-full" style="width: 88%"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <div class="flex justify-between font-mono text-[9px] text-gray-400"><span>Posture alignment score</span><span>85%</span></div>
+                                <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                                    <div class="bg-emerald-400 h-full rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-white/5 pt-4 mt-6 text-[9px] font-mono text-gray-500 uppercase flex justify-between items-center">
+                    <span>Candidate Profile Reference: #X992-ALPHA</span>
+                    <span class="text-emerald-400 font-bold">REPORT SYNCED</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA Area -->
+<section class="py-24 px-8 text-center relative border-t border-white/5 grid-bg">
+    <div class="max-w-2xl mx-auto space-y-8 relative z-10">
+        <h2 class="font-display text-3xl font-bold text-white">Deploy Keiko Into Your Calibration Pipeline</h2>
+        <p class="text-text-secondary text-sm leading-relaxed">
+            Eliminate subjective reviews. Get comprehensive evaluations, telemetry logs, and objective scorecards for every single technical candidate.
+        </p>
+        <a class="bg-accent-gradient text-white px-10 py-4 rounded-full font-bold text-sm hover:scale-105 transition-transform shadow-lg shadow-violet-500/20 inline-block text-center" href="download.html">
+            Experience KEIKO
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-[#050506] border-t border-white/5 w-full py-16">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-8 max-w-[1440px] mx-auto">
+    <div class="lg:col-span-1">
+      <div class="text-3xl text-white mb-4 font-bold tracking-tighter" style="font-family:'Space Grotesk',sans-serif">KEIKO</div>
+      <p class="text-sm text-gray-500 mb-6 max-w-xs">Engineering-grade intelligence for the modern technical interview.</p>
+      <p class="text-xs text-gray-600">&copy; 2026 KEIKO Intelligence. All rights reserved.</p>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold font-mono">Platform</h5>
+      <ul class="space-y-4 text-sm text-gray-500">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="about.html">About Us</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="interview-journey.html">Interview Journey</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="features.html">Features</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="architecture.html">Architecture</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="download.html">Experience KEIKO</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold font-mono">Resources</h5>
+      <ul class="space-y-4 text-sm text-gray-500">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">Documentation</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">API Configuration</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Roadmap</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Changelogs</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold font-mono">Legal</h5>
+      <ul class="space-y-4 text-sm text-gray-500">
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Privacy Policy</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Terms of Service</a></li>
+        <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Contact Research</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+    // Tab stage switcher logic
+    function switchJourneyStage(stageNumber) {
+        const activeBtnClass = "border-primary/30 shadow-lg shadow-violet-500/5 -translate-y-0.5";
+        const inactiveBtnClass = "border-white/5";
+
+        for (let i = 1; i <= 5; i++) {
+            const btn = document.getElementById(`btn-stage-${i}`);
+            const panel = document.getElementById(`panel-stage-${i}`);
+            const node = btn.firstElementChild;
+
+            if (i === stageNumber) {
+                // Activate button
+                btn.className = btn.className.replace(inactiveBtnClass, activeBtnClass);
+                btn.classList.add("border-primary/30");
+                node.className = "w-9 h-9 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center text-xs text-primary font-mono font-bold shrink-0";
+                
+                const stageLbl = document.getElementById(`lbl-stage-${i}`);
+                stageLbl.className = "text-[9px] font-mono text-primary font-bold uppercase tracking-widest block mb-0.5";
+
+                // Show panel
+                panel.classList.remove("hidden", "opacity-0", "scale-95");
+                panel.classList.add("opacity-100", "scale-100");
+            } else {
+                // Deactivate button
+                btn.className = btn.className.replace(activeBtnClass, inactiveBtnClass);
+                btn.classList.remove("border-primary/30");
+                node.className = "w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xs text-gray-400 font-mono shrink-0";
+                
+                const stageLbl = document.getElementById(`lbl-stage-${i}`);
+                stageLbl.className = "text-[9px] font-mono text-gray-500 uppercase tracking-widest block mb-0.5";
+
+                // Hide panel
+                panel.classList.add("hidden", "opacity-0", "scale-95");
+                panel.classList.remove("opacity-100", "scale-100");
+            }
+        }
+    }
+
+    // Unified navigation active state matching
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+    const navItems = {
+        'about.html': 'nav-about',
+        'interview-journey.html': 'nav-journey',
+        'features.html': 'nav-features',
+        'architecture.html': 'nav-architecture'
+    };
+    const activeId = navItems[currentPath];
+    if (activeId) {
+        const activeLink = document.getElementById(activeId);
+        if (activeLink) {
+            activeLink.className = "font-body text-body text-[#d2bbff] font-bold border-b-2 border-[#d2bbff] pb-1 transition-all";
+        }
+    }
+</script>
+
+<!-- Interactive 3D Tumbling Pyramid Particle System Pinned bottom-right -->
+<script>
+(function() {
+    const canvas = document.getElementById('fixed-particle-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const maxParticles = 600; // Exact count matching about page
+
+    // Center is fixed at the bottom right corner
+    let center = { x: width, y: height };
+    
+    // Size is set dynamically so it spans about half the viewport
+    let halfSize = Math.max(width, height) * 0.40;
+
+    window.addEventListener('resize', () => {
+        center.x = width;
+        center.y = height;
+        halfSize = Math.max(width, height) * 0.40;
+    });
+
+    // 3D Rotation Angles
+    let angleX = 0;
+    let angleY = 0;
+    let angleZ = 0;
+
+    let mouse = { x: -1000, y: -1000 };
+
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+
+    window.addEventListener('mouseleave', () => {
+        mouse.x = -1000;
+        mouse.y = -1000;
+    });
+
+    class Particle {
+        constructor(index) {
+            this.index = index;
+            
+            // 95% Purple, 5% Cyan
+            this.isCyan = (Math.random() < 0.05);
+
+            // Coordinates in 3D relative to pyramid center
+            this.x3d = 0;
+            this.y3d = 0;
+            this.z3d = 0;
+
+            const baseCount = 200;
+            const faceCount = 100;
+
+            // Define pyramid vertices (Apex + 4 Square Base points)
+            // apex is at z = halfSize, square base at z = -halfSize
+            const apex = { x: 0, y: 0, z: halfSize };
+            const v0 = { x: -halfSize, y: -halfSize, z: -halfSize };
+            const v1 = { x: halfSize, y: -halfSize, z: -halfSize };
+            const v2 = { x: halfSize, y: halfSize, z: -halfSize };
+            const v3 = { x: -halfSize, y: halfSize, z: -halfSize };
+
+            if (index < baseCount) {
+                // Face 0: Square base grid (approx 14x14)
+                this.face = 0;
+                const gridSize = 14;
+                const r = Math.floor(index / gridSize);
+                const c = index % gridSize;
+                
+                const u = (r / 13) * 2 - 1;
+                const v = (c / 13) * 2 - 1;
+
+                this.u = u;
+                this.v = v;
+                this.isTriangle = false;
+            } else {
+                // Side Triangular Faces 1, 2, 3, 4
+                const k = index - baseCount;
+                this.face = 1 + Math.floor(k / faceCount);
+                const idx = k % faceCount;
+
+                // Triangle grid row/col calculation
+                let row = 0;
+                let col = 0;
+                let acc = 0;
+                for (let r = 0; r < 14; r++) {
+                    if (idx >= acc && idx < acc + r + 1) {
+                        row = r;
+                        col = idx - acc;
+                        break;
+                    }
+                    acc += r + 1;
+                }
+                const tr = (row / 13);
+                const tc = (row > 0) ? (col / row) : 0;
+
+                this.u = tr;
+                this.v = tc;
+                this.isTriangle = true;
+            }
+
+            // Small random jitter offset for floating organic visual depth
+            this.noiseX = (Math.random() - 0.5) * 12;
+            this.noiseY = (Math.random() - 0.5) * 12;
+            this.noiseZ = (Math.random() - 0.5) * 12;
+
+            // Physics spring vectors
+            this.x = center.x;
+            this.y = center.y;
+            this.vx = 0;
+            this.vy = 0;
+
+            // Variable base sizing ranging from 1.2px to 3.4px
+            this.baseSize = Math.random() * 2.2 + 1.2;
+            this.size = this.baseSize;
+        }
+
+        update() {
+            // Re-calculate based on current dynamic halfSize
+            const apex = { x: 0, y: 0, z: halfSize };
+            const v0 = { x: -halfSize, y: -halfSize, z: -halfSize };
+            const v1 = { x: halfSize, y: -halfSize, z: -halfSize };
+            const v2 = { x: halfSize, y: halfSize, z: -halfSize };
+            const v3 = { x: -halfSize, y: halfSize, z: -halfSize };
+
+            if (!this.isTriangle) {
+                // Square base coordinates
+                this.x3d = this.u * halfSize;
+                this.y3d = this.v * halfSize;
+                this.z3d = -halfSize;
+            } else {
+                // Interpolate triangle faces (tr = u, tc = v)
+                let b1, b2;
+                switch(this.face) {
+                    case 1: b1 = v0; b2 = v1; break;
+                    case 2: b1 = v1; b2 = v2; break;
+                    case 3: b1 = v2; b2 = v3; break;
+                    case 4: b1 = v3; b2 = v0; break;
+                }
+                
+                this.x3d = (1 - this.u) * apex.x + this.u * ((1 - this.v) * b1.x + this.v * b2.x);
+                this.y3d = (1 - this.u) * apex.y + this.u * ((1 - this.v) * b1.y + this.v * b2.y);
+                this.z3d = (1 - this.u) * apex.z + this.u * ((1 - this.v) * b1.z + this.v * b2.z);
+            }
+
+            const x3d_j = this.x3d + this.noiseX;
+            const y3d_j = this.y3d + this.noiseY;
+            const z3d_j = this.z3d + this.noiseZ;
+
+            // 3D Rotations on all three axes (Tumbling / Jumbled rotation)
+            // X rotation
+            let y1 = y3d_j * Math.cos(angleX) - z3d_j * Math.sin(angleX);
+            let z1 = y3d_j * Math.sin(angleX) + z3d_j * Math.cos(angleX);
+            // Y rotation
+            let x2 = x3d_j * Math.cos(angleY) - z1 * Math.sin(angleY);
+            let z2 = x3d_j * Math.sin(angleY) + z1 * Math.cos(angleY);
+            // Z rotation
+            let x3 = x2 * Math.cos(angleZ) - y1 * Math.sin(angleZ);
+            let y3 = x2 * Math.sin(angleZ) + y1 * Math.cos(angleZ);
+
+            // Perspective projection math
+            const fov = 3000;
+            const scale = fov / Math.max(100, fov + z2);
+
+            // Projected viewport coordinates centered at bottom-right
+            const targetX = center.x + x3 * scale;
+            const targetY = center.y + y3 * scale;
+
+            // Mouse deflection physics
+            let dx = this.x - mouse.x;
+            let dy = this.y - mouse.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 120) {
+                let force = (120 - dist) / 120;
+                let pushAngle = Math.atan2(dy, dx);
+                // Push particles away
+                this.vx += Math.cos(pushAngle) * force * 15;
+                this.vy += Math.sin(pushAngle) * force * 15;
+            }
+
+            // Elastic spring back to rotating coordinates
+            let ax = targetX - this.x;
+            let ay = targetY - this.y;
+            this.vx += ax * 0.08;
+            this.vy += ay * 0.08;
+
+            // Damping friction
+            this.vx *= 0.8;
+            this.vy *= 0.8;
+
+            this.x += this.vx;
+            this.y += this.vy;
+
+            // Dynamic depth scale sizing
+            this.size = this.baseSize * scale;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.isCyan ? 'rgba(113, 248, 228, 0.75)' : 'rgba(210, 187, 255, 0.55)';
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < maxParticles; i++) {
+        particles.push(new Particle(i));
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Complex phase updates for tumbling movement
+        angleX += 0.0011;
+        angleY += 0.0018;
+        angleZ += 0.0014;
+
+        particles.forEach(p => {
+            p.update();
+        });
+
+        // Draw wireframe connection paths along faces
+        ctx.lineWidth = 0.8;
+        ctx.strokeStyle = 'rgba(210, 187, 255, 0.07)';
+        
+        const baseCount = 200;
+        const faceCount = 100;
+
+        for (let i = 0; i < maxParticles; i++) {
+            const p = particles[i];
+            
+            if (p.face === 0) {
+                // Square base: 14x14 grid
+                const gridSize = 14;
+                const r = Math.floor(i / gridSize);
+                const c = i % gridSize;
+
+                if (c < gridSize - 1 && i + 1 < baseCount) {
+                    const neighbor = particles[i + 1];
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(neighbor.x, neighbor.y);
+                    ctx.stroke();
+                }
+                if (r < gridSize - 1 && i + gridSize < baseCount) {
+                    const neighbor = particles[i + gridSize];
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(neighbor.x, neighbor.y);
+                    ctx.stroke();
+                }
+            } else {
+                // Side Triangular Faces
+                const faceStart = baseCount + (p.face - 1) * faceCount;
+                const localIdx = i - faceStart;
+
+                let r = 0;
+                let c = 0;
+                let acc = 0;
+                for (let rowIdx = 0; rowIdx < 14; rowIdx++) {
+                    if (localIdx >= acc && localIdx < acc + rowIdx + 1) {
+                        r = rowIdx;
+                        c = localIdx - acc;
+                        break;
+                    }
+                    acc += rowIdx + 1;
+                }
+
+                // Connect to next column on same row
+                if (c < r && localIdx + 1 < faceCount) {
+                    const neighbor = particles[faceStart + localIdx + 1];
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(neighbor.x, neighbor.y);
+                    ctx.stroke();
+                }
+
+                // Connect to next row (same column and next column)
+                if (r < 13) {
+                    const nextRowSameColIdx = localIdx + r + 1;
+                    if (nextRowSameColIdx < faceCount) {
+                        const neighbor = particles[faceStart + nextRowSameColIdx];
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(neighbor.x, neighbor.y);
+                        ctx.stroke();
+                    }
+
+                    const nextRowNextColIdx = localIdx + r + 2;
+                    if (nextRowNextColIdx < faceCount) {
+                        const neighbor = particles[faceStart + nextRowNextColIdx];
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(neighbor.x, neighbor.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Draw particle circles
+        particles.forEach(p => {
+            p.draw();
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+})();
+</script>
+</body>
+</html>

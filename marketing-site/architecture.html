@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>System Architecture — KEIKO</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#adc6ff",
+                        "inverse-primary": "#732ee4",
+                        "on-secondary-fixed": "#001a42",
+                        "surface-glass": "rgba(20, 20, 22, 0.75)",
+                        "surface-variant": "#222124",
+                        "danger": "#EF4444",
+                        "surface-bright": "#3a393a",
+                        "surface-container-high": "#2a2a2b",
+                        "on-tertiary-container": "#75fce8",
+                        "text-supporting": "#71717A",
+                        "on-surface": "#e5e2e3",
+                        "secondary-container": "#0566d9",
+                        "outline": "#958da1",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "background": "#050506",
+                        "on-tertiary": "#003731",
+                        "on-background": "#e5e2e3",
+                        "surface-container-highest": "#353436",
+                        "on-secondary-fixed-variant": "#004395",
+                        "surface-dim": "#0e0e0f",
+                        "on-primary-container": "#ede0ff",
+                        "on-secondary": "#002e6a",
+                        "primary-fixed": "#eaddff",
+                        "inverse-on-surface": "#313031",
+                        "text-secondary": "#A1A1AA",
+                        "on-primary": "#3f008e",
+                        "surface-tint": "#d2bbff",
+                        "on-primary-fixed": "#25005a",
+                        "tertiary": "#4fdbc8",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#007468",
+                        "surface-container": "#111012",
+                        "surface-raised": "#0e0d0f",
+                        "on-tertiary-fixed": "#00201c",
+                        "inverse-surface": "#e5e2e3",
+                        "surface-base": "#050506",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "text-primary": "#F4F4F5",
+                        "primary-fixed-dim": "#d2bbff",
+                        "primary": "#d2bbff",
+                        "on-secondary-container": "#e6ecff",
+                        "tertiary-fixed-dim": "#4fdbc8",
+                        "tertiary-fixed": "#71f8e4",
+                        "on-surface-variant": "#ccc3d8",
+                        "surface": "#0a0a0b",
+                        "primary-container": "#7c3aed",
+                        "on-tertiary-fixed-variant": "#005048",
+                        "on-error": "#690005",
+                        "outline-variant": "#222024",
+                        "accent-gradient": "linear-gradient(135deg, #7C3AED 0%, #3B82F6 50%, #14B8A6 100%)",
+                        "surface-container-lowest": "#080709",
+                        "surface-container-low": "#141315",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050506; color: #F4F4F5; -webkit-font-smoothing: antialiased; }
+        .glass-panel {
+            background: rgba(12, 12, 14, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        .gradient-text {
+            background-image: linear-gradient(135deg, #d2bbff 0%, #adc6ff 50%, #71f8e4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        /* Scroll linked timeline custom values */
+        .timeline-node {
+            display: flex;
+            position: relative;
+            margin-bottom: 8rem;
+            width: 100%;
+        }
+        .timeline-card {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .timeline-card.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .timeline-dot {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10; /* Ensure dot stays on top of laser stream line */
+        }
+        .timeline-dot.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.4);
+            background: #7c3aed;
+            border-color: #d2bbff;
+            box-shadow: 0 0 18px 6px rgba(124, 58, 237, 0.75);
+        }
+
+        /* Animated pulsing glowing stream segment line override */
+        .timeline-line-segment {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            background: linear-gradient(to bottom, #7c3aed 0%, #71f8e4 50%, #7c3aed 100%);
+            background-size: 100% 200%;
+            animation: flow-pulse 2.2s linear infinite;
+            box-shadow: 0 0 12px rgba(124, 58, 237, 0.6);
+            border-radius: 9999px;
+            z-index: 1; /* layered behind dots (z-index 10) */
+            pointer-events: none;
+        }
+
+        @keyframes flow-pulse {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% -200%; }
+        }
+    </style>
+</head>
+<body class="font-body text-body min-h-screen flex flex-col selection:bg-primary-container selection:text-white">
+    <!-- WebGL Background Canvas (retained abstract grid pattern) -->
+    <div class="fixed inset-0 w-full h-full z-[-1] pointer-events-none" style="display:block;">
+        <canvas id="shader-canvas-ANIMATION_33" style="display:block;width:100%;height:100%"></canvas>
+        <script>
+        (function() {
+          const canvas = document.getElementById('shader-canvas-ANIMATION_33');
+          function syncSize() {
+            const w = canvas.clientWidth  || 1280;
+            const h = canvas.clientHeight || 720;
+            if (canvas.width !== w || canvas.height !== h) {
+              canvas.width  = w;
+              canvas.height = h;
+            }
+          }
+          if (typeof ResizeObserver !== 'undefined') {
+            new ResizeObserver(syncSize).observe(canvas);
+          }
+          syncSize();
+          const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+          if (!gl) return;
+          const vs = `attribute vec2 a_position;
+        varying vec2 v_texCoord;
+        void main() {
+          v_texCoord = a_position * 0.5 + 0.5;
+          gl_Position = vec4(a_position, 0.0, 1.0);
+        }`;
+          const fs = `precision highp float;
+        uniform float u_time;
+        uniform vec2 u_resolution;
+        uniform vec2 u_mouse;
+        varying vec2 v_texCoord;
+        float hash(vec2 p) {
+            return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+        }
+        float noise(vec2 p) {
+            vec2 i = floor(p);
+            vec2 f = fract(p);
+            f = f * f * (3.0 - 2.0 * f);
+            return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), f.x),
+                       mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+        }
+        void main() {
+            vec2 uv = v_texCoord;
+            vec2 mouse = u_mouse / u_resolution;
+            vec3 color = vec3(0.02, 0.02, 0.025);
+            float lines = 0.0;
+            for(float i = 0.0; i < 6.0; i++) {
+                float x = fract(sin(i * 123.45) + u_time * 0.015);
+                float brightness = 0.015 * (1.0 + sin(u_time * 0.5 + i));
+                lines += smoothstep(0.0015, 0.0, abs(uv.x - x)) * brightness;
+            }
+            color += lines * vec3(0.486, 0.227, 0.929);
+            float grid = smoothstep(0.02, 0.0, abs(fract(uv.y * 12.0) - 0.5)) * 0.01;
+            color += grid;
+            float n = noise(uv * 4.0 - u_time * 0.1);
+            float pulse = smoothstep(0.4, 0.6, n) * 0.01;
+            color += pulse * vec3(0.08, 0.72, 0.65);
+            float d = distance(uv, mouse);
+            float glow = smoothstep(0.4, 0.0, d) * 0.03;
+            color += glow * vec3(0.23, 0.51, 0.96);
+            gl_FragColor = vec4(color, 1.0);
+        }`;
+          function cs(type, src) {
+            const s = gl.createShader(type);
+            gl.shaderSource(s, src);
+            gl.compileShader(s);
+            return s;
+          }
+          const prog = gl.createProgram();
+          gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+          gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+          gl.linkProgram(prog);
+          gl.useProgram(prog);
+          const buf = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+          const pos = gl.getAttribLocation(prog, 'a_position');
+          gl.enableVertexAttribArray(pos);
+          gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+          const uTime = gl.getUniformLocation(prog, 'u_time');
+          const uRes = gl.getUniformLocation(prog, 'u_resolution');
+          const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+          let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+          window.addEventListener('mousemove', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            if (rect.width && rect.height) {
+              const nx = (event.clientX - rect.left) / rect.width;
+              const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+              mouse.x = nx * canvas.width;
+              mouse.y = ny * canvas.height;
+            }
+          });
+          function render(t) {
+            if (typeof ResizeObserver === 'undefined') syncSize();
+            gl.viewport(0, 0, canvas.width, canvas.height);
+            if (uTime) gl.uniform1f(uTime, t * 0.001);
+            if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+            if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            requestAnimationFrame(render);
+          }
+          render(0);
+        })();
+        </script>
+    </div>
+
+    <!-- KEIKO TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 bg-[#050506]/85 backdrop-blur-md border-b border-white/5 h-20">
+      <div class="flex justify-between items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+        <a href="index.html" class="text-2xl md:text-3xl font-bold text-white tracking-tighter hover:opacity-90 transition-opacity" style="font-family:'Space Grotesk',sans-serif">KEIKO</a>
+        <div class="hidden md:flex items-center space-x-8">
+          <a id="nav-about" class="text-sm text-gray-400 hover:text-white transition-colors" href="about.html" style="font-family:'Inter',sans-serif">About</a>
+          <a id="nav-journey" class="text-sm text-gray-400 hover:text-white transition-colors" href="interview-journey.html" style="font-family:'Inter',sans-serif">Journey</a>
+          <a id="nav-features" class="text-sm text-gray-400 hover:text-white transition-colors" href="features.html" style="font-family:'Inter',sans-serif">Features</a>
+          <a id="nav-architecture" class="text-sm text-gray-400 hover:text-white transition-colors" href="architecture.html" style="font-family:'Inter',sans-serif">Architecture</a>
+        </div>
+        <a class="bg-[#7c3aed] text-white px-6 py-2 rounded-full font-bold text-sm transition-all hover:scale-105 hover:opacity-90 active:scale-95" href="download.html" style="font-family:'Inter',sans-serif">Experience KEIKO</a>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="w-full max-w-[1440px] mx-auto px-6 md:px-16 py-32 pb-24">
+        <!-- Hero Section (Scrolls away completely) -->
+        <header id="architecture-hero" class="mb-48 text-center flex flex-col items-center justify-center min-h-[60vh] transition-all duration-300">
+            <div class="inline-block px-4 py-1 rounded-full border border-white/10 glass-panel mb-6 font-mono text-xs text-primary">
+                PLATFORM CORE LIFECYCLE
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6" style="font-family:'Space Grotesk',sans-serif">
+                System <span class="gradient-text">Architecture</span>
+            </h1>
+            <p class="text-lg text-gray-400 max-w-2xl leading-relaxed">
+                Trace the real-time processing flow of candidate training parameters. Scroll down to initiate lifecycle simulation.
+            </p>
+            <div class="mt-12 animate-bounce">
+                <span class="material-symbols-outlined text-gray-500 text-3xl">keyboard_double_arrow_down</span>
+            </div>
+        </header>
+
+        <!-- Section 1: Scroll-Linked Timeline Flow (No background lines/dots initially) -->
+        <section id="timeline-section" class="relative py-24 min-h-[220vh] max-w-5xl mx-auto">
+            
+            <!-- Dynamic one-time entry animated pipeline guide track (grows down when first dot activates) -->
+            <div id="timeline-guideline-track" class="absolute left-1/2 -translate-x-1/2 w-[1px] bg-white/10 z-0 pointer-events-none transition-all duration-[2200ms] cubic-bezier(0.25, 1, 0.5, 1)" style="height: 0px;"></div>
+
+            <!-- Dynamic growing line segments placed here as direct children of the relative section container -->
+            <div class="timeline-line-segment" id="line-segment-1"></div>
+            <div class="timeline-line-segment" id="line-segment-2"></div>
+            <div class="timeline-line-segment" id="line-segment-3"></div>
+            <div class="timeline-line-segment" id="line-segment-4"></div>
+            <div class="timeline-line-segment" id="line-segment-5"></div>
+            <div class="timeline-line-segment" id="line-segment-6"></div>
+            <div class="timeline-line-segment" id="line-segment-7"></div>
+            <div class="timeline-line-segment" id="line-segment-8"></div>
+
+            <!-- Node 1: Resume Upload (Left) -->
+            <div class="timeline-node" id="step-node-1">
+                <!-- Center dot anchor -->
+                <div class="absolute left-1/2 top-1/2 w-4 h-4 rounded-full timeline-dot" id="dot-1"></div>
+
+                <div class="w-full md:w-[42%] text-right pr-12 md:pr-16 md:block flex flex-col items-center">
+                    <div class="timeline-card bg-[#111012]/40 backdrop-blur-md border border-white/5 p-8 rounded-3xl inline-block text-left shadow-2xl" id="card-1">
+                        <span class="font-mono text-[10px] text-primary uppercase tracking-wider block mb-1">Node 01 — Profile Seed</span>
+                        <h3 class="text-xl font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Resume Upload</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Candidate starts the practice session by uploading their resume document, seeding target technical proficiencies and career experience parameters.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-full md:w-[58%]"></div>
+            </div>
+
+            <!-- Node 2: Job Description Input (Right) -->
+            <div class="timeline-node" id="step-node-2">
+                <!-- Center dot anchor -->
+                <div class="absolute left-1/2 top-1/2 w-4 h-4 rounded-full timeline-dot" id="dot-2"></div>
+
+                <div class="w-full md:w-[58%]"></div>
+                <div class="w-full md:w-[42%] text-left pl-12 md:pl-16 md:block flex flex-col items-center">
+                    <div class="timeline-card bg-[#111012]/40 backdrop-blur-md border border-white/5 p-8 rounded-3xl inline-block text-left shadow-2xl" id="card-2">
+                        <span class="font-mono text-[10px] text-primary uppercase tracking-wider block mb-1">Node 02 — Target Metric</span>
+                        <h3 class="text-xl font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Job Description Baseline</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Candidate inputs target Job Specifications or selects a standard role profile (e.g. Frontend Engineer, ML Developer) to configure target assessment matrices.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 3: Profile Analysis (Left) -->
+            <div class="timeline-node" id="step-node-3">
+                <!-- Center dot anchor -->
+                <div class="absolute left-1/2 top-1/2 w-4 h-4 rounded-full timeline-dot" id="dot-3"></div>
+
+                <div class="w-full md:w-[42%] text-right pr-12 md:pr-16 md:block flex flex-col items-center">
+                    <div class="timeline-card bg-[#111012]/40 backdrop-blur-md border border-white/5 p-8 rounded-3xl inline-block text-left shadow-2xl" id="card-3">
+                        <span class="font-mono text-[10px] text-[#14B8A6] uppercase tracking-wider block mb-1">Node 03 — Intelligence</span>
+                        <h3 class="text-xl font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Profile Analysis</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Resume and JD Intelligence modules parse the text, extracting timelines and specific skills to construct candidate profiles.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-full md:w-[58%]"></div>
+            </div>
+
+            <!-- Node 4: Matching convergence (Right) -->
+            <div class="timeline-node" id="step-node-4">
+                <!-- Center dot anchor -->
+                <div class="absolute left-1/2 top-1/2 w-4 h-4 rounded-full timeline-dot" id="dot-4"></div>
+
+                <div class="w-full md:w-[58%]"></div>
+                <div class="w-full md:w-[42%] text-left pl-12 md:pl-16 md:block flex flex-col items-center">
+                    <div class="timeline-card bg-[#111012]/40 backdrop-blur-md border border-white/5 p-8 rounded-3xl inline-block text-left shadow-2xl" id="card-4">
+                        <span class="font-mono text-[10px] text-[#14B8A6] uppercase tracking-wider block mb-1">Node 04 — Convergence</span>
+                        <h3 class="text-xl font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Semantic Alignment</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Matching Engine projects candidate skills against the JD needs, establishing a semantic baseline fit ratio before the practice starts.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 5: Video & Audio Streaming (Left) -->
+            <div class="timeline-node" id="step-node-5">
+                <!-- Center dot anchor -->
+                <div class="absolute left-1/2 top-1/2 w-4 h-4 rounded-full timeline-dot" id="dot-5"></div>
+
+                <div class="w-full md:w-[42%] text-right pr-12 md:pr-16 md:block flex flex-col items-center">
+                    <div class="timeline-card bg-[#111012]/40 backdrop-blur-md border border-white/5 p-8 rounded-3xl inline-block text-left shadow-2xl" id="card-5">
+                        <span class="font-mono text-[10px] text-amber-500 uppercase tracking-wider block mb-1">Node 05 — Telemetry Input</span>
+                        <h3 class="text-xl font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Sensory Streams Ignite</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Session launches. Video stream (capturing 60 frames per second) and microphone audio buffer are processed to trace delivery.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-full md:w-[58%]"></div>
+            </div>
+
+            <!-- Node 6: Cognitive Sensors (Right) -->
+            <div class="timeline-node" id="step-node-6">
+                <!-- Center dot anchor -->
+                <div class="absolute left-1/2 top-1/2 w-4 h-4 rounded-full timeline-dot" id="dot-6"></div>
+
+                <div class="w-full md:w-[58%]"></div>
+                <div class="w-full md:w-[42%] text-left pl-12 md:pl-16 md:block flex flex-col items-center">
+                    <div class="timeline-card bg-[#111012]/40 backdrop-blur-md border border-white/5 p-8 rounded-3xl inline-block text-left shadow-2xl" id="card-6">
+                        <span class="font-mono text-[10px] text-[#14B8A6] uppercase tracking-wider block mb-1">Node 06 — Extraction</span>
+                        <h3 class="text-xl font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Video & Audio Processing</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Visual systems measure posture alignment and gaze focus coordinates, while voice analyzers process pacing values (WPM) and clarity.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 7: Stress Resilience Mapping (Left) -->
+            <div class="timeline-node" id="step-node-7">
+                <!-- Center dot anchor -->
+                <div class="absolute left-1/2 top-1/2 w-4 h-4 rounded-full timeline-dot" id="dot-7"></div>
+
+                <div class="w-full md:w-[42%] text-right pr-12 md:pr-16 md:block flex flex-col items-center">
+                    <div class="timeline-card bg-[#111012]/40 backdrop-blur-md border border-white/5 p-8 rounded-3xl inline-block text-left shadow-2xl" id="card-7">
+                        <span class="font-mono text-[10px] text-red-500 uppercase tracking-wider block mb-1">Node 07 — Behavioral Model</span>
+                        <h3 class="text-xl font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Composure & Stress Engine</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Physical cues and voice modulations feed the Composure Engine. Identifies slouching or speech hesitation penalties, mapping stress recovery.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-full md:w-[58%]"></div>
+            </div>
+
+            <!-- Node 8: Question & Evaluator (Right) -->
+            <div class="timeline-node" id="step-node-8">
+                <!-- Center dot anchor -->
+                <div class="absolute left-1/2 top-1/2 w-4 h-4 rounded-full timeline-dot" id="dot-8"></div>
+
+                <div class="w-full md:w-[58%]"></div>
+                <div class="w-full md:w-[42%] text-left pl-12 md:pl-16 md:block flex flex-col items-center">
+                    <div class="timeline-card bg-[#111012]/40 backdrop-blur-md border border-white/5 p-8 rounded-3xl inline-block text-left shadow-2xl" id="card-8">
+                        <span class="font-mono text-[10px] text-emerald-500 uppercase tracking-wider block mb-1">Node 08 — Dialogue Loop</span>
+                        <h3 class="text-xl font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Adaptive Questioner</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            As transcript answers compile, the question generator adapts the follow-up prompt difficulty based on candidate response depth.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 9: Report Card (Left) -->
+            <div class="timeline-node" id="step-node-9">
+                <!-- Center dot anchor -->
+                <div class="absolute left-1/2 top-1/2 w-4 h-4 rounded-full timeline-dot" id="dot-9"></div>
+
+                <div class="w-full md:w-[42%] text-right pr-12 md:pr-16 md:block flex flex-col items-center">
+                    <div class="timeline-card bg-[#111012]/40 backdrop-blur-md border border-white/5 p-8 rounded-3xl inline-block text-left shadow-2xl" id="card-9">
+                        <span class="font-mono text-[10px] text-primary uppercase tracking-wider block mb-1">Node 09 — Diagnostic Summary</span>
+                        <h3 class="text-xl font-bold text-white mb-2" style="font-family:'Space Grotesk',sans-serif">Self-Diagnostic Feedback</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            At completion, candidate receives diagnostic reports breaking down overall technical clarity, delivery pacing, and stress resilience values.
+                        </p>
+                    </div>
+                </div>
+                <div class="w-full md:w-[58%]"></div>
+            </div>
+
+        </section>
+
+        <!-- Section 2: Non-Technical Visual Simulator (Candidate Practice Focus) -->
+        <section class="mb-24 mt-20">
+            <div class="flex items-center space-x-4 mb-12 border-b border-white/5 pb-4">
+                <span class="material-symbols-outlined text-primary text-3xl">desktop_windows</span>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-white font-display-l">Self-Guided Practice HUD</h2>
+                    <p class="text-sm text-gray-500">Interactive preview of candidate diagnostic monitoring (no coding, purely visual dashboards).</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left Column: Actions panel -->
+                <div class="lg:col-span-1 space-y-4 flex flex-col justify-center">
+                    <h4 class="text-xs font-mono text-gray-400 uppercase tracking-widest">Select Practice Scenario</h4>
+                    
+                    <button onclick="triggerMockBehavior('normal')" id="btn-mock-normal" class="w-full text-left p-4 rounded-2xl border border-primary/50 bg-primary/10 hover:bg-white/5 transition-colors flex justify-between items-center group">
+                        <div>
+                            <div class="font-bold text-white text-sm">Optimal Composure</div>
+                            <p class="text-xs text-gray-400 mt-1">Excellent focus, optimal alignment, calm vocal speech.</p>
+                        </div>
+                        <span class="material-symbols-outlined text-sm text-[#71f8e4]">check_circle</span>
+                    </button>
+
+                    <button onclick="triggerMockBehavior('slouch')" id="btn-mock-slouch" class="w-full text-left p-4 rounded-2xl border border-white/5 bg-[#111012]/40 hover:bg-white/10 transition-colors flex justify-between items-center group">
+                        <div>
+                            <div class="font-bold text-white text-sm">Posture Slip</div>
+                            <p class="text-xs text-gray-400 mt-1">Simulates candidate slouching, leaning out of center alignment.</p>
+                        </div>
+                        <span class="material-symbols-outlined text-sm text-red-400">accessibility_new</span>
+                    </button>
+
+                    <button onclick="triggerMockBehavior('look_away')" id="btn-mock-look_away" class="w-full text-left p-4 rounded-2xl border border-white/5 bg-[#111012]/40 hover:bg-white/10 transition-colors flex justify-between items-center group">
+                        <div>
+                            <div class="font-bold text-white text-sm">Focus Loss</div>
+                            <p class="text-xs text-gray-400 mt-1">Simulates gaze drifting left/right away from screen center.</p>
+                        </div>
+                        <span class="material-symbols-outlined text-sm text-red-400">visibility_off</span>
+                    </button>
+
+                    <button onclick="triggerMockBehavior('hesitate')" id="btn-mock-hesitate" class="w-full text-left p-4 rounded-2xl border border-white/5 bg-[#111012]/40 hover:bg-white/10 transition-colors flex justify-between items-center group">
+                        <div>
+                            <div class="font-bold text-white text-sm">Hesitation filler</div>
+                            <p class="text-xs text-gray-400 mt-1">Simulates multiple rapid verbal fillers (um, uh) during answers.</p>
+                        </div>
+                        <span class="material-symbols-outlined text-sm text-amber-400">keyboard_voice</span>
+                    </button>
+                </div>
+
+                <!-- Right Column: Visual practice diagnostic dashboard (no video feeds or empty placeholder boxes) -->
+                <div class="lg:col-span-2 bg-[#121214]/60 border border-white/10 rounded-2xl p-6 flex flex-col md:flex-row gap-6 shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-2 right-4 text-[9px] font-mono text-gray-600 tracking-wider">PRACTICE telemetry HUD</div>
+
+                    <!-- Left: 5-Pointed Pentagon Skill Radar Chart -->
+                    <div class="w-full md:w-1/2 bg-black/50 rounded-xl border border-white/5 p-4 flex flex-col justify-between aspect-square">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[9px] font-mono text-[#71f8e4]">COGNITIVE SKILL RADAR</span>
+                        </div>
+
+                        <!-- SVG Pentagon Radar Chart -->
+                        <div class="relative w-full h-[90%] flex items-center justify-center bg-black/40 rounded-lg overflow-hidden">
+                            <svg width="280" height="280" viewBox="0 0 300 300" class="w-full h-full max-w-[280px]">
+                                <!-- Background Pentagon grid rings (20%, 40%, 60%, 80%, 100%) -->
+                                <polygon points="150,130 169,144 162,166 138,166 131,144" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"></polygon>
+                                <polygon points="150,110 188,138 174,181 126,181 112,138" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"></polygon>
+                                <polygon points="150,90 207,131 185,197 115,197 93,131" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"></polygon>
+                                <polygon points="150,70 226,125 197,213 103,213 74,125" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"></polygon>
+                                <polygon points="150,50 245,119 209,229 91,229 55,119" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"></polygon>
+
+                                <!-- Axes lines from center to 100% boundary vertices -->
+                                <line x1="150" y1="150" x2="150" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="1"></line>
+                                <line x1="150" y1="150" x2="245" y2="119" stroke="rgba(255,255,255,0.1)" stroke-width="1"></line>
+                                <line x1="150" y1="150" x2="209" y2="229" stroke="rgba(255,255,255,0.1)" stroke-width="1"></line>
+                                <line x1="150" y1="150" x2="91" y2="229" stroke="rgba(255,255,255,0.1)" stroke-width="1"></line>
+                                <line x1="150" y1="150" x2="55" y2="119" stroke="rgba(255,255,255,0.1)" stroke-width="1"></line>
+
+                                <!-- Axis Labels -->
+                                <text x="150" y="42" fill="#d2bbff" font-size="8" font-family="Space Grotesk" text-anchor="middle">Posture</text>
+                                <text x="252" y="118" fill="#d2bbff" font-size="8" font-family="Space Grotesk" text-anchor="start">Focus</text>
+                                <text x="215" y="240" fill="#d2bbff" font-size="8" font-family="Space Grotesk" text-anchor="start">Pace</text>
+                                <text x="85" y="240" fill="#d2bbff" font-size="8" font-family="Space Grotesk" text-anchor="end">Clarity</text>
+                                <text x="48" y="118" fill="#d2bbff" font-size="8" font-family="Space Grotesk" text-anchor="end">Composure</text>
+
+                                <!-- Active Candidate Skill Polygon (Smooth CSS transition animated) -->
+                                <polygon id="skill-radar-polygon" points="150,58 240,120 203,221 96,221 62,122" fill="rgba(124, 58, 237, 0.4)" stroke="#d2bbff" stroke-width="2" style="transition: all 0.5s ease;"></polygon>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Right: Numerical feedback telemetry indicators -->
+                    <div class="w-full md:w-1/2 flex flex-col justify-between space-y-4">
+                        <div class="space-y-4">
+                            <h3 class="text-xs font-bold text-gray-400 font-mono uppercase tracking-wider">Diagnostic Parameters</h3>
+                            
+                            <!-- Gaze target score -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1 font-mono">
+                                    <span class="text-gray-400">Focus Precision</span>
+                                    <span id="score-gaze" class="text-emerald-400 font-bold">95%</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                    <div id="progress-gaze" class="h-full bg-emerald-400 transition-all duration-500" style="width: 95%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Posture score -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1 font-mono">
+                                    <span class="text-gray-400">Posture Alignment</span>
+                                    <span id="score-posture" class="text-emerald-400 font-bold">92%</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                    <div id="progress-posture" class="h-full bg-emerald-400 transition-all duration-500" style="width: 92%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Speaking speed score -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1 font-mono">
+                                    <span class="text-gray-400">Speaking Pace</span>
+                                    <span id="score-speech" class="text-emerald-400 font-bold">135 WPM</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                    <div id="progress-speech" class="h-full bg-emerald-400 transition-all duration-500" style="width: 85%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Anxiety meter -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1 font-mono">
+                                    <span class="text-gray-400">Anxiety / Stress level</span>
+                                    <span id="score-stress" class="text-emerald-400 font-bold">LOW</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                    <div id="progress-stress" class="h-full bg-emerald-400 transition-all duration-500" style="width: 15%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Feedback Diagnostic coaching status box -->
+                        <div class="bg-black/60 border border-white/5 p-4 rounded-xl min-h-[90px] flex items-center">
+                            <p id="mock-status-text" class="text-xs text-gray-400 font-mono leading-relaxed">
+                                Feedback Tip: Focus alignment is excellent. Posture holds solid. Speaking modulation matches benchmarks.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- KEIKO Footer -->
+    <footer class="bg-[#050506] border-t border-white/5 w-full py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-8 max-w-[1440px] mx-auto font-sans">
+        <div class="lg:col-span-1">
+          <div class="text-3xl text-white mb-4 font-bold tracking-tighter" style="font-family:'Space Grotesk',sans-serif">KEIKO</div>
+          <p class="text-sm text-gray-500 mb-6 max-w-xs" style="font-family:'Inter',sans-serif">Engineering-grade intelligence for the modern technical interview.</p>
+          <p class="text-xs text-gray-600" style="font-family:'Inter',sans-serif">&copy; 2026 KEIKO Intelligence. All rights reserved.</p>
+        </div>
+        <div>
+          <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Platform</h5>
+          <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="about.html">About Us</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="interview-journey.html">Interview Journey</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="features.html">Features</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="architecture.html">Architecture</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="download.html">Experience KEIKO</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Resources</h5>
+          <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">Documentation</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html">API Configuration</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Roadmap</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#opensource">Open Source</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#faq">FAQ</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="documentation.html#changelogs">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="text-xs text-white uppercase mb-6 tracking-widest font-semibold" style="font-family:'IBM Plex Mono',monospace">Legal</h5>
+          <ul class="space-y-4 text-sm text-gray-500" style="font-family:'Inter',sans-serif">
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Privacy Policy</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Terms of Service</a></li>
+            <li><a class="hover:text-[#d2bbff] transition-colors" href="#">Contact Research</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+    // Simulator states for Candidate HUD
+    const mockStates = {
+        normal: {
+            gaze: "95%",
+            posture: "92%",
+            speech: "135 WPM",
+            stress: "LOW",
+            gazeVal: 95,
+            postureVal: 92,
+            speechVal: 85,
+            stressVal: 15,
+            status: "Feedback Tip: Focus alignment is excellent. Posture holds solid. Speaking modulation matches benchmarks.",
+            color: "emerald",
+            radar: [92, 95, 90, 90, 92] // Posture, Focus, Pace, Clarity, Composure
+        },
+        slouch: {
+            gaze: "85%",
+            posture: "38%",
+            speech: "128 WPM",
+            stress: "MODERATE",
+            gazeVal: 85,
+            postureVal: 38,
+            speechVal: 78,
+            stressVal: 45,
+            status: "Posture alert: Shoulders slumped or leaning away. Spring alignment is out of optimal bounds. Sit straight to regain posture points.",
+            color: "red",
+            radar: [38, 85, 80, 90, 75]
+        },
+        look_away: {
+            gaze: "12%",
+            posture: "88%",
+            speech: "142 WPM",
+            stress: "HIGH",
+            gazeVal: 12,
+            postureVal: 88,
+            speechVal: 90,
+            stressVal: 75,
+            status: "Focus alert: Gaze coordinates detected off-screen target boundaries. Focus back on the screen to restore gaze tracking metrics.",
+            color: "red",
+            radar: [88, 12, 82, 90, 65]
+        },
+        hesitate: {
+            gaze: "75%",
+            posture: "85%",
+            speech: "98 WPM",
+            stress: "ELEVATED",
+            gazeVal: 75,
+            postureVal: 85,
+            speechVal: 50,
+            stressVal: 60,
+            status: "Speech tip: Speech pace slowing. Frequent fillers detected (um, uh). Pause briefly to collect thoughts and raise composure.",
+            color: "amber",
+            radar: [85, 75, 50, 70, 60]
+        }
+    };
+
+    // Pentagon Radar Math coordinates calculator
+    const center = 150;
+    const maxRadius = 100;
+    const angles = [
+        -Math.PI / 2,                         // Top: Posture
+        -Math.PI / 2 + (2 * Math.PI / 5),    // Right: Focus
+        -Math.PI / 2 + (4 * Math.PI / 5),    // Bottom Right: Pace
+        -Math.PI / 2 + (6 * Math.PI / 5),    // Bottom Left: Clarity
+        -Math.PI / 2 + (8 * Math.PI / 5)     // Left: Composure
+    ];
+
+    function calculateRadarPointsString(values) {
+        return values.map((v, i) => {
+            const x = center + Math.cos(angles[i]) * (v / 100) * maxRadius;
+            const y = center + Math.sin(angles[i]) * (v / 100) * maxRadius;
+            return `${x.toFixed(1)},${y.toFixed(1)}`;
+        }).join(" ");
+    }
+
+    function triggerMockBehavior(key) {
+        document.querySelectorAll("[id^='btn-mock-']").forEach(btn => {
+            btn.className = "w-full text-left p-4 rounded-2xl border border-white/5 bg-[#111012]/40 hover:bg-white/10 transition-colors flex justify-between items-center group";
+        });
+        const activeBtn = document.getElementById("btn-mock-" + key);
+        if (activeBtn) {
+            activeBtn.className = "w-full text-left p-4 rounded-2xl border border-primary/50 bg-primary/10 hover:bg-white/5 transition-colors flex justify-between items-center group";
+        }
+
+        const state = mockStates[key];
+        if (!state) return;
+
+        // Progress score outputs
+        document.getElementById("score-gaze").innerText = state.gaze;
+        document.getElementById("score-posture").innerText = state.posture;
+        document.getElementById("score-speech").innerText = state.speech;
+        document.getElementById("score-stress").innerText = state.stress;
+        document.getElementById("mock-status-text").innerText = state.status;
+
+        const colors = { emerald: "bg-emerald-400", red: "bg-red-400", amber: "bg-amber-400" };
+        const textColors = { emerald: "text-emerald-400", red: "text-red-400", amber: "text-amber-400" };
+
+        const metrics = ["gaze", "posture", "speech", "stress"];
+        metrics.forEach(metric => {
+            const bar = document.getElementById("progress-" + metric);
+            bar.style.width = state[metric + "Val"] + "%";
+            bar.className = "h-full transition-all duration-500";
+            
+            if (metric === "stress") {
+                if (state.stressVal > 60) {
+                    bar.classList.add("bg-red-500");
+                    document.getElementById("score-stress").className = "text-red-500 font-bold";
+                } else if (state.stressVal > 30) {
+                    bar.classList.add("bg-amber-500");
+                    document.getElementById("score-stress").className = "text-amber-500 font-bold";
+                } else {
+                    bar.classList.add("bg-emerald-400");
+                    document.getElementById("score-stress").className = "text-emerald-400 font-bold";
+                }
+            } else {
+                bar.classList.add(colors[state.color]);
+                document.getElementById("score-" + metric).className = `${textColors[state.color]} font-bold`;
+            }
+        });
+
+        // Update Polygon points in SVG pentagon radar
+        const polyPoints = calculateRadarPointsString(state.radar);
+        const polygonElement = document.getElementById("skill-radar-polygon");
+        polygonElement.setAttribute("points", polyPoints);
+        
+        // Adjust radar outline coloring
+        if (state.color === "red") {
+            polygonElement.setAttribute("stroke", "#f87171");
+            polygonElement.setAttribute("fill", "rgba(239, 68, 68, 0.4)");
+        } else if (state.color === "amber") {
+            polygonElement.setAttribute("stroke", "#fbbf24");
+            polygonElement.setAttribute("fill", "rgba(245, 158, 11, 0.4)");
+        } else {
+            polygonElement.setAttribute("stroke", "#34d399");
+            polygonElement.setAttribute("fill", "rgba(16, 185, 129, 0.4)");
+        }
+    }
+
+    // Set initial radar state
+    triggerMockBehavior("normal");
+
+    // Track state to prevent guideline jumping/updating on scroll wheel move
+    let guidelineTriggered = false;
+
+    // Scroll animated Vertical Timeline Calculations
+    function updateScrollTimeline() {
+        const scrollY = window.scrollY;
+        const viewportHeight = window.innerHeight;
+        
+        // 1. Hero text fade-out
+        const hero = document.getElementById('architecture-hero');
+        const fadeLimit = 350;
+        if (hero) {
+            let opacity = 1 - (scrollY / fadeLimit);
+            opacity = Math.max(0, Math.min(1, opacity));
+            let scale = 1 - (scrollY / fadeLimit) * 0.05;
+            scale = Math.max(0.95, Math.min(1, scale));
+            
+            hero.style.opacity = opacity;
+            hero.style.transform = `scale(${scale})`;
+            if (opacity <= 0) {
+                hero.style.visibility = 'hidden';
+            } else {
+                hero.style.visibility = 'visible';
+            }
+        }
+
+        // Hide timeline elements when hero is still visible
+        const timelineSection = document.getElementById("timeline-section");
+        const timelineSectionTop = timelineSection.getBoundingClientRect().top + scrollY;
+        const guidelineTrack = document.getElementById("timeline-guideline-track");
+
+        // None of the cards are shown until hero is fully faded out
+        if (scrollY < fadeLimit) {
+            for (let i = 1; i <= 9; i++) {
+                document.getElementById("card-" + i).classList.remove("active");
+                document.getElementById("dot-" + i).classList.remove("active");
+                const segment = document.getElementById("line-segment-" + i);
+                if (segment) segment.style.height = "0px";
+            }
+            if (guidelineTrack) {
+                guidelineTrack.style.height = "0px";
+            }
+            guidelineTriggered = false; // Reset trigger so it can re-animate if scrolled back up
+            return;
+        }
+
+        const nodesCount = 9;
+        const triggerOffset = viewportHeight * 0.55; // center-ish coordinate trigger
+        const triggerDepth = scrollY + triggerOffset;
+
+        // Calculate node absolute coordinate profiles
+        const nodesCoords = [];
+        for (let i = 1; i <= nodesCount; i++) {
+            const nodeEl = document.getElementById("step-node-" + i);
+            const dotEl = document.getElementById("dot-" + i);
+            const cardEl = document.getElementById("card-" + i);
+            if (!nodeEl || !dotEl || !cardEl) continue;
+
+            const rect = nodeEl.getBoundingClientRect();
+            const nodeAbsoluteCenterY = rect.top + scrollY + (rect.height / 2);
+            
+            // Calculate absolute bottom of this card element
+            const cardRect = cardEl.getBoundingClientRect();
+            const cardAbsoluteBottom = cardRect.top + scrollY + cardRect.height;
+
+            nodesCoords.push({
+                index: i,
+                centerY: nodeAbsoluteCenterY,
+                bottomY: cardAbsoluteBottom,
+                nodeHeight: rect.height
+            });
+        }
+
+        const dotsCoords = nodesCoords; // sync array scope
+
+        // DRAW DYNAMIC GUIDELINE ONLY AFTER NODE 1 LIGHTS UP
+        if (dotsCoords.length > 0) {
+            const firstDotY = dotsCoords[0].centerY;
+            const lastDotY = dotsCoords[dotsCoords.length - 1].centerY;
+
+            if (triggerDepth >= firstDotY) {
+                if (guidelineTrack && !guidelineTriggered) {
+                    guidelineTriggered = true; // lock trigger state so it runs 1-way
+                    guidelineTrack.style.top = firstDotY - timelineSectionTop + "px";
+                    guidelineTrack.style.height = (lastDotY - firstDotY) + "px";
+                }
+            } else {
+                // If not scrolled to first node yet, keep empty
+                if (guidelineTrack && !guidelineTriggered) {
+                    guidelineTrack.style.height = "0px";
+                }
+            }
+        }
+
+        dotsCoords.forEach((dotData, idx) => {
+            const card = document.getElementById("card-" + dotData.index);
+            const dot = document.getElementById("dot-" + dotData.index);
+            const segment = document.getElementById("line-segment-" + dotData.index);
+
+            // 2. Dot & Card Activation
+            if (triggerDepth >= dotData.centerY) {
+                // If not active yet, trigger pop animation
+                if (!dot.classList.contains("active")) {
+                    dot.classList.add("active");
+                    // Add micro-pop animation style override
+                    dot.style.animation = "dot-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+                    setTimeout(() => { dot.style.animation = ""; }, 300);
+                }
+                card.classList.add("active");
+
+                // 3. Connection Line Growth Logic
+                // Grow segment down only AFTER the card is completely scrolled past (card bottom is above triggerDepth)
+                if (idx < dotsCoords.length - 1 && segment) {
+                    const nextDotY = dotsCoords[idx + 1].centerY;
+                    
+                    // Delay point: start drawing line only when scroll goes past the card bottom boundary
+                    const startGrowthY = dotData.bottomY;
+                    
+                    if (triggerDepth > startGrowthY) {
+                        const totalDistance = nextDotY - dotData.centerY;
+                        const progress = (triggerDepth - startGrowthY) / (nextDotY - startGrowthY);
+                        const progressClamped = Math.min(1.0, Math.max(0.0, progress));
+                        
+                        segment.style.top = dotData.centerY - timelineSectionTop + "px";
+                        segment.style.height = (progressClamped * totalDistance) + "px";
+                    } else {
+                        segment.style.height = "0px";
+                    }
+                }
+            } else {
+                dot.classList.remove("active");
+                card.classList.remove("active");
+                if (segment) segment.style.height = "0px";
+            }
+        });
+    }
+
+    // Custom CSS Keyframes for Dot pop injection dynamically
+    (function() {
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes dot-pop {
+                0% { transform: translate(-50%, -50%) scale(0.5); }
+                70% { transform: translate(-50%, -50%) scale(1.7); }
+                100% { transform: translate(-50%, -50%) scale(1.4); }
+            }
+        `;
+        document.head.appendChild(style);
+    })();
+
+    window.addEventListener("scroll", updateScrollTimeline);
+    window.addEventListener("load", updateScrollTimeline);
+    window.addEventListener("resize", updateScrollTimeline);
+    </script>
+</body>
+</html>

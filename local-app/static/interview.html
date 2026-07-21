@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keiko — Interview Analysis</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/style.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%230ea5e9'/><text x='16' y='22' text-anchor='middle' font-size='18' fill='white' font-family='sans-serif'>K</text></svg>" />
+</head>
+<body>
+
+  <div class="dashboard" id="dashboard">
+
+    <!-- ═══ Header ═══ -->
+    <header class="dashboard-header glass-panel">
+      <div class="dashboard-header__brand">
+        <span class="dashboard-header__logo">KEIKO</span>
+        <span class="dashboard-header__sub">Interview Analysis System</span>
+      </div>
+      <div class="dashboard-header__actions">
+        <div class="session-info">
+          <span>SESSION</span>
+          <span class="session-info__id" id="sessionId">—</span>
+        </div>
+        <div class="connection-status" id="connectionStatus">
+          <span class="connection-status__dot"></span>
+          <span id="connectionLabel">Disconnected</span>
+        </div>
+        <button class="neo-btn neo-btn--icon" id="settingsBtn" title="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.32 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+        <a href="admin.html" class="neo-btn neo-btn--icon" title="Admin Portal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 4.354a4 4 0 1 1 0 5.292M15 21H3v-1a6 6 0 0 1 12 0v1zm0 0h6v-1a6 6 0 0 0-9-5.197"/>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- ═══ Left — Video & Workspace ═══ -->
+    <section class="video-section">
+      <div class="video-container" id="videoContainer">
+        <video id="videoEl" autoplay muted playsinline></video>
+        <div class="video-container__overlay"></div>
+        <div class="live-badge" id="liveBadge" style="display:none;">
+          <span class="live-badge__dot"></span>
+          LIVE
+        </div>
+        <button class="fullscreen-btn" id="fullscreenBtn" title="Toggle Fullscreen">
+          <svg id="fsIconExpand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+            <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+          </svg>
+          <svg id="fsIconCompress" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/>
+            <line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/>
+          </svg>
+        </button>
+        <!-- hidden canvas for frame capture -->
+        <canvas id="captureCanvas" style="display:none;"></canvas>
+      </div>
+
+      <!-- Candidate Workspace -->
+      <div class="glass-panel workspace-panel">
+        <span class="panel-label">Candidate Workspace</span>
+        <div class="workspace-grid">
+          
+          <!-- Resume Upload -->
+          <div style="display:flex; flex-direction:column; gap:var(--sp-2);">
+            <span class="label" style="font-size:var(--fs-xs);">1. Upload Resume</span>
+            <div class="dropzone" id="resumeDropzone">
+              <svg class="dropzone__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="12" y1="18" x2="12" y2="12"/>
+                <polyline points="9 15 12 12 15 15"/>
+              </svg>
+              <div class="dropzone__text">Drag &amp; drop PDF, DOCX, TXT or click to browse</div>
+              <input type="file" id="resumeFileInput" accept=".pdf,.docx,.txt" style="display:none;" />
+              <div class="dropzone__status" id="resumeStatus">No resume uploaded</div>
+            </div>
+          </div>
+
+          <!-- Job Description Pasting -->
+          <div style="display:flex; flex-direction:column; gap:var(--sp-2);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="label" style="font-size:var(--fs-xs);">2. Target Job Description</span>
+              <button class="neo-btn" id="analyzeJdBtn" style="padding:2px 8px; font-size:var(--fs-xs);">Analyze</button>
+            </div>
+            <textarea class="jd-textarea" id="jdTextarea" placeholder="Paste target job description requirements here…"></textarea>
+            <div class="dropzone__status" id="jdStatus" style="margin-top:2px;">No job description analyzed</div>
+          </div>
+
+        </div>
+
+        <!-- Matching results (hidden until processed) -->
+        <div class="workspace-results" id="matchResultsPanel" style="display:none;">
+          <div class="results-header">
+            <div class="alignment-score-container">
+              <span class="label">Role Alignment Score:</span>
+              <span class="alignment-score-badge" id="alignmentScoreBadge">0%</span>
+            </div>
+            <div style="font-size:var(--fs-xs); color:var(--on-surface-variant);">
+              Experience: <span id="matchExpPercent">0%</span> | Skills: <span id="matchSkillsPercent">0%</span>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr; gap:var(--sp-4);">
+            <!-- Strengths -->
+            <div>
+              <span class="label" style="font-size:var(--fs-xs); color:var(--secondary);">Profile Strengths</span>
+              <ul class="match-list" id="strengthsList" style="margin-top:var(--sp-2);"></ul>
+            </div>
+            <!-- Skill Gap -->
+            <div>
+              <span class="label" style="font-size:var(--fs-xs); color:var(--tertiary);">Skill Gap / Missing Skills</span>
+              <div class="tags-list" id="gapTagsList"></div>
+            </div>
+          </div>
+
+          <!-- Matching skills tag clouds -->
+          <div>
+            <span class="label" style="font-size:var(--fs-xs);">Extracted Competencies Mapping</span>
+            <div class="tags-list" id="skillsTagsList"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Interview Panel -->
+      <div class="glass-panel workspace-panel" style="margin-top: var(--sp-4);">
+        <span class="panel-label">Live Interview Q&amp;A</span>
+        <div style="display: flex; flex-direction: column; gap: var(--sp-4);">
+          <!-- Start Button / Progress -->
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button class="neo-btn neo-btn--primary" id="startInterviewBtn">Start Interview</button>
+            <span id="questionIndexLabel" style="font-size: var(--fs-sm); font-weight: 600; color: var(--secondary); display: none;">Question 1 / 3</span>
+          </div>
+
+          <!-- Question Display -->
+          <div id="questionDisplayContainer" style="display: none; padding: var(--sp-3); border-radius: var(--br-md); background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);">
+            <p id="questionText" style="margin: 0; font-size: var(--fs-sm); line-height: 1.6; color: var(--on-surface); font-weight: 500;">Press Start to begin your interview.</p>
+          </div>
+
+          <!-- Recording Actions -->
+          <div id="recordingControls" style="display: none; align-items: center; gap: var(--sp-3);">
+            <button class="neo-btn" id="recordBtn" style="background: var(--tertiary-container); color: var(--on-tertiary-container);">Start Recording</button>
+            <span id="recordingStatusLabel" style="font-size: var(--fs-xs); color: var(--text-muted);">Not recording</span>
+            <button class="neo-btn neo-btn--primary" id="submitAnswerBtn" style="margin-left: auto;">Submit Answer</button>
+          </div>
+          
+          <!-- Text fallback answer if mic is not present -->
+          <div id="textAnswerContainer" style="display: none; flex-direction: column; gap: var(--sp-2);">
+            <span class="label" style="font-size:var(--fs-xs);">Or Type Answer Fallback:</span>
+            <textarea class="jd-textarea" id="textAnswerInput" style="height: 60px;" placeholder="Type your answer here if you don't use voice..."></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Right — Metrics ═══ -->
+    <section class="metrics-section" id="metricsSection">
+
+      <!-- Overall Confidence (Hero) -->
+      <div class="metric-card metric-card--hero glass-panel glass-panel--active animate-in" id="cardOverall">
+        <span class="panel-label">Overall Confidence</span>
+        <div class="gauge-container gauge--radial">
+          <svg class="gauge-svg" viewBox="0 0 160 160">
+            <circle class="gauge-track" cx="80" cy="80" r="68" stroke-width="10"/>
+            <circle class="gauge-fill" id="gaugeOverall" cx="80" cy="80" r="68"
+                    stroke-width="10"
+                    stroke="var(--primary)"
+                    stroke-dasharray="427.26"
+                    stroke-dashoffset="427.26"/>
+          </svg>
+          <div class="gauge-center-label">
+            <span class="gauge-center-label__value" id="valOverall">—</span>
+            <span class="gauge-center-label__unit">Score</span>
+          </div>
+        </div>
+        <span class="metric-card__sub" id="subOverall">Waiting for data…</span>
+      </div>
+
+      <!-- Posture (Arc gauge) -->
+      <div class="metric-card glass-panel animate-in" id="cardPosture">
+        <div class="metric-card__header">
+          <span class="panel-label">Posture</span>
+          <span class="metric-card__value" id="valPosture">—</span>
+        </div>
+        <div class="gauge-container gauge--arc" style="align-self:center;">
+          <svg class="gauge-svg" viewBox="0 0 140 80">
+            <path class="gauge-track" d="M 10 75 A 60 60 0 0 1 130 75" stroke-width="9" fill="none"/>
+            <path class="gauge-fill" id="gaugePosture" d="M 10 75 A 60 60 0 0 1 130 75"
+                  stroke-width="9" fill="none"
+                  stroke="var(--secondary)"
+                  stroke-dasharray="188.5"
+                  stroke-dashoffset="188.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Eye Contact (Ring) -->
+      <div class="metric-card glass-panel animate-in" id="cardEye">
+        <div class="metric-card__header">
+          <span class="panel-label">Eye Contact</span>
+          <span class="metric-card__value" id="valEye">—</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:var(--sp-4);">
+          <div class="gauge-container gauge--ring">
+            <svg class="gauge-svg" viewBox="0 0 100 100">
+              <circle class="gauge-track" cx="50" cy="50" r="42" stroke-width="7"/>
+              <circle class="gauge-fill" id="gaugeEye" cx="50" cy="50" r="42"
+                      stroke-width="7"
+                      stroke="var(--primary)"
+                      stroke-dasharray="263.89"
+                      stroke-dashoffset="263.89"/>
+            </svg>
+            <div class="gauge-center-label">
+              <span class="gauge-center-label__value" id="valEyeRing" style="font-size:var(--fs-md);">—</span>
+              <span class="gauge-center-label__unit">%</span>
+            </div>
+          </div>
+          <div style="flex:1;">
+            <div class="sub-score-row">
+              <span class="sub-score-row__label">Gaze Ratio</span>
+              <span class="sub-score-row__value" id="subEyeGaze">—</span>
+            </div>
+            <div class="sub-score-row">
+              <span class="sub-score-row__label">Blink Rate</span>
+              <span class="sub-score-row__value" id="subEyeBlink">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Body Language (Horizontal bar) -->
+      <div class="metric-card glass-panel animate-in" id="cardBody">
+        <div class="metric-card__header">
+          <span class="panel-label">Body Language</span>
+          <span class="metric-card__value" id="valBody">—</span>
+        </div>
+        <div class="hbar">
+          <div class="hbar__fill" id="barBody" style="width:0%; background: var(--secondary);"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-top:var(--sp-1);">
+          <span class="metric-card__sub">Tense</span>
+          <span class="metric-card__sub">Relaxed</span>
+        </div>
+      </div>
+
+      <!-- Attire (Horizontal bar) -->
+      <div class="metric-card glass-panel animate-in" id="cardAttire">
+        <div class="metric-card__header">
+          <span class="panel-label">Attire</span>
+          <span class="metric-card__value" id="valAttire">—</span>
+        </div>
+        <div class="hbar">
+          <div class="hbar__fill" id="barAttire" style="width:0%; background: var(--primary);"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-top:var(--sp-1);">
+          <span class="metric-card__sub">Casual</span>
+          <span class="metric-card__sub">Professional</span>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- ═══ Settings Modal ═══ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal__header">
+        <h2 class="modal__title">Video Sensor Weights</h2>
+        <button class="modal__close" id="modalClose">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <p style="color: var(--text-muted); font-size: var(--fs-sm); margin-bottom: var(--sp-4); line-height: 1.5;">Adjust the contribution ratio of each video sensor. Set to 0 to exclude a sensor from the overall score.</p>
+
+        <!-- Posture Weight -->
+        <div class="weight-slider-group">
+          <div class="weight-slider-header">
+            <span class="label">Posture</span>
+            <span class="weight-slider-val" id="wPostureVal">0.30</span>
+          </div>
+          <div class="slider-track-container">
+            <div class="slider-track-fill" id="wPostureFill" style="width:30%;"></div>
+            <input type="range" class="neo-slider" id="wPosture" min="0" max="100" value="30" />
+          </div>
+        </div>
+
+        <!-- Eye Contact Weight -->
+        <div class="weight-slider-group">
+          <div class="weight-slider-header">
+            <span class="label">Eye Contact</span>
+            <span class="weight-slider-val" id="wEyeVal">0.30</span>
+          </div>
+          <div class="slider-track-container">
+            <div class="slider-track-fill" id="wEyeFill" style="width:30%;"></div>
+            <input type="range" class="neo-slider" id="wEye" min="0" max="100" value="30" />
+          </div>
+        </div>
+
+        <!-- Body Language Weight -->
+        <div class="weight-slider-group">
+          <div class="weight-slider-header">
+            <span class="label">Body Language</span>
+            <span class="weight-slider-val" id="wBodyVal">0.25</span>
+          </div>
+          <div class="slider-track-container">
+            <div class="slider-track-fill" id="wBodyFill" style="width:25%;"></div>
+            <input type="range" class="neo-slider" id="wBody" min="0" max="100" value="25" />
+          </div>
+        </div>
+
+        <!-- Attire Weight -->
+        <div class="weight-slider-group">
+          <div class="weight-slider-header">
+            <span class="label">Attire</span>
+            <span class="weight-slider-val" id="wAttireVal">0.15</span>
+          </div>
+          <div class="slider-track-container">
+            <div class="slider-track-fill" id="wAttireFill" style="width:15%;"></div>
+            <input type="range" class="neo-slider" id="wAttire" min="0" max="100" value="15" />
+          </div>
+        </div>
+
+      </div>
+      <div class="modal__footer">
+        <button class="neo-btn" id="modalCancel">Cancel</button>
+        <button class="neo-btn neo-btn--primary" id="modalSave">Save Weights</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
