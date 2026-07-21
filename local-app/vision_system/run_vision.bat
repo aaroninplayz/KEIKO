@@ -6,10 +6,12 @@ title HR Interview Vision AI Panel
 set "SCRIPT_DIR=%~dp0"
 cd /d "%SCRIPT_DIR%"
 
-:: Set Python Executable (use parent virtual environment if it exists)
+:: Set Python Executable (auto-discover venv)
 set "PYTHON_EXE=python"
-if exist "P:\Dependencies\keiko_venv\Scripts\python.exe" (
-    set "PYTHON_EXE=P:\Dependencies\keiko_venv\Scripts\python.exe"
+if exist "%SCRIPT_DIR%venv\Scripts\python.exe" (
+    set "PYTHON_EXE=%SCRIPT_DIR%venv\Scripts\python.exe"
+) else if exist "%SCRIPT_DIR%..\venv\Scripts\python.exe" (
+    set "PYTHON_EXE=%SCRIPT_DIR%..\venv\Scripts\python.exe"
 )
 
 :: Verify configuration file exists

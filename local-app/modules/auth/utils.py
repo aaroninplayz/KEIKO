@@ -5,7 +5,10 @@ import json
 import time
 import os
 
-SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "super-secret-key-change-in-production")
+# NOTE: Auth is bypassed (see dependencies.py). This secret is only used for
+# legacy JWT token signing and is never a real secret.  Set JWT_SECRET_KEY in
+# your .env file if you re-enable authentication.
+SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "dev-placeholder-not-a-real-secret")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_SECONDS = 86400  # 24 hours
 
